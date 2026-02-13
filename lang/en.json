@@ -1,0 +1,21 @@
+{
+    "onboarding": {
+        "title": "Complete your organization setup",
+        "description": "Add your organization details to finish onboarding.",
+        "breadcrumbs": "Onboarding",
+        "organization_name": "Organization name",
+        "organization_name_placeholder": "Acme Corporation",
+        "organization_name_help": "Your subdomain will be generated automatically.",
+        "plan": "Plan",
+        "plan_placeholder": "Select a plan",
+        "plan_free": "Free",
+        "plan_help": "You can upgrade later to unlock custom domains.",
+        "subdomain_preview_title": "Subdomain preview",
+        "subdomain_preview_fallback": "organization-xxxxxxxx.tenancy.test",
+        "submit": "Complete setup",
+        "head_title": "Complete onboarding"
+    },
+    "auth": {
+        "redirecting_to_organization": "Redirecting to your organization..."
+    }
+}

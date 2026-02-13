@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Translation\NestedJsonLoader;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -24,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        $this->configureTranslationLoader();
     }
 
     /**
@@ -45,6 +47,20 @@ class AppServiceProvider extends ServiceProvider
                 ->symbols()
                 ->uncompromised()
             : null
+        );
+    }
+
+    /**
+     * Configure the custom loaders for the application.
+     */
+    private function configureTranslationLoader(): void
+    {
+        $this->app->extend(
+            abstract: 'translation.loader',
+            closure: fn ($loader, $app): NestedJsonLoader => new NestedJsonLoader(
+                files: $app['files'],
+                path: $app['path.lang']
+            )
         );
     }
 }

@@ -10,8 +10,11 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('dashboard', function () {
-    return Inertia::render('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-require __DIR__.'/settings.php';
+Route::get('/login', function () {
+    return Inertia::render('auth/login');
+})->name('login');
+
+Route::get('/register', function () {
+    return Inertia::render('auth/register');
+})->name('register');
