@@ -17,6 +17,7 @@
         "laravel/wayfinder": "^0.1.9",
         "nunomaduro/essentials": "^1.2",
         "resend/resend-laravel": "^1.2",
+        "spatie/laravel-permission": "^7.2",
         "stancl/tenancy": "^3.9"
     },
     "require-dev": {
