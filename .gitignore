@@ -28,5 +28,5 @@ yarn-error.log
 /.zed
 /.cursor
 /.claude
-CLAUDE.md
+/CLAUDE.md
 .mcp.json
