@@ -200,7 +200,6 @@ PHP;
     private function reactPageStub(string $componentName, string $translationBaseKey): string
     {
         return <<<TSX
-import '@lib/i18n';
 import { Head } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 
