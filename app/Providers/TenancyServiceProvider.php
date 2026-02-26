@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Listeners\Onboarding\SendWorkspaceReadyMail;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -63,9 +62,7 @@ final class TenancyServiceProvider extends ServiceProvider
             // Database events
             Events\DatabaseCreated::class => [],
             Events\DatabaseMigrated::class => [],
-            Events\DatabaseSeeded::class => [
-                SendWorkspaceReadyMail::class,
-            ],
+            Events\DatabaseSeeded::class => [],
             Events\DatabaseRolledBack::class => [],
             Events\DatabaseDeleted::class => [],
 

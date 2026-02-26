@@ -46,4 +46,8 @@ test('workspace ready mail is sent only after tenant database is seeded', functi
                 && $notifiable->routeNotificationFor('mail') === 'owner@acme.com';
         },
     );
+
+    $workspace->refresh();
+
+    expect($workspace->getRawOriginal('data'))->toBeNull();
 });

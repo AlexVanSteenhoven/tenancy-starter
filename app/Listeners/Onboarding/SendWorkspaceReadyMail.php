@@ -34,5 +34,8 @@ final class SendWorkspaceReadyMail
                 $workspaceDomain,
                 $email,
             ));
+
+        unset($workspace->onboarding_email);
+        $workspace->save();
     }
 }
