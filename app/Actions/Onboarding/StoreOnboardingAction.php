@@ -6,8 +6,6 @@ namespace App\Actions\Onboarding;
 
 use App\Http\Requests\Onboarding\StoreOnboardingRequest;
 use App\Models\Workspace;
-use App\Notifications\WorkspaceReadyMail;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
 final readonly class StoreOnboardingAction
@@ -23,19 +21,11 @@ final readonly class StoreOnboardingAction
 
         $workspace = Workspace::create([
             'name' => $name,
+            'onboarding_email' => $email,
         ]);
 
         $workspace->domains()->create([
             'domain' => $subdomain,
         ]);
-
-        Notification::route(channel: 'mail', route: $email)
-            ->notify(
-                notification: new WorkspaceReadyMail(
-                    workspaceName: $name,
-                    subdomain: $subdomain, 
-                    email: $email
-                )
-            );
     }
 }
