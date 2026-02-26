@@ -11,6 +11,7 @@ use App\Http\Controllers\Settings\Profile\ShowProfileController;
 use App\Http\Controllers\Settings\Profile\UpdateProfileController;
 use App\Http\Controllers\Settings\ShowAppearanceController;
 use App\Http\Controllers\Settings\TwoFactorAuthentication\ShowTwoFactorAuthenticationController;
+use App\Http\Controllers\Users\ShowUsersController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
@@ -25,10 +26,15 @@ Route::middleware([InitializeTenancyBySubdomain::class, PreventAccessFromCentral
             Route::post('account', StoreSetupAccountController::class)->name('account.create.store');
         });
 
-        // Dashboard routes
-        Route::get('dashboard', function () {
-            return Inertia::render('dashboard');
-        })->middleware(['auth', 'verified'])->name('dashboard');
+        Route::middleware(['auth', 'verified'])->group(function () {
+            Route::get('/dashboard', function () {
+                return Inertia::render('dashboard');
+            })->name('dashboard');
+
+            Route::prefix('users')->as('users.')->group(function () {
+                Route::get('/', ShowUsersController::class)->name('index');
+            });
+        });
 
         // Settings routes
         Route::prefix('settings')
