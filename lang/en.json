@@ -8,6 +8,14 @@
         "previous": "&laquo; Previous",
         "next": "Next &raquo;"
     },
+    "data-table": {
+        "search": "Search...",
+        "no-results": "No results.",
+        "pagination": {
+            "previous": "Previous",
+            "next": "Next"
+        }
+    },
     "passwords": {
         "reset": "Your password has been reset.",
         "sent": "We have emailed your password reset link.",
@@ -239,6 +247,34 @@
                 },
                 "submit": "Create account"
             }
+        }
+    },
+    "users": {
+        "meta": {
+            "title": "Users overview"
+        },
+        "show-user": {
+            "meta": {
+                "title": "User"
+            }
+        },
+        "columns": {
+            "name": "Name",
+            "email": "Email",
+            "status": "Status",
+            "created-at": "Created at"
+        },
+        "filters": {
+            "search": "Search users...",
+            "status": "Status",
+            "all": "All",
+            "verified": "Verified",
+            "unverified": "Unverified"
+        },
+        "actions": {
+            "label": "Actions",
+            "open-menu": "Open menu",
+            "copy-id": "Copy user ID"
         }
     }
 }
