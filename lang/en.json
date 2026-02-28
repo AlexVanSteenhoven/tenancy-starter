@@ -249,6 +249,23 @@
             }
         }
     },
+    "roles": {
+        "owner": "Owner",
+        "admin": "Admin",
+        "member": "Member",
+        "user": "User"
+    },
+    "status": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "pending": "Pending",
+        "blocked": "Blocked",
+        "suspended": "Suspended",
+        "deleted": "Deleted",
+        "archived": "Archived",
+        "verified": "Verified",
+        "unverified": "Unverified"
+    },
     "users": {
         "meta": {
             "title": "Users overview"
@@ -262,7 +279,10 @@
             "name": "Name",
             "email": "Email",
             "status": "Status",
-            "created-at": "Created at"
+            "created-at": "Created at",
+            "role": "Role",
+            "no-role": "No role",
+            "no-status": "No status"
         },
         "filters": {
             "search": "Search users...",
@@ -274,7 +294,78 @@
         "actions": {
             "label": "Actions",
             "open-menu": "Open menu",
-            "copy-id": "Copy user ID"
+            "copy-id": "Copy user ID",
+            "invite": "Invite user",
+            "remove": "Remove user",
+            "deactivate": "Deactivate",
+            "activate": "Activate",
+            "cancel": "Cancel"
+        },
+        "invite": {
+            "title": "Invite user",
+            "description": "Invite a new member to this workspace by email.",
+            "email": {
+                "label": "Email address",
+                "placeholder": "member@example.com"
+            },
+            "role": {
+                "label": "Role"
+            },
+            "submit": "Send invite",
+            "messages": {
+                "sent": "Invitation sent."
+            }
+        },
+        "pending-invitations": {
+            "title": "Pending invitations",
+            "empty": "No pending invitations.",
+            "columns": {
+                "email": "Email",
+                "role": "Role",
+                "invited-by": "Invited by",
+                "invited-at": "Invited at"
+            }
+        },
+        "messages": {
+            "role_updated": "User role updated.",
+            "status_updated": "User status updated.",
+            "deleted": "User removed from workspace."
+        },
+        "validation": {
+            "owner_role_locked": "Owner role cannot be changed.",
+            "cannot_update_self_status": "You cannot update your own status."
+        }
+    },
+    "invitations": {
+        "meta": {
+            "title": "Accept invitation"
+        },
+        "form": {
+            "name": {
+                "label": "Full name",
+                "placeholder": "Jane Doe"
+            },
+            "email": {
+                "label": "Email address"
+            },
+            "password": {
+                "label": "Password",
+                "placeholder": "Create a strong password"
+            },
+            "password_confirmation": {
+                "label": "Confirm password",
+                "placeholder": "Repeat your password"
+            },
+            "submit": "Create account"
+        },
+        "states": {
+            "invalid": "This invitation is invalid, expired, or already accepted.",
+            "summary": "You were invited by :inviter as :role.",
+            "inviter_unknown": "a workspace admin"
+        },
+        "validation": {
+            "invalid": "This invitation is invalid, expired, or already accepted.",
+            "email_mismatch": "Please use the invited email address."
         }
     }
 }

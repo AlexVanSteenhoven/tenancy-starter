@@ -29,4 +29,12 @@ return [
         'button_note' => 'If the button does not work, copy and paste this URL into your browser:',
         'footer' => 'If you did not create an account, you can safely ignore this email.',
     ],
+    'invite' => [
+        'subject' => 'You have been invited to join a workspace',
+        'title' => 'You are invited to join a workspace',
+        'description' => 'Complete your account setup to access your workspace.',
+        'cta' => 'Accept invitation',
+        'button_note' => 'If the button does not work, copy and paste this URL into your browser:',
+        'footer' => 'If you did not expect this invitation, you can safely ignore this email.',
+    ],
 ];
