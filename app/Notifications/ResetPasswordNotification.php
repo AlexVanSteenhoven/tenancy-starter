@@ -42,6 +42,14 @@ final class ResetPasswordNotification extends Notification implements ShouldQueu
             ]);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
+    public function toArray(object $notifiable): array
+    {
+        return [];
+    }
+
     private function resetUrl(object $notifiable): string
     {
         $path = route('password.reset', [
@@ -56,13 +64,5 @@ final class ResetPasswordNotification extends Notification implements ShouldQueu
         }
 
         return url($path);
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray(object $notifiable): array
-    {
-        return [];
     }
 }
