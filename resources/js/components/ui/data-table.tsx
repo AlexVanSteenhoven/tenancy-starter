@@ -70,14 +70,14 @@ export function DataTable<TData>({
           value={globalFilter}
           onChange={(event) => setGlobalFilter(event.target.value)}
           placeholder={searchPlaceholder ?? t("data-table.search")}
-          className="w-full max-w-sm"
+          className="w-50 max-w-sm bg-secondary/50"
         />
 
         {toolbar ? <div className="ml-auto">{toolbar(table)}</div> : null}
       </div>
 
       <div className="overflow-hidden rounded-md border">
-        <Table>
+        <Table className="bg-secondary">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -124,6 +124,7 @@ export function DataTable<TData>({
         <Button
           type="button"
           variant="outline"
+          className="bg-secondary/50"
           size="sm"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
@@ -134,6 +135,7 @@ export function DataTable<TData>({
         <Button
           type="button"
           variant="outline"
+          className="bg-secondary/50"
           size="sm"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
