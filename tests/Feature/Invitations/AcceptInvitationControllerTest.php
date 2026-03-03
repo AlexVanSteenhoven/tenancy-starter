@@ -7,7 +7,6 @@ use App\Http\Controllers\Invitations\ShowAcceptInvitationController;
 use App\Http\Controllers\Invitations\StoreAcceptInvitationController;
 use App\Models\Invitation;
 use App\Models\User;
-use App\Notifications\VerifyEmailNotification;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
@@ -101,7 +100,7 @@ test('invitation can be accepted', function (): void {
 
     $user = User::query()->where('email', 'new.member@example.com')->firstOrFail();
     expect($user->hasRole(RoleEnum::Member->value))->toBeTrue();
+    expect($user->email_verified_at)->not->toBeNull();
     expect($invitation->fresh()?->accepted_at)->not->toBeNull();
-
-    Notification::assertSentTo($user, VerifyEmailNotification::class);
+    Notification::assertNothingSent();
 });

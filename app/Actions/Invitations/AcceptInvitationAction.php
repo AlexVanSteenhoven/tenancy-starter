@@ -25,16 +25,18 @@ final readonly class AcceptInvitationAction
             'password' => (string) $request->input('password'),
         ]);
 
-        $guardName = (string) config('auth.defaults.guard', 'web');
+        $user->forceFill([
+            'email_verified_at' => now(),
+        ])->save();
 
-        Role::findOrCreate($invitation->role, $guardName);
-        $user->assignRole($invitation->role);
+        $guardName = (string) config('auth.defaults.guard', 'web');
+        $role = $invitation->role;
+        Role::findOrCreate($role, $guardName);
+        $user->assignRole($role);
 
         $invitation->forceFill([
             'accepted_at' => now(),
         ])->save();
-
-        $user->sendEmailVerificationNotification();
 
         Auth::login($user);
     }
