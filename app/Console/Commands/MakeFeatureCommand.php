@@ -54,7 +54,7 @@ final class MakeFeatureCommand extends Command
         $controllerDirectory = app_path('Http/Controllers'.($segments !== [] ? '/'.implode('/', $segments) : ''));
         $controllerNamespace = 'App\\Http\\Controllers'.($segments !== [] ? '\\'.implode('\\', $segments) : '');
         $controllerPath = $controllerDirectory.'/'.$className.'.php';
-        $isShowFeature = preg_match('/^(Show|List|Index)/', $baseName) === 1;
+        $isShowFeature = preg_match('/^(Show|List|Index|View)/', $baseName) === 1;
 
         $createdFiles = [];
 
