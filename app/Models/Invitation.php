@@ -47,6 +47,9 @@ final class Invitation extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<User, Invitation>
+     */
     public function invitedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'invited_by_id');
