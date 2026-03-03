@@ -273,6 +273,15 @@
         "show-user": {
             "meta": {
                 "title": "User"
+            },
+            "title": "User details",
+            "back": "Back to users",
+            "fields": {
+                "id": "User ID",
+                "name": "Name",
+                "email": "Email",
+                "role": "Role",
+                "status": "Status"
             }
         },
         "columns": {
@@ -283,7 +292,7 @@
             "role": "Role",
             "no-role": "No role",
             "no-status": "No status",
-            "no-name": "No name"
+            "no-name": "Waiting to accept invitation"
         },
         "filters": {
             "search": "Search users...",
@@ -296,11 +305,29 @@
             "label": "Actions",
             "open-menu": "Open menu",
             "copy-id": "Copy user ID",
+            "show": "Show user",
+            "edit": "Edit user",
+            "delete": "Delete user",
+            "save": "Save changes",
             "invite": "Invite user",
             "remove": "Remove user",
             "deactivate": "Deactivate",
             "activate": "Activate",
             "cancel": "Cancel"
+        },
+        "edit": {
+            "title": "Edit user",
+            "description": "Update this user's role and status.",
+            "role": {
+                "label": "Role"
+            },
+            "status": {
+                "label": "Status"
+            }
+        },
+        "delete": {
+            "title": "Delete user",
+            "description": "Are you sure you want to delete this user? This action cannot be undone."
         },
         "invite": {
             "title": "Invite user",
