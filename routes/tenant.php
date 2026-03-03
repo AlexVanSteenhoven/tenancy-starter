@@ -15,6 +15,7 @@ use App\Http\Controllers\Settings\ShowAppearanceController;
 use App\Http\Controllers\Settings\TwoFactorAuthentication\ShowTwoFactorAuthenticationController;
 use App\Http\Controllers\Users\DeleteUserController;
 use App\Http\Controllers\Users\InviteUserController;
+use App\Http\Controllers\Users\ShowUserController;
 use App\Http\Controllers\Users\ShowUsersController;
 use App\Http\Controllers\Users\UpdateUserRoleController;
 use App\Http\Controllers\Users\UpdateUserStatusController;
@@ -44,6 +45,7 @@ Route::middleware([InitializeTenancyBySubdomain::class, PreventAccessFromCentral
 
             Route::prefix('users')->as('users.')->group(function () {
                 Route::get('/', ShowUsersController::class)->name('index');
+                Route::get('{user}', ShowUserController::class)->name('show');
                 Route::post('invite', InviteUserController::class)->name('invite');
                 Route::patch('{user}/role', UpdateUserRoleController::class)->name('role.update');
                 Route::patch('{user}/status', UpdateUserStatusController::class)->name('status.update');
