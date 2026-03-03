@@ -6,6 +6,7 @@ namespace App\Actions\Users;
 
 use App\Models\Invitation;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 
 final readonly class DeleteUserAction
 {
@@ -16,5 +17,7 @@ final readonly class DeleteUserAction
             ->delete();
 
         $user->delete();
+
+        Cache::forget('users.index');
     }
 }

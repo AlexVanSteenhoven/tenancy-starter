@@ -282,7 +282,8 @@
             "created-at": "Created at",
             "role": "Role",
             "no-role": "No role",
-            "no-status": "No status"
+            "no-status": "No status",
+            "no-name": "No name"
         },
         "filters": {
             "search": "Search users...",
@@ -314,16 +315,6 @@
             "submit": "Send invite",
             "messages": {
                 "sent": "Invitation sent."
-            }
-        },
-        "pending-invitations": {
-            "title": "Pending invitations",
-            "empty": "No pending invitations.",
-            "columns": {
-                "email": "Email",
-                "role": "Role",
-                "invited-by": "Invited by",
-                "invited-at": "Invited at"
             }
         },
         "messages": {

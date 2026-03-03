@@ -36,7 +36,7 @@ final class InviteUserRequest extends FormRequest
                 Rule::unique('users', 'email'),
                 Rule::unique('invitations', 'email')
                     ->whereNull('accepted_at')
-                    ->where('expires_at', '>', now()),
+                    ->where(fn ($query) => $query->where('expires_at', '>', now())),
             ],
             'role' => [
                 'required',

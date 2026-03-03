@@ -6,6 +6,7 @@ namespace App\Actions\Users;
 
 use App\Http\Requests\Users\UpdateUserStatusRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 
 final readonly class UpdateUserStatusAction
 {
@@ -14,5 +15,7 @@ final readonly class UpdateUserStatusAction
         $user->forceFill([
             'status' => (string) $request->input('status'),
         ])->save();
+
+        Cache::forget('users.index');
     }
 }

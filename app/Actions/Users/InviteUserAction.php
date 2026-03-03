@@ -7,6 +7,7 @@ namespace App\Actions\Users;
 use App\Http\Requests\Users\InviteUserRequest;
 use App\Models\Invitation;
 use App\Notifications\InviteUserNotification;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
@@ -29,5 +30,7 @@ final readonly class InviteUserAction
                 tenantScheme: $request->getScheme(),
             ),
         );
+
+        Cache::forget('users.index');
     }
 }

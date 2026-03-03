@@ -7,6 +7,7 @@ namespace App\Actions\Users;
 use App\Enums\Role;
 use App\Http\Requests\Users\UpdateUserRoleRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Permission\Models\Role as RoleModel;
 
 final readonly class UpdateUserRoleAction
@@ -23,5 +24,7 @@ final readonly class UpdateUserRoleAction
         RoleModel::findOrCreate($role, $guardName);
 
         $user->syncRoles([$role]);
+
+        Cache::forget('users.index');
     }
 }

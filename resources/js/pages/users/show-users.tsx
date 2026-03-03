@@ -33,43 +33,27 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@components/ui/select';
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@components/ui/table';
 import { useEnumTranslation } from '@hooks/use-enum-translation';
 import { useLabel } from '@hooks/use-label';
 import type { Auth, BreadcrumbItem } from '@types';
 
 type UserTableRow = {
     id: string;
-    name: string;
+    name: string | null;
     email: string;
     created_at: string | null;
     status: Status | string | null;
     role: Role | string | null;
-};
-
-type PendingInvitationRow = {
-    id: string;
-    email: string;
-    role: Role | string;
-    invited_by: string | null;
-    invited_at: string | null;
+    type: 'user' | 'invitation';
 };
 
 type ShowUsersProps = {
     users: UserTableRow[];
-    pendingInvitations: PendingInvitationRow[];
 };
 
 const roles: Role[] = [Role.ADMIN, Role.MEMBER];
 
-export default function ShowUsers({ users, pendingInvitations }: ShowUsersProps) {
+export default function ShowUsers({ users }: ShowUsersProps) {
     const { t } = useTranslation();
     const translateStatus = useEnumTranslation(statusTranslationMap);
     const { getLabel, translateRole } = useLabel();
@@ -118,6 +102,10 @@ export default function ShowUsers({ users, pendingInvitations }: ShowUsersProps)
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             ),
+            cell: ({ row }) =>
+                row.original.name !== null && row.original.name.trim() !== ''
+                    ? row.original.name
+                    : t('users.columns.no-name'),
         },
         {
             accessorKey: 'email',
@@ -167,8 +155,10 @@ export default function ShowUsers({ users, pendingInvitations }: ShowUsersProps)
                     <DropdownMenuTrigger asChild>
                         <Button
                             disabled={
+                                row.original.type === 'invitation' ||
                                 auth.user?.id === row.original.id ||
-                                row.original.role === Role.OWNER
+                                row.original.role === Role.OWNER ||
+                                row.original.status === Status.PENDING
                             }
                             type="button"
                             variant="ghost"
@@ -229,7 +219,11 @@ export default function ShowUsers({ users, pendingInvitations }: ShowUsersProps)
                             {t('users.actions.copy-id')}
                         </DropdownMenuItem>
                         <DropdownMenuItem
-                            disabled={auth.user?.id === row.original.id}
+                            disabled={
+                                row.original.type === 'invitation' ||
+                                auth.user?.id === row.original.id ||
+                                row.original.status === Status.PENDING
+                            }
                             onClick={() => {
                                 const nextStatus =
                                     row.original.status === Status.ACTIVE
@@ -252,7 +246,11 @@ export default function ShowUsers({ users, pendingInvitations }: ShowUsersProps)
                                 : t('users.actions.activate')}
                         </DropdownMenuItem>
                         <DropdownMenuItem
-                            disabled={auth.user?.id === row.original.id}
+                            disabled={
+                                row.original.type === 'invitation' ||
+                                auth.user?.id === row.original.id ||
+                                row.original.status === Status.PENDING
+                            }
                             onClick={() =>
                                 router.delete(`/users/${row.original.id}`, {
                                     preserveScroll: true,
@@ -377,70 +375,6 @@ export default function ShowUsers({ users, pendingInvitations }: ShowUsersProps)
                     data={users}
                     searchPlaceholder={t('users.filters.search')}
                 />
-
-                <div className="rounded-md border bg-secondary p-4">
-                    <h2 className="mb-4 text-lg font-semibold">
-                        {t('users.pending-invitations.title')}
-                    </h2>
-
-                    {pendingInvitations.length === 0 ? (
-                        <p className="text-muted-foreground text-sm">
-                            {t('users.pending-invitations.empty')}
-                        </p>
-                    ) : (
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>
-                                        {t(
-                                            'users.pending-invitations.columns.email',
-                                        )}
-                                    </TableHead>
-                                    <TableHead>
-                                        {t(
-                                            'users.pending-invitations.columns.role',
-                                        )}
-                                    </TableHead>
-                                    <TableHead>
-                                        {t(
-                                            'users.pending-invitations.columns.invited-by',
-                                        )}
-                                    </TableHead>
-                                    <TableHead>
-                                        {t(
-                                            'users.pending-invitations.columns.invited-at',
-                                        )}
-                                    </TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {pendingInvitations.map((invitation) => (
-                                    <TableRow key={invitation.id}>
-                                        <TableCell>
-                                            {invitation.email}
-                                        </TableCell>
-                                        <TableCell>
-                                            {getLabel(
-                                                invitation.role,
-                                                translateRole,
-                                            )}
-                                        </TableCell>
-                                        <TableCell>
-                                            {invitation.invited_by ?? '-'}
-                                        </TableCell>
-                                        <TableCell>
-                                            {invitation.invited_at
-                                                ? new Date(
-                                                      invitation.invited_at,
-                                                  ).toLocaleDateString()
-                                                : '-'}
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    )}
-                </div>
             </div>
         </AppLayout>
     );
