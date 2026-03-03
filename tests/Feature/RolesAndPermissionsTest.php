@@ -64,6 +64,7 @@ test('permission mapping for roles is correct', function () {
     expect($ownerPermissions)->toBe($allPermissionValues);
     expect($adminPermissions)->toBe([
         PermissionEnum::InviteMembers->value,
+        PermissionEnum::ManageMembers->value,
         PermissionEnum::ManageRoles->value,
         PermissionEnum::RemoveMembers->value,
         PermissionEnum::ViewMembers->value,
@@ -81,6 +82,7 @@ test('roles and permissions seeder creates expected records', function () {
 
     expect($permissionNames)->toBe([
         PermissionEnum::InviteMembers->value,
+        PermissionEnum::ManageMembers->value,
         PermissionEnum::ManageRoles->value,
         PermissionEnum::ManageWorkspace->value,
         PermissionEnum::RemoveMembers->value,

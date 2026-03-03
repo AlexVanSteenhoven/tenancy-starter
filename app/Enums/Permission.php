@@ -10,6 +10,7 @@ enum Permission: string
     case ManageRoles = 'manage:roles';
     case InviteMembers = 'invite:members';
     case RemoveMembers = 'remove:members';
+    case ManageMembers = 'manage:members';
     case ViewMembers = 'view:members';
 
     /**
@@ -22,6 +23,7 @@ enum Permission: string
             Role::Admin => [
                 self::InviteMembers,
                 self::RemoveMembers,
+                self::ManageMembers,
                 self::ViewMembers,
                 self::ManageRoles,
             ],
