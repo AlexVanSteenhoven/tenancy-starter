@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Users;
 
+use App\Enums\Permission;
 use App\Enums\Role;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -13,13 +14,9 @@ final class InviteUserRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        $user = $this->user();
-
-        if ($user === null) {
-            return false;
-        }
-
-        return $user->hasAnyRole([Role::Owner->value, Role::Admin->value]);
+        return $this->user()?->hasPermissionTo(
+            permission: Permission::InviteMembers
+        ) ?? false;
     }
 
     /**

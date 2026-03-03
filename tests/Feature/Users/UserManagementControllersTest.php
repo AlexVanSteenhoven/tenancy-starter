@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Enums\Permission as PermissionEnum;
 use App\Enums\Role as RoleEnum;
 use App\Enums\Status;
 use App\Http\Controllers\Users\DeleteUserController;
@@ -113,6 +114,42 @@ test('owner can update user status', function (): void {
         ->assertRedirect();
 
     expect($member->fresh()?->status)->toBe(Status::Inactive->value);
+});
+
+test('user with manage members permission can update user role', function (): void {
+    $actor = User::factory()->create();
+    $actor->assignRole(RoleEnum::Member->value);
+    $actor->givePermissionTo(PermissionEnum::ManageMembers->value);
+
+    $target = User::factory()->create();
+    $target->assignRole(RoleEnum::Member->value);
+
+    $this->actingAs($actor)
+        ->patch("/users/{$target->id}/role", [
+            'role' => RoleEnum::Admin->value,
+        ])
+        ->assertRedirect();
+
+    expect($target->fresh()?->hasRole(RoleEnum::Admin->value))->toBeTrue();
+});
+
+test('user with manage members permission can update owner status', function (): void {
+    $actor = User::factory()->create();
+    $actor->assignRole(RoleEnum::Member->value);
+    $actor->givePermissionTo(PermissionEnum::ManageMembers->value);
+
+    $owner = User::factory()->create([
+        'status' => Status::Active->value,
+    ]);
+    $owner->assignRole(RoleEnum::Owner->value);
+
+    $this->actingAs($actor)
+        ->patch("/users/{$owner->id}/status", [
+            'status' => Status::Inactive->value,
+        ])
+        ->assertRedirect();
+
+    expect($owner->fresh()?->status)->toBe(Status::Inactive->value);
 });
 
 test('owner can delete a user', function (): void {
