@@ -12,6 +12,11 @@ final class ProfileUpdateRequest extends FormRequest
 {
     use ProfileValidationRules;
 
+    public function authorize(): bool
+    {
+        return $this->user() !== null;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
