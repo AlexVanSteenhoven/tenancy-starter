@@ -2,6 +2,14 @@
 
 declare(strict_types=1);
 
+use App\Models\Workspace;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
+use Stancl\Tenancy\Bootstrappers\DatabaseTenancyBootstrapper;
+use Stancl\Tenancy\Events\TenantCreated;
+use Tests\TestCase;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -13,7 +21,7 @@ declare(strict_types=1);
 |
 */
 
-pest()->extend(Tests\TestCase::class)
+pest()->extend(TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
 
@@ -46,4 +54,63 @@ expect()->extend('toBeOne', function () {
 function something()
 {
     // ..
+}
+
+function bootstrapTenantAwareFeatureTest(TestCase $testCase): void
+{
+    Event::fake([TenantCreated::class]);
+
+    config()->set(
+        'tenancy.bootstrappers',
+        array_values(array_filter(
+            config('tenancy.bootstrappers'),
+            fn (string $bootstrapper): bool => $bootstrapper !== DatabaseTenancyBootstrapper::class,
+        )),
+    );
+
+    if (! Schema::hasTable('users')) {
+        $testCase->artisan('migrate', [
+            '--path' => database_path('migrations/tenant/0001_01_01_000000_create_users_table.php'),
+            '--realpath' => true,
+        ])->assertSuccessful();
+    }
+
+    if (! Schema::hasColumn('users', 'two_factor_secret')) {
+        $testCase->artisan('migrate', [
+            '--path' => database_path('migrations/tenant/2025_08_14_170933_add_two_factor_columns_to_users_table.php'),
+            '--realpath' => true,
+        ])->assertSuccessful();
+    }
+
+    if (! Schema::hasColumn('users', 'status')) {
+        $testCase->artisan('migrate', [
+            '--path' => database_path('migrations/tenant/2026_02_26_145649_add_status_to_users_table.php'),
+            '--realpath' => true,
+        ])->assertSuccessful();
+    }
+
+    if (! Schema::hasTable('cache')) {
+        $testCase->artisan('migrate', [
+            '--path' => database_path('migrations/tenant/2026_02_24_134735_create_cache_table.php'),
+            '--realpath' => true,
+        ])->assertSuccessful();
+    }
+
+    if (! Schema::hasTable('roles')) {
+        $testCase->artisan('migrate', [
+            '--path' => database_path('migrations/tenant/2026_02_24_170219_create_permission_tables.php'),
+            '--realpath' => true,
+        ])->assertSuccessful();
+    }
+
+    $workspace = Workspace::query()->firstOrCreate([
+        'name' => 'Acme Workspace',
+    ]);
+
+    $workspace->domains()->firstOrCreate([
+        'domain' => 'acme',
+    ]);
+
+    URL::forceRootUrl('http://acme.tenancy-starter.test');
+    $testCase->withHeader('Host', 'acme.tenancy-starter.test');
 }

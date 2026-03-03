@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+beforeEach(function (): void {
+    bootstrapTenantAwareFeatureTest($this);
+});
+
 test('registration screen can be rendered', function () {
     $response = $this->get(route('register'));
 
@@ -17,5 +21,5 @@ test('new users can register', function () {
     ]);
 
     $this->assertAuthenticated();
-    $response->assertRedirect(route('dashboard', absolute: false));
+    expect(parse_url((string) $response->headers->get('Location'), PHP_URL_PATH))->toBe('/dashboard');
 });

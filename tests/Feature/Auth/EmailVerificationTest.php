@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\URL;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
+beforeEach(function (): void {
+    bootstrapTenantAwareFeatureTest($this);
+});
+
 test('email verification screen can be rendered', function () {
     $user = User::factory()->unverified()->create();
 
