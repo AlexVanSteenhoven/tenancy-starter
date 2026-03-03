@@ -45,6 +45,10 @@ final class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $hasInitializedTenancy ? $request->user() : null,
             ],
+            'flash' => [
+                'status' => $request->session()->get('status'),
+                'statusDescription' => $request->session()->get('statusDescription'),
+            ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
     }

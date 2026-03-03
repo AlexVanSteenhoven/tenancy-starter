@@ -12,24 +12,18 @@ export const roleTranslationMap: Record<Role, string> = {
 
 export enum Status {
     ACTIVE = 'active',
-    INACTIVE = 'inactive',
-    PENDING = 'pending',
-    BLOCKED = 'blocked',
-    SUSPENDED = 'suspended',
     DELETED = 'deleted',
-    ARCHIVED = 'archived',
-    VERIFIED = 'verified',
-    UNVERIFIED = 'unverified',
+    INACTIVE = 'inactive',
+    BLOCKED = 'blocked',
+    PENDING = 'pending',
+    SUSPENDED = 'suspended',
 }
 
 export const statusTranslationMap: Record<Status, string> = {
     [Status.ACTIVE]: 'status.active',
-    [Status.INACTIVE]: 'status.inactive',
-    [Status.PENDING]: 'status.pending',
-    [Status.BLOCKED]: 'status.blocked',
-    [Status.SUSPENDED]: 'status.suspended',
     [Status.DELETED]: 'status.deleted',
-    [Status.ARCHIVED]: 'status.archived',
-    [Status.VERIFIED]: 'status.verified',
-    [Status.UNVERIFIED]: 'status.unverified',
+    [Status.INACTIVE]: 'status.inactive',
+    [Status.BLOCKED]: 'status.blocked',
+    [Status.PENDING]: 'status.pending',
+    [Status.SUSPENDED]: 'status.suspended',
 };

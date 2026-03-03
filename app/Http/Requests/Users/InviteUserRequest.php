@@ -15,7 +15,7 @@ final class InviteUserRequest extends FormRequest
     public function authorize(): bool
     {
         return $this->user()?->hasPermissionTo(
-            permission: Permission::InviteMembers
+            permission: Permission::InviteUsers
         ) ?? false;
     }
 

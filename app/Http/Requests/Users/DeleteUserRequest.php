@@ -13,7 +13,7 @@ final class DeleteUserRequest extends FormRequest
     public function authorize(): bool
     {
         return $this->user()?->hasPermissionTo(
-            permission: Permission::RemoveMembers
+            permission: Permission::DeleteUsers
         ) ?? false;
     }
 

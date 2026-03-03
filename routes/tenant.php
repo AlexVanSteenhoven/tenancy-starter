@@ -13,8 +13,10 @@ use App\Http\Controllers\Settings\Profile\ShowProfileController;
 use App\Http\Controllers\Settings\Profile\UpdateProfileController;
 use App\Http\Controllers\Settings\ShowAppearanceController;
 use App\Http\Controllers\Settings\TwoFactorAuthentication\ShowTwoFactorAuthenticationController;
+use App\Http\Controllers\Users\DeletePendingInvitationController;
 use App\Http\Controllers\Users\DeleteUserController;
 use App\Http\Controllers\Users\InviteUserController;
+use App\Http\Controllers\Users\ResendPendingInvitationController;
 use App\Http\Controllers\Users\ShowUserController;
 use App\Http\Controllers\Users\ShowUsersController;
 use App\Http\Controllers\Users\UpdateUserRoleController;
@@ -50,6 +52,8 @@ Route::middleware([InitializeTenancyBySubdomain::class, PreventAccessFromCentral
                 Route::patch('{user}/role', UpdateUserRoleController::class)->name('role.update');
                 Route::patch('{user}/status', UpdateUserStatusController::class)->name('status.update');
                 Route::delete('{user}', DeleteUserController::class)->name('delete');
+                Route::post('invitations/{invitation}/resend', ResendPendingInvitationController::class)->name('invitations.resend');
+                Route::delete('invitations/{invitation}', DeletePendingInvitationController::class)->name('invitations.delete');
             });
         });
 

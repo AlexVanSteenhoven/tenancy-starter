@@ -6,12 +6,12 @@ namespace App\Enums;
 
 enum Permission: string
 {
-    case ManageWorkspace = 'manage:workspace';
-    case ManageRoles = 'manage:roles';
-    case InviteMembers = 'invite:members';
-    case RemoveMembers = 'remove:members';
-    case ManageMembers = 'manage:members';
-    case ViewMembers = 'view:members';
+    case UpdateWorkspace = 'update:workspace';
+    case DeleteWorkspace = 'delete:workspace';
+    case InviteUsers = 'invite:users';
+    case ViewUsers = 'view:users';
+    case UpdateUsers = 'update:users';
+    case DeleteUsers = 'delete:users';
 
     /**
      * @return array<self>
@@ -21,14 +21,13 @@ enum Permission: string
         return match ($role) {
             Role::Owner => self::cases(),
             Role::Admin => [
-                self::InviteMembers,
-                self::RemoveMembers,
-                self::ManageMembers,
-                self::ViewMembers,
-                self::ManageRoles,
+                self::InviteUsers,
+                self::ViewUsers,
+                self::UpdateUsers,
+                self::DeleteUsers,
             ],
             Role::Member => [
-                self::ViewMembers,
+                self::ViewUsers,
             ],
         };
     }

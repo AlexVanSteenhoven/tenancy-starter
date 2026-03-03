@@ -63,14 +63,13 @@ test('permission mapping for roles is correct', function () {
 
     expect($ownerPermissions)->toBe($allPermissionValues);
     expect($adminPermissions)->toBe([
-        PermissionEnum::InviteMembers->value,
-        PermissionEnum::ManageMembers->value,
-        PermissionEnum::ManageRoles->value,
-        PermissionEnum::RemoveMembers->value,
-        PermissionEnum::ViewMembers->value,
+        PermissionEnum::DeleteUsers->value,
+        PermissionEnum::InviteUsers->value,
+        PermissionEnum::UpdateUsers->value,
+        PermissionEnum::ViewUsers->value,
     ]);
     expect($memberPermissions)->toBe([
-        PermissionEnum::ViewMembers->value,
+        PermissionEnum::ViewUsers->value,
     ]);
 });
 
@@ -81,12 +80,12 @@ test('roles and permissions seeder creates expected records', function () {
     $roleNames = Role::query()->pluck('name')->sort()->values()->all();
 
     expect($permissionNames)->toBe([
-        PermissionEnum::InviteMembers->value,
-        PermissionEnum::ManageMembers->value,
-        PermissionEnum::ManageRoles->value,
-        PermissionEnum::ManageWorkspace->value,
-        PermissionEnum::RemoveMembers->value,
-        PermissionEnum::ViewMembers->value,
+        PermissionEnum::DeleteUsers->value,
+        PermissionEnum::DeleteWorkspace->value,
+        PermissionEnum::InviteUsers->value,
+        PermissionEnum::UpdateUsers->value,
+        PermissionEnum::UpdateWorkspace->value,
+        PermissionEnum::ViewUsers->value,
     ]);
     expect($roleNames)->toBe([
         RoleEnum::Admin->value,
@@ -102,6 +101,6 @@ test('users inherit permissions from assigned role', function () {
     $user->assignRole(RoleEnum::Admin->value);
 
     expect($user->hasRole(RoleEnum::Admin->value))->toBeTrue();
-    expect($user->hasPermissionTo(PermissionEnum::ManageRoles->value))->toBeTrue();
-    expect($user->hasPermissionTo(PermissionEnum::ManageWorkspace->value))->toBeFalse();
+    expect($user->hasPermissionTo(PermissionEnum::UpdateUsers->value))->toBeTrue();
+    expect($user->hasPermissionTo(PermissionEnum::UpdateWorkspace->value))->toBeFalse();
 });

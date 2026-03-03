@@ -52,7 +52,16 @@ type UserTableRow = {
 
 type ShowUsersProps = {
     users: UserTableRow[];
-    canInviteUsers: boolean;
+    permissions: {
+        canInviteUsers: boolean;
+        canUpdateUsers: boolean;
+        canDeleteUsers: boolean;
+        canViewUsers: boolean;
+    };
+    filters: {
+        status: string[];
+        role: string[];
+    };
 };
 
 const roles: Role[] = [Role.ADMIN, Role.MEMBER];
@@ -63,16 +72,17 @@ const isRole = (value: string | null): value is Role =>
 
 const isStatus = (value: string | null): value is Status =>
     value === Status.ACTIVE ||
+    value === Status.DELETED ||
     value === Status.INACTIVE ||
     value === Status.PENDING ||
     value === Status.BLOCKED ||
-    value === Status.SUSPENDED ||
-    value === Status.DELETED ||
-    value === Status.ARCHIVED ||
-    value === Status.VERIFIED ||
-    value === Status.UNVERIFIED;
+    value === Status.SUSPENDED;
 
-export default function ShowUsers({ users, canInviteUsers }: ShowUsersProps) {
+export default function ShowUsers({
+    users,
+    permissions,
+    filters,
+}: ShowUsersProps) {
     const { t } = useTranslation();
     const translateStatus = useEnumTranslation(statusTranslationMap);
     const { getLabel, translateRole } = useLabel();
@@ -82,8 +92,10 @@ export default function ShowUsers({ users, canInviteUsers }: ShowUsersProps) {
     const [editingRole, setEditingRole] = useState<Role>(Role.MEMBER);
     const [editingStatus, setEditingStatus] = useState<Status>(Status.ACTIVE);
     const [isSubmittingEdit, setIsSubmittingEdit] = useState(false);
-    const [deletingUser, setDeletingUser] = useState<UserTableRow | null>(null);
-    const [isDeletingUser, setIsDeletingUser] = useState(false);
+    const [deletingRow, setDeletingRow] = useState<UserTableRow | null>(null);
+    const [isDeletingRow, setIsDeletingRow] = useState(false);
+    const [selectedStatusFilter, setSelectedStatusFilter] = useState('all');
+    const [selectedRoleFilter, setSelectedRoleFilter] = useState('all');
 
     const inviteForm = useForm({
         email: '',
@@ -110,16 +122,33 @@ export default function ShowUsers({ users, canInviteUsers }: ShowUsersProps) {
     };
 
     const roleOptions = useMemo(() => roles, []);
+    const filteredUsers = useMemo(
+        () =>
+            users.filter((user) => {
+                const matchesStatus =
+                    selectedStatusFilter === 'all' ||
+                    user.status === selectedStatusFilter;
+                const matchesRole =
+                    selectedRoleFilter === 'all' ||
+                    user.role === selectedRoleFilter;
+
+                return matchesStatus && matchesRole;
+            }),
+        [users, selectedRoleFilter, selectedStatusFilter],
+    );
 
     const canEditRow = (row: UserTableRow): boolean =>
+        permissions.canUpdateUsers &&
         row.type === 'user' &&
         auth.user?.id !== row.id &&
         row.status !== Status.PENDING;
 
     const canDeleteRow = (row: UserTableRow): boolean =>
-        row.type === 'user' &&
-        auth.user?.id !== row.id &&
-        row.status !== Status.PENDING;
+        permissions.canDeleteUsers &&
+        (row.type === 'invitation' ||
+            (row.type === 'user' &&
+                auth.user?.id !== row.id &&
+                row.status !== Status.PENDING));
 
     const openEditDialog = (row: UserTableRow): void => {
         setEditingUser(row);
@@ -147,7 +176,7 @@ export default function ShowUsers({ users, canInviteUsers }: ShowUsersProps) {
         });
 
     const handleEditSubmit = async (): Promise<void> => {
-        if (!editingUser) {
+        if (!permissions.canUpdateUsers || !editingUser) {
             return;
         }
 
@@ -178,20 +207,25 @@ export default function ShowUsers({ users, canInviteUsers }: ShowUsersProps) {
         setIsSubmittingEdit(false);
     };
 
-    const handleDeleteUser = (): void => {
-        if (!deletingUser) {
+    const handleDeleteRow = (): void => {
+        if (!permissions.canDeleteUsers || !deletingRow) {
             return;
         }
 
-        setIsDeletingUser(true);
+        setIsDeletingRow(true);
 
-        router.delete(`/users/${deletingUser.id}`, {
+        const deleteUrl =
+            deletingRow.type === 'invitation'
+                ? `/users/invitations/${deletingRow.id}`
+                : `/users/${deletingRow.id}`;
+
+        router.delete(deleteUrl, {
             preserveScroll: true,
             onSuccess: () => {
-                setDeletingUser(null);
+                setDeletingRow(null);
             },
             onFinish: () => {
-                setIsDeletingUser(false);
+                setIsDeletingRow(false);
             },
         });
     };
@@ -267,6 +301,7 @@ export default function ShowUsers({ users, canInviteUsers }: ShowUsersProps) {
                     <DropdownMenuTrigger asChild>
                         <Button
                             disabled={
+                                !permissions.canUpdateUsers ||
                                 row.original.type === 'invitation' ||
                                 auth.user?.id === row.original.id ||
                                 row.original.role === Role.OWNER ||
@@ -324,9 +359,15 @@ export default function ShowUsers({ users, canInviteUsers }: ShowUsersProps) {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuItem
-                            disabled={row.original.type !== 'user'}
+                            disabled={
+                                row.original.type !== 'user' ||
+                                !permissions.canViewUsers
+                            }
                             onClick={() => {
-                                if (row.original.type !== 'user') {
+                                if (
+                                    row.original.type !== 'user' ||
+                                    !permissions.canViewUsers
+                                ) {
                                     return;
                                 }
 
@@ -345,6 +386,30 @@ export default function ShowUsers({ users, canInviteUsers }: ShowUsersProps) {
                             {t('users.actions.copy-id')}
                         </DropdownMenuItem>
                         <DropdownMenuItem
+                            disabled={
+                                row.original.type !== 'invitation' ||
+                                !permissions.canInviteUsers
+                            }
+                            onClick={() => {
+                                if (
+                                    row.original.type !== 'invitation' ||
+                                    !permissions.canInviteUsers
+                                ) {
+                                    return;
+                                }
+
+                                router.post(
+                                    `/users/invitations/${row.original.id}/resend`,
+                                    {},
+                                    {
+                                        preserveScroll: true,
+                                    },
+                                );
+                            }}
+                        >
+                            {t('users.actions.resend-invitation')}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
                             disabled={!canEditRow(row.original)}
                             onClick={() => openEditDialog(row.original)}
                         >
@@ -352,7 +417,7 @@ export default function ShowUsers({ users, canInviteUsers }: ShowUsersProps) {
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             disabled={!canDeleteRow(row.original)}
-                            onClick={() => setDeletingUser(row.original)}
+                            onClick={() => setDeletingRow(row.original)}
                         >
                             {t('users.actions.delete')}
                         </DropdownMenuItem>
@@ -368,7 +433,7 @@ export default function ShowUsers({ users, canInviteUsers }: ShowUsersProps) {
 
             <div className="mx-auto mt-8 flex w-full max-w-7xl flex-col gap-4 rounded bg-gray-100 p-2 sm:p-4 dark:bg-secondary/50">
                 <div className="flex justify-end">
-                    {canInviteUsers && (
+                    {permissions.canInviteUsers && (
                         <Dialog
                             open={isInviteDialogOpen}
                             onOpenChange={setIsInviteDialogOpen}
@@ -477,8 +542,53 @@ export default function ShowUsers({ users, canInviteUsers }: ShowUsersProps) {
 
                 <DataTable
                     columns={columns}
-                    data={users}
+                    data={filteredUsers}
                     searchPlaceholder={t('users.filters.search')}
+                    toolbar={() => (
+                        <div className="flex flex-wrap items-center gap-2">
+                            <Select
+                                value={selectedStatusFilter}
+                                onValueChange={setSelectedStatusFilter}
+                            >
+                                <SelectTrigger className="w-[180px] bg-secondary/50">
+                                    <SelectValue
+                                        placeholder={t('users.filters.status')}
+                                    />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="all">
+                                        {t('users.filters.all-status')}
+                                    </SelectItem>
+                                    {filters.status.map((status) => (
+                                        <SelectItem key={status} value={status}>
+                                            {getLabel(status, translateStatus)}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+
+                            <Select
+                                value={selectedRoleFilter}
+                                onValueChange={setSelectedRoleFilter}
+                            >
+                                <SelectTrigger className="w-[180px] bg-secondary/50">
+                                    <SelectValue
+                                        placeholder={t('users.filters.role')}
+                                    />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="all">
+                                        {t('users.filters.all-role')}
+                                    </SelectItem>
+                                    {filters.role.map((role) => (
+                                        <SelectItem key={role} value={role}>
+                                            {getLabel(role, translateRole)}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    )}
                 />
             </div>
 
@@ -582,18 +692,24 @@ export default function ShowUsers({ users, canInviteUsers }: ShowUsersProps) {
             </Dialog>
 
             <Dialog
-                open={deletingUser !== null}
+                open={deletingRow !== null}
                 onOpenChange={(open) => {
-                    if (!open && !isDeletingUser) {
-                        setDeletingUser(null);
+                    if (!open && !isDeletingRow) {
+                        setDeletingRow(null);
                     }
                 }}
             >
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>{t('users.delete.title')}</DialogTitle>
+                        <DialogTitle>
+                            {deletingRow?.type === 'invitation'
+                                ? t('users.delete.invitation-title')
+                                : t('users.delete.title')}
+                        </DialogTitle>
                         <DialogDescription>
-                            {t('users.delete.description')}
+                            {deletingRow?.type === 'invitation'
+                                ? t('users.delete.invitation-description')
+                                : t('users.delete.description')}
                         </DialogDescription>
                     </DialogHeader>
 
@@ -601,16 +717,16 @@ export default function ShowUsers({ users, canInviteUsers }: ShowUsersProps) {
                         <Button
                             type="button"
                             variant="secondary"
-                            disabled={isDeletingUser}
-                            onClick={() => setDeletingUser(null)}
+                            disabled={isDeletingRow}
+                            onClick={() => setDeletingRow(null)}
                         >
                             {t('users.actions.cancel')}
                         </Button>
                         <Button
                             type="button"
                             variant="destructive"
-                            disabled={isDeletingUser}
-                            onClick={handleDeleteUser}
+                            disabled={isDeletingRow}
+                            onClick={handleDeleteRow}
                         >
                             {t('users.actions.delete')}
                         </Button>

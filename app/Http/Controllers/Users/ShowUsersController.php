@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Users;
 
 use App\Enums\Permission;
+use App\Enums\Role;
+use App\Enums\Status;
 use App\Http\Controllers\Controller;
 use App\Models\Invitation;
 use App\Models\User;
@@ -64,7 +66,22 @@ final class ShowUsersController extends Controller
             component: 'users/show-users',
             props: [
                 'users' => $users,
-                'canInviteUsers' => $request->user()?->hasPermissionTo(permission: Permission::InviteMembers) ?? false,
+                'permissions' => [
+                    'canInviteUsers' => $request->user()?->hasPermissionTo(permission: Permission::InviteUsers) ?? false,
+                    'canUpdateUsers' => $request->user()?->hasPermissionTo(permission: Permission::UpdateUsers) ?? false,
+                    'canDeleteUsers' => $request->user()?->hasPermissionTo(permission: Permission::DeleteUsers) ?? false,
+                    'canViewUsers' => $request->user()?->hasPermissionTo(permission: Permission::ViewUsers) ?? false,
+                ],
+                'filters' => [
+                    'status' => array_map(
+                        static fn (Status $status): string => $status->value,
+                        Status::cases(),
+                    ),
+                    'role' => array_map(
+                        static fn (Role $role): string => $role->value,
+                        Role::cases(),
+                    ),
+                ],
             ],
         );
     }

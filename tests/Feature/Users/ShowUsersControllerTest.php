@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Enums\Role;
+use App\Enums\Status;
 use App\Http\Controllers\Users\ShowUsersController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -55,5 +57,18 @@ test('users page can be rendered', function (): void {
         ->assertInertia(fn (Assert $page): Assert => $page
             ->component('users/show-users')
             ->has('users', 3)
-            ->has('users.0.status'));
+            ->has('users.0.status')
+            ->has('permissions')
+            ->has('permissions.canInviteUsers')
+            ->has('permissions.canUpdateUsers')
+            ->has('permissions.canDeleteUsers')
+            ->has('permissions.canViewUsers')
+            ->has('filters.status', count(Status::cases()))
+            ->has('filters.role', count(Role::cases()))
+            ->where('filters.status.0', Status::Active->value)
+            ->where('filters.role.0', Role::Owner->value)
+            ->where('permissions.canInviteUsers', false)
+            ->where('permissions.canUpdateUsers', false)
+            ->where('permissions.canDeleteUsers', false)
+            ->where('permissions.canViewUsers', false));
 });

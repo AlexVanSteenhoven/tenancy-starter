@@ -1,10 +1,13 @@
 import { createInertiaApp } from '@inertiajs/react';
+import { GooeyToaster } from 'goey-toast';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import '@styles/app.css';
 import '@lib/i18n';
-import { initializeTheme } from '@hooks/use-appearance';
+import 'goey-toast/styles.css';
+import { initializeTheme, useAppearance } from '@hooks/use-appearance';
+import { useFlashToast } from '@hooks/use-flash-toast';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -18,14 +21,31 @@ createInertiaApp({
     setup({ el, App, props }) {
         const root = createRoot(el);
 
+        const Root = () => {
+            const { resolvedAppearance } = useAppearance();
+            useFlashToast();
+
+            return (
+                <>
+                    <App {...props} />
+                    <GooeyToaster
+                        position="top-right"
+                        spring={false}
+                        theme={resolvedAppearance}
+                        showProgress={true}
+                    />
+                </>
+            );
+        };
+
         root.render(
             <StrictMode>
-                <App {...props} />
+                <Root />
             </StrictMode>,
         );
     },
     progress: {
-        color: '#4B5563',
+        color: '#FF6900',
     },
 });
 

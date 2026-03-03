@@ -7,6 +7,7 @@ namespace App\Actions\Invitations;
 use App\Http\Requests\Invitations\StoreAcceptInvitationRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Permission\Models\Role;
 
 final readonly class AcceptInvitationAction
@@ -37,6 +38,8 @@ final readonly class AcceptInvitationAction
         $invitation->forceFill([
             'accepted_at' => now(),
         ])->save();
+
+        Cache::forget('users.index');
 
         Auth::login($user);
     }

@@ -249,6 +249,44 @@
             }
         }
     },
+    "notifications": {
+        "users": {
+            "invite": {
+                "title": "Invitation sent",
+                "description": "They'll receive an email with setup instructions."
+            },
+            "resend": {
+                "title": "Invitation resent",
+                "description": "A new invitation email has been sent."
+            },
+            "delete": {
+                "title": "User removed",
+                "description": "The user has been removed from this workspace."
+            },
+            "invitation-delete": {
+                "title": "Invitation removed",
+                "description": "The pending invitation has been removed."
+            },
+            "role-update": {
+                "title": "Role updated",
+                "description": "The user's role has been updated successfully."
+            },
+            "status-update": {
+                "title": "Status updated",
+                "description": "The user's status has been updated successfully."
+            }
+        },
+        "settings": {
+            "password": {
+                "title": "Password updated",
+                "description": "Your password has been changed successfully."
+            },
+            "profile": {
+                "title": "Profile saved",
+                "description": "Your profile information has been updated."
+            }
+        }
+    },
     "roles": {
         "owner": "Owner",
         "admin": "Admin",
@@ -257,14 +295,11 @@
     },
     "status": {
         "active": "Active",
+        "deleted": "Deleted",
         "inactive": "Inactive",
         "pending": "Pending",
         "blocked": "Blocked",
-        "suspended": "Suspended",
-        "deleted": "Deleted",
-        "archived": "Archived",
-        "verified": "Verified",
-        "unverified": "Unverified"
+        "suspended": "Suspended"
     },
     "users": {
         "meta": {
@@ -297,7 +332,10 @@
         "filters": {
             "search": "Search users...",
             "status": "Status",
+            "role": "Role",
             "all": "All",
+            "all-status": "All statuses",
+            "all-role": "All roles",
             "verified": "Verified",
             "unverified": "Unverified"
         },
@@ -305,6 +343,7 @@
             "label": "Actions",
             "open-menu": "Open menu",
             "copy-id": "Copy user ID",
+            "resend-invitation": "Resend invitation",
             "show": "Show user",
             "edit": "Edit user",
             "delete": "Delete user",
@@ -327,7 +366,9 @@
         },
         "delete": {
             "title": "Delete user",
-            "description": "Are you sure you want to delete this user? This action cannot be undone."
+            "description": "Are you sure you want to delete this user? This action cannot be undone.",
+            "invitation-title": "Delete invitation",
+            "invitation-description": "Are you sure you want to delete this pending invitation?"
         },
         "invite": {
             "title": "Invite user",
@@ -341,13 +382,15 @@
             },
             "submit": "Send invite",
             "messages": {
-                "sent": "Invitation sent."
+                "sent": "Invitation sent.",
+                "resent": "Invitation email resent."
             }
         },
         "messages": {
             "role_updated": "User role updated.",
             "status_updated": "User status updated.",
-            "deleted": "User removed from workspace."
+            "deleted": "User removed from workspace.",
+            "invitation_deleted": "Invitation removed."
         },
         "validation": {
             "owner_role_locked": "Owner role cannot be changed.",

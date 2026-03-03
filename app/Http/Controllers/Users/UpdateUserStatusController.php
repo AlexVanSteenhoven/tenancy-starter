@@ -18,6 +18,8 @@ final class UpdateUserStatusController extends Controller
 
         $action->handle($request, $targetUser);
 
-        return back()->with('status', __('users.messages.status_updated'));
+        return back()
+            ->with('status', __('notifications.users.status-update.title'))
+            ->with('statusDescription', __('notifications.users.status-update.description'));
     }
 }

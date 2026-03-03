@@ -17,7 +17,7 @@ final class UpdateUserStatusRequest extends FormRequest
     public function authorize(): bool
     {
         return $this->user()?->hasPermissionTo(
-            permission: Permission::ManageMembers
+            permission: Permission::UpdateUsers
         ) ?? false;
     }
 
@@ -30,7 +30,7 @@ final class UpdateUserStatusRequest extends FormRequest
             'status' => [
                 'required',
                 Rule::enum(Status::class),
-                Rule::notIn([Status::Deleted->value, Status::Archived->value]),
+                Rule::notIn([Status::Deleted->value]),
             ],
         ];
     }

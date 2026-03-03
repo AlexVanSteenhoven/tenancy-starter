@@ -20,6 +20,8 @@ final class UpdatePasswordController extends Controller
             request: $request
         );
 
-        return back();
+        return back()
+            ->with('status', __('notifications.settings.password.title'))
+            ->with('statusDescription', __('notifications.settings.password.description'));
     }
 }
