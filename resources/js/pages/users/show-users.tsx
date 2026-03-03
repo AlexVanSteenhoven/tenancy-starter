@@ -1,7 +1,8 @@
 import { Head, router, useForm, usePage } from '@inertiajs/react';
 import type { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from 'lucide-react';
-import { FormEvent, useMemo, useState } from 'react';
+import type React from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AppLayout from '@/layouts/app-layout';
 import { statusTranslationMap } from '@/types/enums';
@@ -35,7 +36,7 @@ import {
 } from '@components/ui/select';
 import { useEnumTranslation } from '@hooks/use-enum-translation';
 import { useLabel } from '@hooks/use-label';
-import type { Auth, BreadcrumbItem } from '@types';
+import type { Auth, BreadcrumbItem, User } from '@types';
 
 type UserTableRow = {
     id: string;
@@ -49,11 +50,12 @@ type UserTableRow = {
 
 type ShowUsersProps = {
     users: UserTableRow[];
+    canInviteUsers: boolean;
 };
 
 const roles: Role[] = [Role.ADMIN, Role.MEMBER];
 
-export default function ShowUsers({ users }: ShowUsersProps) {
+export default function ShowUsers({ users, canInviteUsers }: ShowUsersProps) {
     const { t } = useTranslation();
     const translateStatus = useEnumTranslation(statusTranslationMap);
     const { getLabel, translateRole } = useLabel();
@@ -72,7 +74,7 @@ export default function ShowUsers({ users }: ShowUsersProps) {
         },
     ];
 
-    const handleInviteSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const handleInviteSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         inviteForm.post('/users/invite', {
@@ -271,103 +273,111 @@ export default function ShowUsers({ users }: ShowUsersProps) {
 
             <div className="mx-auto mt-8 flex w-full max-w-7xl flex-col gap-4 rounded bg-gray-100 p-2 sm:p-4 dark:bg-secondary/50">
                 <div className="flex justify-end">
-                    <Dialog
-                        open={isInviteDialogOpen}
-                        onOpenChange={setIsInviteDialogOpen}
-                    >
-                        <DialogTrigger asChild>
-                            <Button type="button">
-                                {t('users.actions.invite')}
-                            </Button>
-                        </DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>
-                                    {t('users.invite.title')}
-                                </DialogTitle>
-                                <DialogDescription>
-                                    {t('users.invite.description')}
-                                </DialogDescription>
-                            </DialogHeader>
+                    {canInviteUsers && (
+                        <Dialog
+                            open={isInviteDialogOpen}
+                            onOpenChange={setIsInviteDialogOpen}
+                        >
+                            <DialogTrigger asChild>
+                                <Button type="button">
+                                    {t('users.actions.invite')}
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>
+                                        {t('users.invite.title')}
+                                    </DialogTitle>
+                                    <DialogDescription>
+                                        {t('users.invite.description')}
+                                    </DialogDescription>
+                                </DialogHeader>
 
-                            <form
-                                className="grid gap-4"
-                                onSubmit={handleInviteSubmit}
-                            >
-                                <div className="grid gap-2">
-                                    <Label htmlFor="invite-email">
-                                        {t('users.invite.email.label')}
-                                    </Label>
-                                    <Input
-                                        id="invite-email"
-                                        type="email"
-                                        value={inviteForm.data.email}
-                                        onChange={(event) =>
-                                            inviteForm.setData(
-                                                'email',
-                                                event.target.value,
-                                            )
-                                        }
-                                        placeholder={t(
-                                            'users.invite.email.placeholder',
-                                        )}
-                                    />
-                                    <InputError message={inviteForm.errors.email} />
-                                </div>
+                                <form
+                                    className="grid gap-4"
+                                    onSubmit={handleInviteSubmit}
+                                >
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="invite-email">
+                                            {t('users.invite.email.label')}
+                                        </Label>
+                                        <Input
+                                            id="invite-email"
+                                            type="email"
+                                            value={inviteForm.data.email}
+                                            onChange={(event) =>
+                                                inviteForm.setData(
+                                                    'email',
+                                                    event.target.value,
+                                                )
+                                            }
+                                            placeholder={t(
+                                                'users.invite.email.placeholder',
+                                            )}
+                                        />
+                                        <InputError
+                                            message={inviteForm.errors.email}
+                                        />
+                                    </div>
 
-                                <div className="grid gap-2">
-                                    <Label htmlFor="invite-role">
-                                        {t('users.invite.role.label')}
-                                    </Label>
-                                    <Select
-                                        value={inviteForm.data.role}
-                                        onValueChange={(value) =>
-                                            inviteForm.setData(
-                                                'role',
-                                                value as Role,
-                                            )
-                                        }
-                                    >
-                                        <SelectTrigger id="invite-role">
-                                            <SelectValue />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {roleOptions.map((roleOption) => (
-                                                <SelectItem
-                                                    key={roleOption}
-                                                    value={roleOption}
-                                                >
-                                                    {getLabel(
-                                                        roleOption,
-                                                        translateRole,
-                                                    )}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                    <InputError message={inviteForm.errors.role} />
-                                </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="invite-role">
+                                            {t('users.invite.role.label')}
+                                        </Label>
+                                        <Select
+                                            value={inviteForm.data.role}
+                                            onValueChange={(value) =>
+                                                inviteForm.setData(
+                                                    'role',
+                                                    value as Role,
+                                                )
+                                            }
+                                        >
+                                            <SelectTrigger id="invite-role">
+                                                <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {roleOptions.map(
+                                                    (roleOption) => (
+                                                        <SelectItem
+                                                            key={roleOption}
+                                                            value={roleOption}
+                                                        >
+                                                            {getLabel(
+                                                                roleOption,
+                                                                translateRole,
+                                                            )}
+                                                        </SelectItem>
+                                                    ),
+                                                )}
+                                            </SelectContent>
+                                        </Select>
+                                        <InputError
+                                            message={inviteForm.errors.role}
+                                        />
+                                    </div>
 
-                                <DialogFooter>
-                                    <Button
-                                        type="button"
-                                        variant="secondary"
-                                        onClick={() =>
-                                            setIsInviteDialogOpen(false)
-                                        }
-                                    >
-                                        {t('users.actions.cancel')}
-                                    </Button>
-                                    <Button
-                                        type="submit"
-                                        disabled={inviteForm.processing}
-                                    >
-                                        {t('users.invite.submit')}
-                                    </Button>
-                                </DialogFooter>
-                            </form>
-                        </DialogContent>
-                    </Dialog>
+                                    <DialogFooter>
+                                        <Button
+                                            type="button"
+                                            variant="secondary"
+                                            onClick={() =>
+                                                setIsInviteDialogOpen(false)
+                                            }
+                                        >
+                                            {t('users.actions.cancel')}
+                                        </Button>
+                                        <Button
+                                            type="submit"
+                                            disabled={inviteForm.processing}
+                                        >
+                                            {t('users.invite.submit')}
+                                        </Button>
+                                    </DialogFooter>
+                                </form>
+                            </DialogContent>
+                        </Dialog>
+                    )}
                 </div>
 
                 <DataTable
