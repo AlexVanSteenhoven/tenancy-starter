@@ -1,6 +1,6 @@
 import { router } from '@inertiajs/react';
-import { gooeyToast } from 'goey-toast';
 import { useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 
 type FlashData = {
     status?: string | null;
@@ -24,7 +24,7 @@ export function useFlashToast(): void {
 
             lastToastKeyRef.current = toastKey;
 
-            gooeyToast.success(flash.status, {
+            toast.success(flash.status, {
                 description: flash.statusDescription ?? undefined,
             });
         };

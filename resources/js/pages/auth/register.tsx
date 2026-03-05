@@ -1,4 +1,5 @@
 import { Form, Head } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
 import InputError from '@components/input-error';
 import TextLink from '@components/text-link';
 import { Button } from '@components/ui/button';
@@ -8,14 +9,17 @@ import { Spinner } from '@components/ui/spinner';
 import AuthCardLayout from '@/layouts/auth/auth-card-layout';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
+import '@lib/i18n';
 
 export default function Register() {
+    const { t } = useTranslation();
+
     return (
         <AuthCardLayout
-            title="Create an account"
-            description="Enter your details below to create your account"
+            title={t('auth.register.title')}
+            description={t('auth.register.description')}
         >
-            <Head title="Register" />
+            <Head title={t('auth.register.meta.title')} />
             <Form
                 {...store.form()}
                 resetOnSuccess={['password', 'password_confirmation']}
@@ -26,7 +30,9 @@ export default function Register() {
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="name">
+                                    {t('auth.register.form.name.label')}
+                                </Label>
                                 <Input
                                     id="name"
                                     type="text"
@@ -35,7 +41,9 @@ export default function Register() {
                                     tabIndex={1}
                                     autoComplete="name"
                                     name="name"
-                                    placeholder="Full name"
+                                    placeholder={t(
+                                        'auth.register.form.name.placeholder',
+                                    )}
                                 />
                                 <InputError
                                     message={errors.name}
@@ -44,7 +52,9 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
+                                <Label htmlFor="email">
+                                    {t('auth.register.form.email.label')}
+                                </Label>
                                 <Input
                                     id="email"
                                     type="email"
@@ -52,13 +62,17 @@ export default function Register() {
                                     tabIndex={2}
                                     autoComplete="email"
                                     name="email"
-                                    placeholder="email@example.com"
+                                    placeholder={t(
+                                        'auth.register.form.email.placeholder',
+                                    )}
                                 />
                                 <InputError message={errors.email} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password">Password</Label>
+                                <Label htmlFor="password">
+                                    {t('auth.register.form.password.label')}
+                                </Label>
                                 <Input
                                     id="password"
                                     type="password"
@@ -66,14 +80,18 @@ export default function Register() {
                                     tabIndex={3}
                                     autoComplete="new-password"
                                     name="password"
-                                    placeholder="Password"
+                                    placeholder={t(
+                                        'auth.register.form.password.placeholder',
+                                    )}
                                 />
                                 <InputError message={errors.password} />
                             </div>
 
                             <div className="grid gap-2">
                                 <Label htmlFor="password_confirmation">
-                                    Confirm password
+                                    {t(
+                                        'auth.register.form.password_confirmation.label',
+                                    )}
                                 </Label>
                                 <Input
                                     id="password_confirmation"
@@ -82,7 +100,9 @@ export default function Register() {
                                     tabIndex={4}
                                     autoComplete="new-password"
                                     name="password_confirmation"
-                                    placeholder="Confirm password"
+                                    placeholder={t(
+                                        'auth.register.form.password_confirmation.placeholder',
+                                    )}
                                 />
                                 <InputError
                                     message={errors.password_confirmation}
@@ -96,14 +116,14 @@ export default function Register() {
                                 data-test="register-user-button"
                             >
                                 {processing && <Spinner />}
-                                Create account
+                                {t('auth.register.form.submit')}
                             </Button>
                         </div>
 
                         <div className="text-center text-sm text-muted-foreground">
-                            Already have an account?{' '}
+                            {t('auth.register.messages.has-account')}{' '}
                             <TextLink href={login()} tabIndex={6}>
-                                Log in
+                                {t('auth.register.actions.log-in')}
                             </TextLink>
                         </div>
                     </>

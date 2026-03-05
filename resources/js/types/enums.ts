@@ -5,9 +5,9 @@ export enum Role {
 }
 
 export const roleTranslationMap: Record<Role, string> = {
-    [Role.OWNER]: 'roles.owner',
-    [Role.ADMIN]: 'roles.admin',
-    [Role.MEMBER]: 'roles.member',
+    [Role.OWNER]: 'app.enums.role.owner',
+    [Role.ADMIN]: 'app.enums.role.admin',
+    [Role.MEMBER]: 'app.enums.role.member',
 };
 
 export enum Status {
@@ -20,10 +20,10 @@ export enum Status {
 }
 
 export const statusTranslationMap: Record<Status, string> = {
-    [Status.ACTIVE]: 'status.active',
-    [Status.DELETED]: 'status.deleted',
-    [Status.INACTIVE]: 'status.inactive',
-    [Status.BLOCKED]: 'status.blocked',
-    [Status.PENDING]: 'status.pending',
-    [Status.SUSPENDED]: 'status.suspended',
+    [Status.ACTIVE]: 'app.enums.status.active',
+    [Status.DELETED]: 'app.enums.status.deleted',
+    [Status.INACTIVE]: 'app.enums.status.inactive',
+    [Status.BLOCKED]: 'app.enums.status.blocked',
+    [Status.PENDING]: 'app.enums.status.pending',
+    [Status.SUSPENDED]: 'app.enums.status.suspended',
 };

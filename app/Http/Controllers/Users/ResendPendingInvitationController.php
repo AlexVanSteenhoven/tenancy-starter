@@ -22,7 +22,7 @@ final class ResendPendingInvitationController extends Controller
         $action->handle($pendingInvitation, $request);
 
         return back()
-            ->with('status', __('notifications.users.resend.title'))
-            ->with('statusDescription', __('notifications.users.resend.description'));
+            ->with('status', __('users.notifications.resend.title'))
+            ->with('statusDescription', __('users.notifications.resend.description'));
     }
 }

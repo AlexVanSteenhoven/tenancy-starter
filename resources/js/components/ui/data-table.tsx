@@ -69,7 +69,7 @@ export function DataTable<TData>({
         <Input
           value={globalFilter}
           onChange={(event) => setGlobalFilter(event.target.value)}
-          placeholder={searchPlaceholder ?? t("data-table.search")}
+          placeholder={searchPlaceholder ?? t("app.tables.search")}
           className="w-50 max-w-sm bg-secondary/50"
         />
 
@@ -112,7 +112,7 @@ export function DataTable<TData>({
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  {t("data-table.no-results")}
+                  {t("app.tables.no-results")}
                 </TableCell>
               </TableRow>
             )}
@@ -129,7 +129,7 @@ export function DataTable<TData>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          {t("data-table.pagination.previous")}
+          {t("app.tables.pagination.previous")}
         </Button>
 
         <Button
@@ -140,7 +140,7 @@ export function DataTable<TData>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          {t("data-table.pagination.next")}
+          {t("app.tables.pagination.next")}
         </Button>
       </div>
     </div>

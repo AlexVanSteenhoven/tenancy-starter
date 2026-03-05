@@ -1,24 +1,27 @@
 // Components
 import { Form, Head } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
 import TextLink from '@components/text-link';
 import { Button } from '@components/ui/button';
 import { Spinner } from '@components/ui/spinner';
 import AuthCardLayout from '@/layouts/auth/auth-card-layout';
 import { logout } from '@/routes';
 import { send } from '@/routes/verification';
+import '@lib/i18n';
 
 export default function VerifyEmail({ status }: { status?: string }) {
+    const { t } = useTranslation();
+
     return (
         <AuthCardLayout
-            title="Verify email"
-            description="Please verify your email address by clicking on the link we just emailed to you."
+            title={t('auth.verify-email.title')}
+            description={t('auth.verify-email.description')}
         >
-            <Head title="Email verification" />
+            <Head title={t('auth.verify-email.meta.title')} />
 
             {status === 'verification-link-sent' && (
                 <div className="mb-4 text-center text-sm font-medium text-green-600">
-                    A new verification link has been sent to the email address
-                    you provided during registration.
+                    {t('auth.verify-email.messages.verification-link-sent')}
                 </div>
             )}
 
@@ -27,14 +30,14 @@ export default function VerifyEmail({ status }: { status?: string }) {
                     <>
                         <Button disabled={processing} variant="secondary">
                             {processing && <Spinner />}
-                            Resend verification email
+                            {t('auth.verify-email.actions.resend')}
                         </Button>
 
                         <TextLink
                             href={logout()}
                             className="mx-auto block text-sm"
                         >
-                            Log out
+                            {t('auth.verify-email.actions.logout')}
                         </TextLink>
                     </>
                 )}

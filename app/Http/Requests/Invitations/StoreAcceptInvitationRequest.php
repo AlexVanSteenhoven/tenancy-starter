@@ -37,13 +37,13 @@ final class StoreAcceptInvitationRequest extends FormRequest
             $invitation = $this->invitation();
 
             if ($invitation === null || $invitation->isAccepted() || $invitation->isExpired()) {
-                $validator->errors()->add('email', __('invitations.validation.invalid'));
+                $validator->errors()->add('email', __('auth.invitations.validation.invalid'));
 
                 return;
             }
 
             if ($invitation->email !== mb_strtolower(mb_trim((string) $this->input('email')))) {
-                $validator->errors()->add('email', __('invitations.validation.email_mismatch'));
+                $validator->errors()->add('email', __('auth.invitations.validation.email_mismatch'));
             }
         });
     }

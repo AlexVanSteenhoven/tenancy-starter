@@ -1,0 +1,28 @@
+{
+    "meta": {
+        "title": "Create your workspace",
+        "description": "Set up your workspace and we will email the account setup link."
+    },
+    "form": {
+        "workspace_name": {
+            "label": "Workspace name",
+            "placeholder": "Acme Corp"
+        },
+        "email": {
+            "label": "Email address",
+            "placeholder": "owner@acme.com"
+        },
+        "submit": "Create workspace"
+    },
+    "preview": {
+        "empty": "Your workspace URL preview will appear here.",
+        "value": "Your workspace will be at :domain"
+    },
+    "messages": {
+        "check_email": "Check your email to complete setup."
+    },
+    "validation": {
+        "invalid_subdomain": "The workspace name must include letters or numbers.",
+        "subdomain_taken": "That workspace subdomain is already taken."
+    }
+}

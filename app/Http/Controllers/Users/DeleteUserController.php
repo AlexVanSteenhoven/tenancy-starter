@@ -19,7 +19,7 @@ final class DeleteUserController extends Controller
         $action->handle($targetUser);
 
         return back()
-            ->with('status', __('notifications.users.delete.title'))
-            ->with('statusDescription', __('notifications.users.delete.description'));
+            ->with('status', __('users.notifications.delete.title'))
+            ->with('statusDescription', __('users.notifications.delete.description'));
     }
 }

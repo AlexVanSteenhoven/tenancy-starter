@@ -17,12 +17,13 @@ use Inertia\Response;
 
 final class ShowUsersController extends Controller
 {
-    private const USERS_CACHE_KEY = 'users.index';
-
     public function __invoke(Request $request): Response
     {
-        $users = Cache::rememberForever(
-            key: self::USERS_CACHE_KEY,
+        $cacheKey = sprintf('tenant.%s.users.index', tenancy()->tenant?->id ?? $request->getHost());
+
+        $users = Cache::remember(
+            key: $cacheKey,
+            ttl: now()->addDays(1),
             callback: function (): array {
                 $activeUsers = User::query()
                     ->select(columns: ['id', 'name', 'email', 'status', 'created_at'])

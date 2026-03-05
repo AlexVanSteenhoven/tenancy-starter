@@ -1,11 +1,10 @@
 import { createInertiaApp } from '@inertiajs/react';
-import { GooeyToaster } from 'goey-toast';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { Toaster } from 'sonner';
 import '@styles/app.css';
 import '@lib/i18n';
-import 'goey-toast/styles.css';
 import { initializeTheme, useAppearance } from '@hooks/use-appearance';
 import { useFlashToast } from '@hooks/use-flash-toast';
 
@@ -28,11 +27,10 @@ createInertiaApp({
             return (
                 <>
                     <App {...props} />
-                    <GooeyToaster
+                    <Toaster
+                        richColors
                         position="top-right"
-                        spring={false}
                         theme={resolvedAppearance}
-                        showProgress={true}
                     />
                 </>
             );

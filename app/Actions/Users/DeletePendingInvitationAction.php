@@ -17,6 +17,6 @@ final readonly class DeletePendingInvitationAction
 
         $invitation->delete();
 
-        Cache::forget('users.index');
+        Cache::forget(sprintf('tenant.%s.users.index', tenancy()->tenant?->id ?? request()->getHost()));
     }
 }

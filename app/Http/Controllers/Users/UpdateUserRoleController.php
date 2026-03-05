@@ -19,7 +19,7 @@ final class UpdateUserRoleController extends Controller
         $action->handle($request, $targetUser);
 
         return back()
-            ->with('status', __('notifications.users.role-update.title'))
-            ->with('statusDescription', __('notifications.users.role-update.description'));
+            ->with('status', __('users.notifications.role-update.title'))
+            ->with('statusDescription', __('users.notifications.role-update.description'));
     }
 }

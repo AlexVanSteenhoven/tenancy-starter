@@ -1,0 +1,53 @@
+{
+    "tables": {
+        "search": "Search...",
+        "no-results": "No results.",
+        "pagination": {
+            "previous": "Previous",
+            "next": "Next"
+        }
+    },
+    "enums": {
+        "status": {
+            "active": "Active",
+            "deleted": "Deleted",
+            "inactive": "Inactive",
+            "pending": "Pending",
+            "blocked": "Blocked",
+            "suspended": "Suspended"
+        },
+        "role": {
+            "owner": "Owner",
+            "admin": "Admin",
+            "member": "Member",
+            "user": "User"
+        }
+    },
+    "dashboard": {
+        "meta": {
+            "title": "Dashboard"
+        }
+    },
+    "navigation": {
+        "platform": "Platform"
+    },
+    "user-menu": {
+        "settings": "Settings",
+        "logout": "Log out"
+    },
+    "ui": {
+        "loading": "Loading",
+        "common": {
+            "close": "Close",
+            "more": "More"
+        },
+        "sidebar": {
+            "title": "Sidebar",
+            "description": "Displays the mobile sidebar.",
+            "toggle": "Toggle Sidebar"
+        },
+        "breadcrumb": {
+            "aria-label": "breadcrumb"
+        }
+    }
+}

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Concerns\HasUUIDAsPrimaryKey;
+use App\Enums\Status;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmailNotification;
 use Carbon\CarbonInterface;
@@ -30,7 +31,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string[]|null $two_factor_recovery_codes
  * @property CarbonInterface|null $two_factor_confirmed_at
  * @property CarbonInterface|null $email_verified_at
- * @property string $status
+ * @property Status $status
  * @property CarbonInterface|null $created_at
  * @property CarbonInterface|null $updated_at
  * @property-read Collection<int, Role> $roles
@@ -55,6 +56,7 @@ final class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'status',
     ];
 
     protected $guarded = [
@@ -84,6 +86,7 @@ final class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
+            'status' => Status::class,
         ];
     }
 

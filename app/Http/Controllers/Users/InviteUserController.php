@@ -16,7 +16,7 @@ final class InviteUserController extends Controller
         $action->handle($request);
 
         return back()
-            ->with('status', __('notifications.users.invite.title'))
-            ->with('statusDescription', __('notifications.users.invite.description'));
+            ->with('status', __('users.notifications.invite.title'))
+            ->with('statusDescription', __('users.notifications.invite.description'));
     }
 }

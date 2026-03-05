@@ -39,7 +39,7 @@ final readonly class AcceptInvitationAction
             'accepted_at' => now(),
         ])->save();
 
-        Cache::forget('users.index');
+        Cache::forget(sprintf('tenant.%s.users.index', tenancy()->tenant?->id ?? $request->getHost()));
 
         Auth::login($user);
     }

@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Services\Translation;
 
 use Illuminate\Translation\FileLoader;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use SplFileInfo;
 
 /**
  * Custom JSON loader that supports nested translation keys by flattening them
@@ -26,28 +29,79 @@ final class TranslationLoader extends FileLoader
             return [];
         }
 
-        $localeFilePath = "{$baseJsonPath}/{$locale}.json";
+        $localeDirectoryPath = "{$baseJsonPath}/{$locale}";
 
-        if (! is_file(filename: $localeFilePath)) {
+        if (! is_dir(filename: $localeDirectoryPath)) {
             return [];
         }
 
-        $rawJsonContents = file_get_contents(filename: $localeFilePath);
+        $groupedTranslations = [];
 
-        if ($rawJsonContents === false) {
-            return [];
-        }
-
-        $decodedTranslations = json_decode(
-            json: $rawJsonContents,
-            associative: true,
+        $directoryIterator = new RecursiveDirectoryIterator(
+            directory: $localeDirectoryPath,
+            flags: RecursiveDirectoryIterator::SKIP_DOTS,
         );
 
-        if (! is_array($decodedTranslations)) {
-            return [];
+        $translationFiles = new RecursiveIteratorIterator(iterator: $directoryIterator);
+
+        foreach ($translationFiles as $translationFile) {
+            if (! $translationFile instanceof SplFileInfo || ! $translationFile->isFile()) {
+                continue;
+            }
+
+            if ($translationFile->getExtension() !== 'json') {
+                continue;
+            }
+
+            $translationFilePath = $translationFile->getPathname();
+            $relativeTranslationFilePath = mb_substr(
+                string: $translationFilePath,
+                start: mb_strlen($localeDirectoryPath) + 1,
+            );
+
+            if ($relativeTranslationFilePath === false || $relativeTranslationFilePath === '') {
+                continue;
+            }
+
+            $normalizedTranslationFilePath = str_replace(
+                search: '\\',
+                replace: '/',
+                subject: $relativeTranslationFilePath,
+            );
+
+            $translationGroup = str_replace(
+                search: '/',
+                replace: '.',
+                subject: preg_replace(
+                    pattern: '/\.json$/',
+                    replacement: '',
+                    subject: $normalizedTranslationFilePath,
+                ) ?? '',
+            );
+
+            if ($translationGroup === '') {
+                continue;
+            }
+
+            $rawJsonContents = file_get_contents(filename: $translationFilePath);
+
+            if ($rawJsonContents === false) {
+                continue;
+            }
+
+            $decodedTranslations = json_decode(
+                json: $rawJsonContents,
+                associative: true,
+            );
+
+            if (! is_array($decodedTranslations)) {
+                continue;
+            }
+
+            $groupedTranslations[$translationGroup] = $decodedTranslations;
         }
 
-        return $this->flattenTranslations($decodedTranslations);
+        return $this->flattenTranslations($groupedTranslations);
     }
 
     /**

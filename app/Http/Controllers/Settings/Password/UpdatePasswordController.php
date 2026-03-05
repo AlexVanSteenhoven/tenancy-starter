@@ -21,7 +21,7 @@ final class UpdatePasswordController extends Controller
         );
 
         return back()
-            ->with('status', __('notifications.settings.password.title'))
-            ->with('statusDescription', __('notifications.settings.password.description'));
+            ->with('status', __('settings.notifications.password.title'))
+            ->with('statusDescription', __('settings.notifications.password.description'));
     }
 }

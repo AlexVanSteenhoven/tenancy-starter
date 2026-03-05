@@ -76,8 +76,8 @@ test('owner can invite a user', function (): void {
             'role' => RoleEnum::Member->value,
         ])
         ->assertRedirect()
-        ->assertSessionHas('status', __('notifications.users.invite.title'))
-        ->assertSessionHas('statusDescription', __('notifications.users.invite.description'));
+        ->assertSessionHas('status', __('users.notifications.invite.title'))
+        ->assertSessionHas('statusDescription', __('users.notifications.invite.description'));
 
     $this->assertDatabaseHas('invitations', [
         'email' => 'invited@example.com',
@@ -100,8 +100,8 @@ test('owner can update user role', function (): void {
             'role' => RoleEnum::Admin->value,
         ])
         ->assertRedirect()
-        ->assertSessionHas('status', __('notifications.users.role-update.title'))
-        ->assertSessionHas('statusDescription', __('notifications.users.role-update.description'));
+        ->assertSessionHas('status', __('users.notifications.role-update.title'))
+        ->assertSessionHas('statusDescription', __('users.notifications.role-update.description'));
 
     expect($member->fresh()?->hasRole(RoleEnum::Admin->value))->toBeTrue();
 });
@@ -120,10 +120,10 @@ test('owner can update user status', function (): void {
             'status' => Status::Inactive->value,
         ])
         ->assertRedirect()
-        ->assertSessionHas('status', __('notifications.users.status-update.title'))
-        ->assertSessionHas('statusDescription', __('notifications.users.status-update.description'));
+        ->assertSessionHas('status', __('users.notifications.status-update.title'))
+        ->assertSessionHas('statusDescription', __('users.notifications.status-update.description'));
 
-    expect($member->fresh()?->status)->toBe(Status::Inactive->value);
+    expect($member->fresh()?->status)->toBe(Status::Inactive);
 });
 
 test('user with update users permission can update user role', function (): void {
@@ -159,7 +159,7 @@ test('user with update users permission can update owner status', function (): v
         ])
         ->assertRedirect();
 
-    expect($owner->fresh()?->status)->toBe(Status::Inactive->value);
+    expect($owner->fresh()?->status)->toBe(Status::Inactive);
 });
 
 test('owner can delete a user', function (): void {
@@ -180,8 +180,8 @@ test('owner can delete a user', function (): void {
     $this->actingAs($owner)
         ->delete("/users/{$member->id}")
         ->assertRedirect()
-        ->assertSessionHas('status', __('notifications.users.delete.title'))
-        ->assertSessionHas('statusDescription', __('notifications.users.delete.description'));
+        ->assertSessionHas('status', __('users.notifications.delete.title'))
+        ->assertSessionHas('statusDescription', __('users.notifications.delete.description'));
 
     $this->assertDatabaseMissing('users', ['id' => $member->id]);
     $this->assertDatabaseMissing('invitations', ['email' => $member->email]);
@@ -202,8 +202,8 @@ test('owner can delete a pending invitation', function (): void {
     $this->actingAs($owner)
         ->delete("/users/invitations/{$invitation->id}")
         ->assertRedirect()
-        ->assertSessionHas('status', __('notifications.users.invitation-delete.title'))
-        ->assertSessionHas('statusDescription', __('notifications.users.invitation-delete.description'));
+        ->assertSessionHas('status', __('users.notifications.invitation-delete.title'))
+        ->assertSessionHas('statusDescription', __('users.notifications.invitation-delete.description'));
 
     $this->assertDatabaseMissing('invitations', ['id' => $invitation->id]);
 });
@@ -227,8 +227,8 @@ test('owner can resend a pending invitation email', function (): void {
     $this->actingAs($owner)
         ->post("/users/invitations/{$invitation->id}/resend")
         ->assertRedirect()
-        ->assertSessionHas('status', __('notifications.users.resend.title'))
-        ->assertSessionHas('statusDescription', __('notifications.users.resend.description'));
+        ->assertSessionHas('status', __('users.notifications.resend.title'))
+        ->assertSessionHas('statusDescription', __('users.notifications.resend.description'));
 
     expect($invitation->fresh()?->token)->not->toBe($previousToken);
 

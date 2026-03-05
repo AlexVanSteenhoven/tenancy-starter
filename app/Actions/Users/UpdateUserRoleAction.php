@@ -25,6 +25,6 @@ final readonly class UpdateUserRoleAction
 
         $user->syncRoles([$role]);
 
-        Cache::forget('users.index');
+        Cache::forget(sprintf('tenant.%s.users.index', tenancy()->tenant?->id ?? $request->getHost()));
     }
 }

@@ -8,7 +8,6 @@ export default function Welcome({
     canRegister?: boolean;
 }) {
     const { auth } = usePage().props;
-
     return (
         <>
             <Head title="Welcome">

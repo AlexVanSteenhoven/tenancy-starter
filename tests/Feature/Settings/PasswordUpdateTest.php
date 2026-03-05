@@ -34,8 +34,8 @@ test('password can be updated', function () {
     $response
         ->assertSessionHasNoErrors()
         ->assertRedirect(route('settings.password.edit'))
-        ->assertSessionHas('status', __('notifications.settings.password.title'))
-        ->assertSessionHas('statusDescription', __('notifications.settings.password.description'));
+        ->assertSessionHas('status', __('settings.notifications.password.title'))
+        ->assertSessionHas('statusDescription', __('settings.notifications.password.description'));
 
     expect(Hash::check('new-password', $user->refresh()->password))->toBeTrue();
 });

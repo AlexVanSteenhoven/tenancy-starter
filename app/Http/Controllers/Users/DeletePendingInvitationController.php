@@ -22,7 +22,7 @@ final class DeletePendingInvitationController extends Controller
         $action->handle($pendingInvitation);
 
         return back()
-            ->with('status', __('notifications.users.invitation-delete.title'))
-            ->with('statusDescription', __('notifications.users.invitation-delete.description'));
+            ->with('status', __('users.notifications.invitation-delete.title'))
+            ->with('statusDescription', __('users.notifications.invitation-delete.description'));
     }
 }

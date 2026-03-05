@@ -18,10 +18,10 @@ export default function SetupAccount({ email }: Props) {
 
     return (
         <AuthCardLayout
-            title={t('setup.account.meta.title')}
-            description={t('setup.account.meta.description')}
+            title={t('auth.setup.account.meta.title')}
+            description={t('auth.setup.account.meta.description')}
         >
-            <Head title={t('setup.account.meta.title')} />
+            <Head title={t('auth.setup.account.meta.title')} />
 
             <Form
                 {...StoreSetupAccountController.form()}
@@ -34,7 +34,7 @@ export default function SetupAccount({ email }: Props) {
                         <div className="grid gap-6">
                             <div className="grid gap-2">
                                 <Label htmlFor="email">
-                                    {t('setup.account.form.email.label')}
+                                    {t('auth.setup.account.form.email.label')}
                                 </Label>
                                 <Input
                                     id="email"
@@ -50,7 +50,7 @@ export default function SetupAccount({ email }: Props) {
 
                             <div className="grid gap-2">
                                 <Label htmlFor="name">
-                                    {t('setup.account.form.name.label')}
+                                    {t('auth.setup.account.form.name.label')}
                                 </Label>
                                 <Input
                                     id="name"
@@ -60,14 +60,14 @@ export default function SetupAccount({ email }: Props) {
                                     autoFocus
                                     tabIndex={2}
                                     autoComplete="name"
-                                    placeholder={t('setup.account.form.name.placeholder')}
+                                    placeholder={t('auth.setup.account.form.name.placeholder')}
                                 />
                                 <InputError message={errors.name} />
                             </div>
 
                             <div className="grid gap-2">
                                 <Label htmlFor="password">
-                                    {t('setup.account.form.password.label')}
+                                    {t('auth.setup.account.form.password.label')}
                                 </Label>
                                 <Input
                                     id="password"
@@ -76,14 +76,14 @@ export default function SetupAccount({ email }: Props) {
                                     required
                                     tabIndex={3}
                                     autoComplete="new-password"
-                                    placeholder={t('setup.account.form.password.placeholder')}
+                                    placeholder={t('auth.setup.account.form.password.placeholder')}
                                 />
                                 <InputError message={errors.password} />
                             </div>
 
                             <div className="grid gap-2">
                                 <Label htmlFor="password_confirmation">
-                                    {t('setup.account.form.password_confirmation.label')}
+                                    {t('auth.setup.account.form.password_confirmation.label')}
                                 </Label>
                                 <Input
                                     id="password_confirmation"
@@ -92,7 +92,7 @@ export default function SetupAccount({ email }: Props) {
                                     required
                                     tabIndex={4}
                                     autoComplete="new-password"
-                                    placeholder={t('setup.account.form.password_confirmation.placeholder')}
+                                    placeholder={t('auth.setup.account.form.password_confirmation.placeholder')}
                                 />
                                 <InputError message={errors.password_confirmation} />
                             </div>
@@ -104,7 +104,7 @@ export default function SetupAccount({ email }: Props) {
                                 disabled={processing}
                             >
                                 {processing && <Spinner />}
-                                {t('setup.account.form.submit')}
+                                {t('auth.setup.account.form.submit')}
                             </Button>
                         </div>
                     </>
