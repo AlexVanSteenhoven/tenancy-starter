@@ -37,17 +37,17 @@ final class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $isCentralDomain = in_array(
-            $request->getHost(),
-            config('tenancy.central_domains', []),
-            true
-        );
+        $hasInitializedTenancy = tenancy()->initialized;
 
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
-                'user' => $isCentralDomain ? null : $request->user(),
+                'user' => $hasInitializedTenancy ? $request->user() : null,
+            ],
+            'flash' => [
+                'status' => $request->session()->get('status'),
+                'statusDescription' => $request->session()->get('statusDescription'),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];

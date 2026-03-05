@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 use App\Models\User;
 
+beforeEach(function (): void {
+    bootstrapTenantAwareFeatureTest($this);
+});
+
 test('guests are redirected to the login page', function () {
     $response = $this->get(route('dashboard'));
     $response->assertRedirect(route('login'));

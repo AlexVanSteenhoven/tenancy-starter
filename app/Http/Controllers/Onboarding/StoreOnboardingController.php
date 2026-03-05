@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Onboarding;
 
+use App\Actions\Onboarding\StoreOnboardingAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Onboarding\StoreOnboardingRequest;
-use App\Actions\Onboarding\StoreOnboardingAction;
 use Illuminate\Http\RedirectResponse;
 
-class StoreOnboardingController extends Controller
+final class StoreOnboardingController extends Controller
 {
     public function __invoke(StoreOnboardingRequest $request, StoreOnboardingAction $action): RedirectResponse
     {

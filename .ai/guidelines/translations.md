@@ -1,6 +1,6 @@
 # Translations
 
-This project supports both React (Inertia) and Laravel (Blade/PHP) translation consumers. The shared source of truth is a single JSON file.
+This project supports both React (Inertia) and Laravel (Blade/PHP) translation consumers. The shared source of truth is per-domain JSON files.
 
 ---
 
@@ -8,17 +8,32 @@ This project supports both React (Inertia) and Laravel (Blade/PHP) translation c
 
 ```
 lang/
-├── en.json          # React + shared translations (primary source)
-└── en/
-    ├── mail.php     # PHP-only strings (email templates, Blade mails)
-    └── onboarding.php  # PHP-only strings (validation messages used server-side)
+├── en/
+│   ├── users.json
+│   ├── onboarding.json
+│   ├── pages/
+│   │   ├── dashboard.json
+│   │   └── settings/
+│   │       └── profile.json
+│   ├── validation.json
+│   └── mail.json
+└── nl/
+    ├── users.json
+    ├── onboarding.json
+    ├── pages/
+    │   ├── dashboard.json
+    │   └── settings/
+    │       └── profile.json
+    ├── validation.json
+    └── mail.json
 ```
 
 ### Rule: JSON first
 
-- Use `lang/en.json` for anything consumed by React.
-- Use `lang/en/*.php` only for strings that are never needed in React (e.g. email subject lines, server-side validation messages).
-- Never duplicate a key in both JSON and PHP.
+- Use `lang/{locale}/**/*.json` for all user-facing strings.
+- The file path (including nested directories) is the translation key prefix.
+- Example: `users.json` -> `users.*`, `pages/settings/profile.json` -> `pages.settings.profile.*`.
+- Keep the same domain files across locales for consistency.
 
 ---
 
@@ -39,7 +54,7 @@ export default function MyPage() {
 }
 ```
 
-The `@lib/i18n` module auto-discovers all `lang/*.json` files at build time via `import.meta.glob`. No manual registration is needed when adding a new language.
+The `@lib/i18n` module auto-discovers all `lang/{locale}/**/*.json` files at build time via `import.meta.glob`. No manual registration is needed when adding a new language.
 
 ### Interpolation
 
@@ -105,7 +120,7 @@ Keys follow a **domain-first** dot-separated structure:
 
 ## Adding a New Translation
 
-1. Add the English string to `lang/en.json` under the correct domain key.
+1. Add the English string to the correct domain file in `lang/en/**/*.json`.
 2. Use `t('the.key')` in React, or `__('the.key')` in PHP/Blade.
 3. Never hardcode visible text in JSX or Blade — always use the translation system.
 
@@ -113,4 +128,4 @@ Keys follow a **domain-first** dot-separated structure:
 
 ## Adding a New Language
 
-Drop a new JSON file into `lang/` (e.g. `lang/nl.json`). The i18n initialisation in `@lib/i18n` will pick it up automatically. No code changes required.
+Create a locale directory (for example `lang/nl/`) and add the same domain JSON files (`users.json`, `validation.json`, etc.). The i18n initialisation in `@lib/i18n` will pick it up automatically. No code changes required.

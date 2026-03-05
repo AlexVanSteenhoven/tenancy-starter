@@ -20,6 +20,8 @@ final class UpdateProfileController extends Controller
             request: $request
         );
 
-        return to_route('profile.edit');
+        return to_route('settings.profile.edit')
+            ->with('status', __('settings.notifications.profile.title'))
+            ->with('statusDescription', __('settings.notifications.profile.description'));
     }
 }

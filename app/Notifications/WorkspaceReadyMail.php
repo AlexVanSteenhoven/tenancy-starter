@@ -15,7 +15,7 @@ final class WorkspaceReadyMail extends Notification implements ShouldQueue
 
     public function __construct(
         public string $workspaceName,
-        public string $subdomain,
+        public string $workspaceDomain,
         public string $email,
     ) {}
 
@@ -35,11 +35,13 @@ final class WorkspaceReadyMail extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         $centralDomain = collect(config('tenancy.central_domains'))->first() ?? config('tenancy.central_domains.0');
+        $workspaceHost = str_contains($this->workspaceDomain, '.')
+            ? $this->workspaceDomain
+            : sprintf('%s.%s', $this->workspaceDomain, $centralDomain);
 
         $setupUrl = sprintf(
-            'https://%s.%s/onboarding/account/create?email=%s',
-            $this->subdomain,
-            $centralDomain,
+            'https://%s/onboarding/account/create?email=%s',
+            $workspaceHost,
             urlencode($this->email),
         );
 

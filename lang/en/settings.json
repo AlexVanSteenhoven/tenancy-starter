@@ -1,0 +1,178 @@
+{
+    "layout": {
+        "title": "Settings",
+        "description": "Manage your profile and account settings",
+        "navigation-label": "Settings",
+        "navigation": {
+            "profile": "Profile",
+            "password": "Password",
+            "two-factor": "Two-Factor Auth",
+            "appearance": "Appearance"
+        }
+    },
+    "profile": {
+        "meta": {
+            "title": "Profile settings",
+            "sr-title": "Profile Settings"
+        },
+        "heading": {
+            "title": "Profile information",
+            "description": "Update your name and email address"
+        },
+        "form": {
+            "name": {
+                "label": "Name",
+                "placeholder": "Full name"
+            },
+            "email": {
+                "label": "Email address",
+                "placeholder": "Email address"
+            }
+        },
+        "email-verification": {
+            "unverified": "Your email address is unverified.",
+            "resend": "Click here to resend the verification email.",
+            "sent": "A new verification link has been sent to your email address."
+        },
+        "actions": {
+            "save": "Save"
+        },
+        "states": {
+            "saved": "Saved"
+        },
+        "delete-account": {
+            "heading": {
+                "title": "Delete account",
+                "description": "Delete your account and all of its resources"
+            },
+            "warning": {
+                "title": "Warning",
+                "description": "Please proceed with caution, this cannot be undone."
+            },
+            "dialog": {
+                "title": "Are you sure you want to delete your account?",
+                "description": "Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.",
+                "password-label": "Password",
+                "password-placeholder": "Password"
+            },
+            "actions": {
+                "delete": "Delete account",
+                "cancel": "Cancel",
+                "confirm-delete": "Delete account"
+            }
+        }
+    },
+    "password": {
+        "meta": {
+            "title": "Password settings",
+            "sr-title": "Password Settings"
+        },
+        "heading": {
+            "title": "Update password",
+            "description": "Ensure your account is using a long, random password to stay secure"
+        },
+        "form": {
+            "current_password": {
+                "label": "Current password",
+                "placeholder": "Current password"
+            },
+            "password": {
+                "label": "New password",
+                "placeholder": "New password"
+            },
+            "password_confirmation": {
+                "label": "Confirm password",
+                "placeholder": "Confirm password"
+            }
+        },
+        "actions": {
+            "save": "Save password"
+        },
+        "states": {
+            "saved": "Saved"
+        }
+    },
+    "appearance": {
+        "meta": {
+            "title": "Appearance settings",
+            "sr-title": "Appearance Settings"
+        },
+        "heading": {
+            "title": "Appearance settings",
+            "description": "Update your account's appearance settings"
+        },
+        "options": {
+            "light": "Light",
+            "dark": "Dark",
+            "system": "System"
+        }
+    },
+    "two-factor": {
+        "meta": {
+            "title": "Two-Factor Authentication",
+            "sr-title": "Two-Factor Authentication Settings"
+        },
+        "heading": {
+            "title": "Two-Factor Authentication",
+            "description": "Manage your two-factor authentication settings"
+        },
+        "badges": {
+            "enabled": "Enabled",
+            "disabled": "Disabled"
+        },
+        "states": {
+            "enabled-description": "With two-factor authentication enabled, you will be prompted for a secure, random pin during login, which you can retrieve from the TOTP-supported application on your phone.",
+            "disabled-description": "When you enable two-factor authentication, you will be prompted for a secure pin during login. This pin can be retrieved from a TOTP-supported application on your phone."
+        },
+        "actions": {
+            "disable": "Disable 2FA",
+            "continue-setup": "Continue Setup",
+            "enable": "Enable 2FA"
+        },
+        "recovery-codes": {
+            "title": "2FA Recovery Codes",
+            "description": "Recovery codes let you regain access if you lose your 2FA device. Store them in a secure password manager.",
+            "actions": {
+                "show": "View Recovery Codes",
+                "hide": "Hide Recovery Codes",
+                "regenerate": "Regenerate Codes"
+            },
+            "labels": {
+                "list": "Recovery codes",
+                "loading": "Loading recovery codes"
+            },
+            "warning": "Each recovery code can be used once to access your account and will be removed after use. If you need more, click Regenerate Codes above."
+        },
+        "setup-modal": {
+            "manual-entry": "or, enter the code manually",
+            "actions": {
+                "back": "Back",
+                "confirm": "Confirm",
+                "continue": "Continue",
+                "close": "Close"
+            },
+            "enabled": {
+                "title": "Two-Factor Authentication Enabled",
+                "description": "Two-factor authentication is now enabled. Scan the QR code or enter the setup key in your authenticator app."
+            },
+            "verify": {
+                "title": "Verify Authentication Code",
+                "description": "Enter the 6-digit code from your authenticator app"
+            },
+            "enable": {
+                "title": "Enable Two-Factor Authentication",
+                "description": "To finish enabling two-factor authentication, scan the QR code or enter the setup key in your authenticator app"
+            }
+        }
+    },
+    "notifications": {
+        "password": {
+            "title": "Password updated",
+            "description": "Your password has been changed successfully."
+        },
+        "profile": {
+            "title": "Profile saved",
+            "description": "Your profile information has been updated."
+        }
+    }
+}

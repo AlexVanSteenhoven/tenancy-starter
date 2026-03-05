@@ -6,6 +6,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\RateLimiter;
 use Laravel\Fortify\Features;
 
+beforeEach(function (): void {
+    bootstrapTenantAwareFeatureTest($this);
+});
+
 test('login screen can be rendered', function () {
     $response = $this->get(route('login'));
 
@@ -69,7 +73,7 @@ test('users can logout', function () {
     $response = $this->actingAs($user)->post(route('logout'));
 
     $this->assertGuest();
-    $response->assertRedirect(route('home'));
+    expect(parse_url((string) $response->headers->get('Location'), PHP_URL_PATH))->toBe('/login');
 });
 
 test('users are rate limited', function () {

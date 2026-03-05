@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Onboarding;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Validator;
 use Stancl\Tenancy\Database\Models\Domain;
 
-class StoreOnboardingRequest extends FormRequest
+final class StoreOnboardingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +27,8 @@ class StoreOnboardingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'workspace' => [ 'required', 'unique:workspaces,name', 'max:255' ],
-            'email' => [ 'required', 'email', 'max:255' ],
+            'workspace' => ['required', 'unique:workspaces,name', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
         ];
     }
 

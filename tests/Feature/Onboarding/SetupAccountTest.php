@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Models\User;
 use App\Models\Workspace;
 use App\Notifications\VerifyEmailNotification;
+use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
@@ -27,7 +28,7 @@ beforeEach(function (): void {
 
     if (! Schema::hasTable('users')) {
         Schema::create('users', function (Blueprint $table): void {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -39,6 +40,15 @@ beforeEach(function (): void {
             $table->timestamps();
         });
     }
+
+    if (! Schema::hasTable('roles')) {
+        $this->artisan('migrate', [
+            '--path' => database_path('migrations/tenant/2026_02_24_170219_create_permission_tables.php'),
+            '--realpath' => true,
+        ])->assertSuccessful();
+    }
+
+    $this->seed(RolesAndPermissionsSeeder::class);
 });
 
 test('setup account screen can be rendered on tenant domain', function (): void {
@@ -101,7 +111,7 @@ function createSetupAccountWorkspace(string $workspaceName, string $subdomain): 
     ]);
 
     $workspace->domains()->create([
-        'domain' => $subdomain.'.tenancy-starter.test',
+        'domain' => $subdomain,
     ]);
 
     return $workspace;

@@ -4,19 +4,48 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Concerns\HasUUIDAsPrimaryKey;
+use App\Enums\Status;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmailNotification;
+use Carbon\CarbonInterface;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Ramsey\Uuid\UuidInterface;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * @property string|UuidInterface $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string|null $remember_token
+ * @property string|null $two_factor_secret
+ * @property string[]|null $two_factor_recovery_codes
+ * @property CarbonInterface|null $two_factor_confirmed_at
+ * @property CarbonInterface|null $email_verified_at
+ * @property Status $status
+ * @property CarbonInterface|null $created_at
+ * @property CarbonInterface|null $updated_at
+ * @property-read Collection<int, Role> $roles
+ * @property-read Collection<int, Permission> $permissions
+ */
 final class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable;
+    use HasFactory;
+
+    use HasRoles;
+    use HasUUIDAsPrimaryKey;
+    use Notifiable;
+    use TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +56,11 @@ final class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'status',
+    ];
+
+    protected $guarded = [
+        'email_verified_at',
     ];
 
     /**
@@ -52,6 +86,7 @@ final class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
+            'status' => Status::class,
         ];
     }
 

@@ -1,4 +1,5 @@
 import { Form, Head } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
 import InputError from '@components/input-error';
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
@@ -6,25 +7,32 @@ import { Label } from '@components/ui/label';
 import { Spinner } from '@components/ui/spinner';
 import AuthCardLayout from '@/layouts/auth/auth-card-layout';
 import { store } from '@/routes/password/confirm';
+import '@lib/i18n';
 
 export default function ConfirmPassword() {
+    const { t } = useTranslation();
+
     return (
         <AuthCardLayout
-            title="Confirm your password"
-            description="This is a secure area of the application. Please confirm your password before continuing."
+            title={t('auth.confirm-password.title')}
+            description={t('auth.confirm-password.description')}
         >
-            <Head title="Confirm password" />
+            <Head title={t('auth.confirm-password.meta.title')} />
 
             <Form {...store.form()} resetOnSuccess={['password']}>
                 {({ processing, errors }) => (
                     <div className="space-y-6">
                         <div className="grid gap-2">
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password">
+                                {t('auth.confirm-password.form.password.label')}
+                            </Label>
                             <Input
                                 id="password"
                                 type="password"
                                 name="password"
-                                placeholder="Password"
+                                placeholder={t(
+                                    'auth.confirm-password.form.password.placeholder',
+                                )}
                                 autoComplete="current-password"
                                 autoFocus
                             />
@@ -39,7 +47,7 @@ export default function ConfirmPassword() {
                                 data-test="confirm-password-button"
                             >
                                 {processing && <Spinner />}
-                                Confirm password
+                                {t('auth.confirm-password.form.submit')}
                             </Button>
                         </div>
                     </div>

@@ -43,6 +43,14 @@ final class VerifyEmailNotification extends Notification implements ShouldQueue
             ]);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
+    public function toArray(object $notifiable): array
+    {
+        return [];
+    }
+
     private function verificationUrl(object $notifiable): string
     {
         $expiration = Carbon::now()->addMinutes(config('auth.verification.expire', 60));
@@ -68,13 +76,5 @@ final class VerifyEmailNotification extends Notification implements ShouldQueue
             URL::forceRootUrl($fallbackAppUrl);
             URL::forceScheme((string) $fallbackScheme);
         }
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray(object $notifiable): array
-    {
-        return [];
     }
 }

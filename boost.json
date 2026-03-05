@@ -7,7 +7,8 @@
     "herd_mcp": true,
     "mcp": true,
     "packages": [
-        "laravel/fortify"
+        "laravel/fortify",
+        "spatie/laravel-permission"
     ],
     "sail": false,
     "skills": [
@@ -15,6 +16,7 @@
         "pest-testing",
         "inertia-react-development",
         "tailwindcss-development",
-        "developing-with-fortify"
+        "developing-with-fortify",
+        "laravel-permission-development"
     ]
 }

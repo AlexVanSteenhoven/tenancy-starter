@@ -12,6 +12,27 @@ Request → FormRequest (validation) → Controller (routing) → Action (busine
 
 ---
 
+## Create new feature
+
+For easier and faster generating a base feature we will use a custom artisan command (make:feature), this scaffolds the files for us.
+
+```
+php artisan make:feature Users/ShowUsersController # generates the controller and view
+php artisan make:feature Users/StoreUserController # generates the controller, action and form request
+```
+
+`make:feature` behavior:
+
+- Use `/` in the name to create nested folders, where the last segment is the class file name.
+    - Example: `Users/Admin/ShowUsersController` creates files under `Users/Admin`.
+- If the controller name starts with `Show`, `List`, `Show`, or `Index`, it scaffolds:
+    - `app/Http/Controllers/...`
+    - `resources/js/pages/...` (kebab-case path from the full feature path)
+- For non-show controllers, it scaffolds:
+    - `app/Http/Controllers/...` from a command stub
+    - `app/Http/Requests/...` via `php artisan make:request`
+    - `app/Actions/...` via `php artisan make:action`
+
 ## Invokable Controllers
 
 All controllers are **single-action** (invokable) using `__invoke()`. Each controller maps 1:1 to a route and is named after the HTTP verb + resource:
@@ -99,6 +120,7 @@ app/Http/Requests/
 ```
 
 Rules:
+
 - Always `final`
 - Always declare `rules(): array` with a typed return `array<string, ValidationRule|array<mixed>|string>`
 - Share common rules via traits (`use ProfileValidationRules;`)
@@ -120,6 +142,7 @@ app/Actions/
 ```
 
 Rules:
+
 - Always `final` (and `readonly` when stateless)
 - Single public `handle()` method — accepts the typed FormRequest, returns `void`
 - Business logic only — no HTTP knowledge, no redirects, no response building
@@ -157,10 +180,10 @@ Not every mutation needs an action. For trivial one-liners (e.g. creating a sing
 
 ## Summary Table
 
-| Concern          | Where it lives         |
-|------------------|------------------------|
-| Validation       | `FormRequest`          |
-| Routing / HTTP   | `Controller`           |
-| Business logic   | `Action`               |
-| Page rendering   | `Inertia::render()`    |
-| Shared rules     | `Concerns/` traits     |
+| Concern        | Where it lives      |
+| -------------- | ------------------- |
+| Validation     | `FormRequest`       |
+| Routing / HTTP | `Controller`        |
+| Business logic | `Action`            |
+| Page rendering | `Inertia::render()` |
+| Shared rules   | `Concerns/` traits  |
