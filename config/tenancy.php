@@ -18,6 +18,7 @@ return [
      */
     'central_domains' => [
         'tenancy-starter.test',
+        'admin.tenancy-starter.test',
     ],
 
     /**

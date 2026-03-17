@@ -4,22 +4,33 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Enums\Permission as PermissionEnum;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 final class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $permissions = Permission::findOrCreate(PermissionEnum::AccessAdminPanel->value, 'web');
+        $role = Role::findOrCreate('sysadmin', 'web');
+        $role->givePermissionTo($permissions);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        $adminUser = User::firstOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'System Administrator',
+                'password' => Hash::make('password'),
+            ],
+        );
+
+        $adminUser->assignRole($role);
+
+        // $this->call([
+        //     PlanSeeder::class,
+        // ]);
     }
 }

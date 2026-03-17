@@ -6,6 +6,7 @@ namespace App\Enums;
 
 enum Permission: string
 {
+    case AccessAdminPanel = 'access:admin-panel';
     case UpdateWorkspace = 'update:workspace';
     case DeleteWorkspace = 'delete:workspace';
     case InviteUsers = 'invite:users';
@@ -19,7 +20,14 @@ enum Permission: string
     public static function forRole(Role $role): array
     {
         return match ($role) {
-            Role::Owner => self::cases(),
+            Role::Owner => [
+                self::UpdateWorkspace,
+                self::DeleteWorkspace,
+                self::InviteUsers,
+                self::ViewUsers,
+                self::UpdateUsers,
+                self::DeleteUsers,
+            ],
             Role::Admin => [
                 self::InviteUsers,
                 self::ViewUsers,

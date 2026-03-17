@@ -1,0 +1,183 @@
+{
+    "common": {
+        "actions": "Actions",
+        "view": "View",
+        "update": "Update",
+        "deactivate": "Deactivate",
+        "sync": "Sync",
+        "not_available": "Not available",
+        "yes": "Yes",
+        "no": "No"
+    },
+    "navigation": {
+        "dashboard": "Dashboard",
+        "workspaces": "Workspaces",
+        "plans": "Plans",
+        "subscriptions": "Subscriptions",
+        "invoices": "Invoices"
+    },
+    "auth": {
+        "meta": {
+            "title": "Admin login",
+            "description": "Sign in to access the administration panel."
+        },
+        "form": {
+            "email": {
+                "label": "Email",
+                "placeholder": "admin@example.com"
+            },
+            "password": {
+                "label": "Password",
+                "placeholder": "Your password"
+            },
+            "remember": "Remember me",
+            "submit": "Sign in"
+        },
+        "validation": {
+            "invalid_credentials": "Invalid login credentials.",
+            "not_allowed": "You do not have access to the admin panel."
+        },
+        "messages": {
+            "logged_out": "You have been logged out."
+        }
+    },
+    "dashboard": {
+        "meta": {
+            "title": "Admin dashboard",
+            "description": "Overview of workspaces, subscriptions, and billing."
+        },
+        "stats": {
+            "total_workspaces": "Total workspaces",
+            "active_subscriptions": "Active subscriptions",
+            "mrr": "MRR"
+        },
+        "recent": {
+            "title": "Recent workspaces",
+            "open": "Open"
+        }
+    },
+    "workspaces": {
+        "meta": {
+            "title": "Workspace management",
+            "description": "Manage tenants, plans, and subscriptions."
+        },
+        "search_placeholder": "Search workspaces...",
+        "table": {
+            "name": "Name",
+            "domain": "Domain",
+            "plan": "Plan",
+            "subscription_status": "Subscription status"
+        },
+        "show": {
+            "meta": {
+                "title": "Workspace :workspace"
+            },
+            "subscription": {
+                "title": "Subscription",
+                "status": "Status",
+                "stripe_id": "Stripe subscription ID",
+                "change_plan": "Change plan",
+                "plan_label": "Plan",
+                "update_button": "Update subscription",
+                "cancel_button": "Cancel subscription"
+            }
+        },
+        "validation": {
+            "plan_not_found": "The selected plan does not exist.",
+            "plan_missing_price": "This paid plan has no Stripe price configured.",
+            "missing_default_payment_method": "Workspace has no default payment method."
+        },
+        "messages": {
+            "subscription_updated": "Workspace subscription has been updated.",
+            "subscription_canceled": "Workspace subscription has been canceled."
+        }
+    },
+    "plans": {
+        "meta": {
+            "title": "Plans",
+            "description": "Create and manage Stripe-backed billing plans."
+        },
+        "create": {
+            "title": "Create plan",
+            "submit": "Create plan"
+        },
+        "fields": {
+            "slug": "Slug",
+            "name": "Name",
+            "description": "Description",
+            "price_monthly": "Monthly price (cents)",
+            "features": "Features (newline separated)"
+        },
+        "table": {
+            "title": "Existing plans",
+            "price": "Price",
+            "stripe": "Stripe"
+        },
+        "messages": {
+            "created": "Plan created successfully.",
+            "updated": "Plan updated successfully.",
+            "deactivated": "Plan deactivated successfully.",
+            "synced": "Plans synced from Stripe. Created: :created, Updated: :updated, Deleted: :deleted."
+        }
+    },
+    "subscriptions": {
+        "meta": {
+            "title": "Subscriptions",
+            "description": "All workspace subscriptions."
+        },
+        "table": {
+            "workspace": "Workspace",
+            "status": "Status",
+            "price": "Price",
+            "created_at": "Created at"
+        },
+        "show": {
+            "meta": {
+                "title": "Subscription details"
+            },
+            "fields": {
+                "domain": "Domain",
+                "status": "Status",
+                "stripe_id": "Stripe ID",
+                "stripe_price": "Stripe price",
+                "cancel_at_period_end": "Cancel at period end"
+            }
+        }
+    },
+    "invoices": {
+        "meta": {
+            "title": "Invoices",
+            "description": "Browse invoices and issue refunds."
+        },
+        "table": {
+            "number": "Invoice",
+            "workspace": "Workspace",
+            "status": "Status",
+            "amount_paid": "Amount paid"
+        },
+        "show": {
+            "meta": {
+                "title": "Invoice details"
+            },
+            "details": {
+                "title": "Invoice",
+                "status": "Status",
+                "amount_paid": "Amount paid",
+                "amount_due": "Amount due",
+                "download_pdf": "Download PDF"
+            },
+            "refund": {
+                "title": "Issue refund",
+                "amount": "Amount (cents, optional)",
+                "reason": "Reason",
+                "submit": "Create refund"
+            }
+        },
+        "validation": {
+            "missing_charge": "This invoice does not have a refundable charge."
+        },
+        "messages": {
+            "refund_created": "Refund created successfully."
+        }
+    }
+}
