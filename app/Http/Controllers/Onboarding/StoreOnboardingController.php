@@ -13,9 +13,10 @@ final class StoreOnboardingController extends Controller
 {
     public function __invoke(StoreOnboardingRequest $request, StoreOnboardingAction $action): RedirectResponse
     {
-        $action->handle($request);
+        $workspace = $action->handle($request);
 
-        return to_route('onboarding.create-workspace')
-            ->with('status', __('onboarding.messages.check_email'));
+        $request->session()->put('onboarding_workspace_id', (string) $workspace->id);
+
+        return to_route('onboarding.billing');
     }
 }

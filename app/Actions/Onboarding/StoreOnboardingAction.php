@@ -10,10 +10,7 @@ use Illuminate\Support\Str;
 
 final readonly class StoreOnboardingAction
 {
-    /**
-     * Execute the action.
-     */
-    public function handle(StoreOnboardingRequest $request): void
+    public function handle(StoreOnboardingRequest $request): Workspace
     {
         $name = mb_trim($request->input('workspace'));
         $email = mb_trim($request->input('email'));
@@ -27,5 +24,7 @@ final readonly class StoreOnboardingAction
         $workspace->domains()->create([
             'domain' => $subdomain,
         ]);
+
+        return $workspace;
     }
 }

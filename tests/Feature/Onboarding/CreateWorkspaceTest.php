@@ -3,10 +3,8 @@
 declare(strict_types=1);
 
 use App\Models\Workspace;
-use App\Notifications\WorkspaceReadyMail;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
-use Stancl\Tenancy\Events\DatabaseSeeded;
 use Stancl\Tenancy\Events\TenantCreated;
 
 beforeEach(function (): void {
@@ -14,7 +12,7 @@ beforeEach(function (): void {
     Event::fake([TenantCreated::class]);
 });
 
-test('workspace ready mail is sent only after tenant database is seeded', function (): void {
+test('workspace creation redirects to billing and stores workspace in session', function (): void {
     Notification::fake();
 
     $response = $this->post('/onboarding/create-workspace', [
@@ -23,31 +21,13 @@ test('workspace ready mail is sent only after tenant database is seeded', functi
     ]);
 
     $response
-        ->assertRedirect(route('onboarding.create-workspace'))
-        ->assertSessionHas('status', __('onboarding.messages.check_email'));
+        ->assertRedirect(route('onboarding.billing'))
+        ->assertSessionHas('onboarding_workspace_id');
 
     $workspace = Workspace::query()
         ->where('name', 'Acme Workspace')
         ->firstOrFail();
 
     $this->assertSame('owner@acme.com', $workspace->onboarding_email);
-
     Notification::assertNothingSent();
-
-    event(new DatabaseSeeded($workspace));
-
-    Notification::assertSentOnDemand(
-        WorkspaceReadyMail::class,
-        function (WorkspaceReadyMail $notification, array $channels, object $notifiable): bool {
-            return $notification->workspaceName === 'Acme Workspace'
-                && $notification->workspaceDomain === 'acme-workspace'
-                && $notification->email === 'owner@acme.com'
-                && $channels === ['mail']
-                && $notifiable->routeNotificationFor('mail') === 'owner@acme.com';
-        },
-    );
-
-    $workspace->refresh();
-
-    expect($workspace->getRawOriginal('data'))->toBeNull();
 });

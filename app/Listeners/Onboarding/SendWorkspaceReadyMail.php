@@ -21,6 +21,10 @@ final class SendWorkspaceReadyMail
             return;
         }
 
+        if ($workspace->plan === null) {
+            return;
+        }
+
         $email = (string) ($workspace->onboarding_email ?? '');
         $workspaceDomain = (string) ($workspace->domains->first()?->domain ?? '');
 

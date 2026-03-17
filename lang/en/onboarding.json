@@ -21,6 +21,108 @@
     "messages": {
         "check_email": "Check your email to complete setup."
     },
+    "billing": {
+        "meta": {
+            "title": "Choose your plan",
+            "description": "Select the plan for your workspace before finishing setup."
+        },
+        "workspace": "Workspace :workspace (:domain)",
+        "selected": "Selected",
+        "steps": {
+            "plan": "Plan",
+            "payment": "Payment"
+        },
+        "price": {
+            "free": "Free",
+            "monthly": ":amount / month"
+        },
+        "card": {
+            "number": "Card number",
+            "expiry": "Expiry date",
+            "cvc": "CVC",
+            "secure_note": "Payments are processed securely by Stripe."
+        },
+        "methods": {
+            "title": "Payment method",
+            "card": "Cards",
+            "ideal_wero": "iDEAL | Wero",
+            "sepa": "SEPA Direct Debit",
+            "paypal": "PayPal",
+            "external_redirect_note": "After submitting, you will be redirected to your selected payment provider to complete the payment.",
+            "sepa_mandate_note": "By providing your IBAN and confirming this payment, you authorize Stripe and your bank to debit your account according to the SEPA mandate."
+        },
+        "biller": {
+            "title": "Biller information",
+            "name": "Full name",
+            "name_placeholder": "Jane Doe",
+            "email": "Billing email",
+            "email_placeholder": "billing@example.com",
+            "country": "Country",
+            "country_placeholder": "Netherlands",
+            "iban": "IBAN",
+            "iban_placeholder": "NL00 AAAA 0000 0000 00",
+            "vat": "VAT number (optional)",
+            "vat_placeholder": "NL123456789B01"
+        },
+        "summary": {
+            "title": "Order summary",
+            "plan": "Selected plan",
+            "price": ":amount / month",
+            "includes": "Includes",
+            "recurring": "Billed monthly",
+            "seats": ":quantity seat(s)",
+            "subtotal": "Subtotal",
+            "tax": "VAT",
+            "tax_included": "Included",
+            "total": "Total"
+        },
+        "seats": {
+            "label": "Select the needed amount of seats"
+        },
+        "actions": {
+            "continue_to_payment": "Continue to payment",
+            "back_to_plan": "Back to plans",
+            "complete_purchase": "Start paid plan"
+        },
+        "submit": "Continue to setup email",
+        "plans": {
+            "free": {
+                "name": "Free",
+                "description": "For trying the platform.",
+                "features": [
+                    "Up to 3 members",
+                    "Basic workspace settings",
+                    "Community support"
+                ]
+            },
+            "pro": {
+                "name": "Pro",
+                "description": "For growing teams.",
+                "features": [
+                    "Up to 25 members",
+                    "Advanced permissions",
+                    "Priority support"
+                ]
+            },
+            "business": {
+                "name": "Business",
+                "description": "For larger organizations.",
+                "features": [
+                    "Unlimited members",
+                    "Advanced security controls",
+                    "Dedicated support"
+                ]
+            }
+        },
+        "validation": {
+            "workspace_missing": "Your onboarding session has expired. Please create your workspace again.",
+            "plan_unavailable": "The selected plan is not available right now.",
+            "stripe_not_ready": "Payment is currently unavailable. Please refresh and try again.",
+            "card_required": "Please enter your card details.",
+            "payment_failed": "We could not process your payment method. Please try again.",
+            "payment_method_unavailable": "This payment method is not available yet. Please use Cards for now."
+        }
+    },
     "validation": {
         "invalid_subdomain": "The workspace name must include letters or numbers.",
         "subdomain_taken": "That workspace subdomain is already taken."
