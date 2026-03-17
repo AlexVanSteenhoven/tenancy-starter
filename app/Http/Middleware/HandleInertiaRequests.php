@@ -37,13 +37,11 @@ final class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $hasInitializedTenancy = tenancy()->initialized;
-
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
-                'user' => $hasInitializedTenancy ? $request->user() : null,
+                'user' => $request->user(),
             ],
             'flash' => [
                 'status' => $request->session()->get('status'),

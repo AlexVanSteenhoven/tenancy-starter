@@ -38,6 +38,6 @@ final class ShowTwoFactorAuthenticationController extends Controller implements 
         return Features::optionEnabled(
             feature: Features::twoFactorAuthentication(),
             option: 'confirmPassword'
-        ) ? [new Middleware('password.confirm')] : [];
+        ) ? [new Middleware('password.confirm.unless-admin-domain')] : [];
     }
 }

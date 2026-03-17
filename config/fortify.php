@@ -106,8 +106,8 @@ return [
     */
 
     'middleware' => [
-        InitializeTenancyBySubdomain::class,
         PreventAccessFromCentralDomains::class,
+        InitializeTenancyBySubdomain::class,
         'web',
     ],
 
