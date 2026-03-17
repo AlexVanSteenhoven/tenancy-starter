@@ -10,7 +10,7 @@ import { Label } from '@components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import type { BreadcrumbItem } from '@types';
-import UpdatePasswordController from '@/actions/App/Http/Controllers/Settings/Password/UpdatePasswordController';
+import { update } from '@/routes/settings/password';
 import { edit } from '@/routes/settings/password';
 import '@lib/i18n';
 
@@ -40,7 +40,7 @@ export default function Password() {
                     />
 
                     <Form
-                        {...UpdatePasswordController.form()}
+                        {...update.form()}
                         options={{
                             preserveScroll: true,
                         }}
@@ -89,7 +89,9 @@ export default function Password() {
 
                                 <div className="grid gap-2">
                                     <Label htmlFor="password">
-                                        {t('settings.password.form.password.label')}
+                                        {t(
+                                            'settings.password.form.password.label',
+                                        )}
                                     </Label>
 
                                     <Input
@@ -146,7 +148,9 @@ export default function Password() {
                                         leaveTo="opacity-0"
                                     >
                                         <p className="text-sm text-neutral-600">
-                                            {t('settings.password.states.saved')}
+                                            {t(
+                                                'settings.password.states.saved',
+                                            )}
                                         </p>
                                     </Transition>
                                 </div>

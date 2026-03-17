@@ -1,6 +1,8 @@
 import { Head } from '@inertiajs/react';
 import { Link } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
+import ShowUserController from '@/actions/App/Http/Controllers/Users/ShowUserController';
+import ShowUsersController from '@/actions/App/Http/Controllers/Users/ShowUsersController';
 import AppLayout from '@/layouts/app-layout';
 import StatusBadge from '@components/status-badge';
 import { Button } from '@components/ui/button';
@@ -26,11 +28,11 @@ export default function ShowUser({ user }: ShowUserProps) {
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: t('users.meta.title'),
-            href: '/users',
+            href: ShowUsersController.url(),
         },
         {
             title: t('users.show-user.meta.title'),
-            href: `/users/${user.id}`,
+            href: ShowUserController.url(user.id),
         },
     ];
 
@@ -44,7 +46,7 @@ export default function ShowUser({ user }: ShowUserProps) {
                         {t('users.show-user.title')}
                     </h1>
                     <Button asChild type="button" variant="secondary">
-                        <Link href="/users">{t('users.show-user.back')}</Link>
+                        <Link href={ShowUsersController.url()}>{t('users.show-user.back')}</Link>
                     </Button>
                 </div>
 

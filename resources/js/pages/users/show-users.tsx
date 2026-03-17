@@ -1,10 +1,18 @@
 import { Head, router, useForm, usePage } from '@inertiajs/react';
 import type { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from 'lucide-react';
-import type React from 'react';
+import { type SubmitEventHandler } from 'react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import '@lib/i18n';
+import DeletePendingInvitationController from '@/actions/App/Http/Controllers/Users/DeletePendingInvitationController';
+import DeleteUserController from '@/actions/App/Http/Controllers/Users/DeleteUserController';
+import InviteUserController from '@/actions/App/Http/Controllers/Users/InviteUserController';
+import ResendPendingInvitationController from '@/actions/App/Http/Controllers/Users/ResendPendingInvitationController';
+import ShowUserController from '@/actions/App/Http/Controllers/Users/ShowUserController';
+import ShowUsersController from '@/actions/App/Http/Controllers/Users/ShowUsersController';
+import UpdateUserRoleController from '@/actions/App/Http/Controllers/Users/UpdateUserRoleController';
+import UpdateUserStatusController from '@/actions/App/Http/Controllers/Users/UpdateUserStatusController';
 import AppLayout from '@/layouts/app-layout';
 import { statusTranslationMap } from '@/types/enums';
 import { Role, Status } from '@/types/enums';
@@ -105,14 +113,14 @@ export default function ShowUsers({
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: t('users.meta.title'),
-            href: '/users',
+            href: ShowUsersController.url(),
         },
     ];
 
-    const handleInviteSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleInviteSubmit: SubmitEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault();
 
-        inviteForm.post('/users/invite', {
+        inviteForm.post(InviteUserController.url(), {
             preserveScroll: true,
             onSuccess: () => {
                 inviteForm.reset();
@@ -189,13 +197,13 @@ export default function ShowUsers({
         let successful = true;
 
         if (roleChanged) {
-            successful = await patchUser(`/users/${editingUser.id}/role`, {
+            successful = await patchUser(UpdateUserRoleController.url(editingUser.id), {
                 role: editingRole,
             });
         }
 
         if (successful && statusChanged) {
-            successful = await patchUser(`/users/${editingUser.id}/status`, {
+            successful = await patchUser(UpdateUserStatusController.url(editingUser.id), {
                 status: editingStatus,
             });
         }
@@ -216,8 +224,8 @@ export default function ShowUsers({
 
         const deleteUrl =
             deletingRow.type === 'invitation'
-                ? `/users/invitations/${deletingRow.id}`
-                : `/users/${deletingRow.id}`;
+                ? DeletePendingInvitationController.url(deletingRow.id)
+                : DeleteUserController.url(deletingRow.id);
 
         router.delete(deleteUrl, {
             preserveScroll: true,
@@ -323,7 +331,9 @@ export default function ShowUsers({
                                 key={roleOption}
                                 onClick={() => {
                                     router.patch(
-                                        `/users/${row.original.id}/role`,
+                                        UpdateUserRoleController.url(
+                                            row.original.id,
+                                        ),
                                         {
                                             role: roleOption,
                                         },
@@ -371,7 +381,7 @@ export default function ShowUsers({
                                     return;
                                 }
 
-                                router.get(`/users/${row.original.id}`);
+                                router.get(ShowUserController.url(row.original.id));
                             }}
                         >
                             {t('users.actions.show')}
@@ -399,7 +409,9 @@ export default function ShowUsers({
                                 }
 
                                 router.post(
-                                    `/users/invitations/${row.original.id}/resend`,
+                                    ResendPendingInvitationController.url(
+                                        row.original.id,
+                                    ),
                                     {},
                                     {
                                         preserveScroll: true,

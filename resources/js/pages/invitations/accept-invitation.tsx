@@ -1,13 +1,14 @@
 import { Head, useForm } from '@inertiajs/react';
-import type { FormEvent } from 'react';
+import { type SubmitEventHandler } from 'react';
+import { useTranslation } from 'react-i18next';
+import StoreAcceptInvitationController from '@/actions/App/Http/Controllers/Invitations/StoreAcceptInvitationController';
+import AuthCardLayout from '@/layouts/auth/auth-card-layout';
 import InputError from '@components/input-error';
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import { Label } from '@components/ui/label';
-import AuthCardLayout from '@/layouts/auth/auth-card-layout';
 import '@/lib/i18n';
 import { useLabel } from '@hooks/use-label';
-import { useTranslation } from 'react-i18next';
 
 type InvitationData = {
     email: string;
@@ -33,10 +34,10 @@ export default function AcceptInvitation({
         password_confirmation: '',
     });
 
-    const submit = (event: FormEvent<HTMLFormElement>) => {
+    const submit: SubmitEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault();
 
-        form.post(`/invitations/${token}`, {
+        form.post(StoreAcceptInvitationController.url(token), {
             onSuccess: () => form.reset('password', 'password_confirmation'),
         });
     };

@@ -15,7 +15,7 @@ import {
 } from '@components/ui/dialog';
 import { Input } from '@components/ui/input';
 import { Label } from '@components/ui/label';
-import DeleteProfileController from '@/actions/App/Http/Controllers/Settings/Profile/DeleteProfileController';
+import { destroy } from '@/routes/settings/profile';
 import '@lib/i18n';
 
 export default function DeleteUser() {
@@ -37,7 +37,9 @@ export default function DeleteUser() {
                         {t('settings.profile.delete-account.warning.title')}
                     </p>
                     <p className="text-sm">
-                        {t('settings.profile.delete-account.warning.description')}
+                        {t(
+                            'settings.profile.delete-account.warning.description',
+                        )}
                     </p>
                 </div>
 
@@ -47,7 +49,9 @@ export default function DeleteUser() {
                             variant="destructive"
                             data-test="delete-user-button"
                         >
-                            {t('settings.profile.delete-account.actions.delete')}
+                            {t(
+                                'settings.profile.delete-account.actions.delete',
+                            )}
                         </Button>
                     </DialogTrigger>
                     <DialogContent>
@@ -61,7 +65,7 @@ export default function DeleteUser() {
                         </DialogDescription>
 
                         <Form
-                            {...DeleteProfileController.form()}
+                            {...destroy.form()}
                             options={{
                                 preserveScroll: true,
                             }}

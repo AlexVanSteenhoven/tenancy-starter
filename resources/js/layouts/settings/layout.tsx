@@ -7,11 +7,11 @@ import { Separator } from '@components/ui/separator';
 import { useCurrentUrl } from '@hooks/use-current-url';
 import { cn, toUrl } from '@/lib/utils';
 import type { NavItem } from '@types';
-import { edit as editAppearance } from '@/routes/settings/appearance';
-import { edit as editPassword } from '@/routes/settings/password';
-import { edit } from '@/routes/settings/profile';
-import { show } from '@/routes/settings/two-factor';
 import '@lib/i18n';
+import { edit as editProfile } from '@/routes/settings/profile';
+import { edit as editPassword } from '@/routes/settings/password';
+import { show as showTwoFactor } from '@/routes/settings/two-factor';
+import { edit as editAppearance } from '@/routes/settings/appearance';
 
 export default function SettingsLayout({ children }: PropsWithChildren) {
     const { t } = useTranslation();
@@ -19,22 +19,22 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
     const sidebarNavItems: NavItem[] = [
         {
             title: t('settings.layout.navigation.profile'),
-            href: edit(),
+            href: editProfile().url,
             icon: null,
         },
         {
             title: t('settings.layout.navigation.password'),
-            href: editPassword(),
+            href: editPassword().url,
             icon: null,
         },
         {
             title: t('settings.layout.navigation.two-factor'),
-            href: show(),
+            href: showTwoFactor().url,
             icon: null,
         },
         {
             title: t('settings.layout.navigation.appearance'),
-            href: editAppearance(),
+            href: editAppearance().url,
             icon: null,
         },
     ];

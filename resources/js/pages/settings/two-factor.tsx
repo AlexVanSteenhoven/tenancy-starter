@@ -28,7 +28,7 @@ export default function TwoFactor({
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: t('settings.two-factor.meta.title'),
-            href: show.url(),
+            href: show().url,
         },
     ];
     const {
@@ -47,14 +47,18 @@ export default function TwoFactor({
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={t('settings.two-factor.meta.title')} />
 
-            <h1 className="sr-only">{t('settings.two-factor.meta.sr-title')}</h1>
+            <h1 className="sr-only">
+                {t('settings.two-factor.meta.sr-title')}
+            </h1>
 
             <SettingsLayout>
                 <div className="space-y-6">
                     <Heading
                         variant="small"
                         title={t('settings.two-factor.heading.title')}
-                        description={t('settings.two-factor.heading.description')}
+                        description={t(
+                            'settings.two-factor.heading.description',
+                        )}
                     />
                     {twoFactorEnabled ? (
                         <div className="flex flex-col items-start justify-start space-y-4">
@@ -62,7 +66,9 @@ export default function TwoFactor({
                                 {t('settings.two-factor.badges.enabled')}
                             </Badge>
                             <p className="text-muted-foreground">
-                                {t('settings.two-factor.states.enabled-description')}
+                                {t(
+                                    'settings.two-factor.states.enabled-description',
+                                )}
                             </p>
 
                             <TwoFactorRecoveryCodes
@@ -80,7 +86,9 @@ export default function TwoFactor({
                                             disabled={processing}
                                         >
                                             <ShieldBan />{' '}
-                                            {t('settings.two-factor.actions.disable')}
+                                            {t(
+                                                'settings.two-factor.actions.disable',
+                                            )}
                                         </Button>
                                     )}
                                 </Form>
@@ -103,7 +111,9 @@ export default function TwoFactor({
                                         onClick={() => setShowSetupModal(true)}
                                     >
                                         <ShieldCheck />
-                                        {t('settings.two-factor.actions.continue-setup')}
+                                        {t(
+                                            'settings.two-factor.actions.continue-setup',
+                                        )}
                                     </Button>
                                 ) : (
                                     <Form
@@ -118,7 +128,9 @@ export default function TwoFactor({
                                                 disabled={processing}
                                             >
                                                 <ShieldCheck />
-                                                {t('settings.two-factor.actions.enable')}
+                                                {t(
+                                                    'settings.two-factor.actions.enable',
+                                                )}
                                             </Button>
                                         )}
                                     </Form>
