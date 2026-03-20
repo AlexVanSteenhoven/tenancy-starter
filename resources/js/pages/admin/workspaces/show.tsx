@@ -38,7 +38,10 @@ type Props = {
     }>;
 };
 
-export default function AdminWorkspaceShow({ workspace, availablePlans }: Props) {
+export default function AdminWorkspaceShow({
+    workspace,
+    availablePlans,
+}: Props) {
     const { t } = useTranslation();
     const form = useForm({
         plan: workspace.plan ?? availablePlans[0]?.slug ?? '',
@@ -55,43 +58,71 @@ export default function AdminWorkspaceShow({ workspace, availablePlans }: Props)
 
     return (
         <AdminLayout>
-            <Head title={t('admin.workspaces.show.meta.title', { workspace: workspace.name })} />
+            <Head
+                title={t('admin.workspaces.show.meta.title', {
+                    workspace: workspace.name,
+                })}
+            />
 
             <div className="space-y-6">
                 <div>
                     <h1 className="text-2xl font-semibold">{workspace.name}</h1>
-                    <p className="text-sm text-muted-foreground">{workspace.domain}</p>
+                    <p className="text-sm text-muted-foreground">
+                        {workspace.domain}
+                    </p>
                 </div>
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>{t('admin.workspaces.show.subscription.title')}</CardTitle>
+                        <CardTitle>
+                            {t('admin.workspaces.show.subscription.title')}
+                        </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <p className="text-sm">
-                            {t('admin.workspaces.show.subscription.status')}: {workspace.subscription.status ?? t('admin.common.not_available')}
+                            {t('admin.workspaces.show.subscription.status')}:{' '}
+                            {workspace.subscription.status ??
+                                t('admin.common.not_available')}
                         </p>
                         <p className="text-sm">
-                            {t('admin.workspaces.show.subscription.stripe_id')}: {workspace.subscription.stripe_id ?? t('admin.common.not_available')}
+                            {t('admin.workspaces.show.subscription.stripe_id')}:{' '}
+                            {workspace.subscription.stripe_id ??
+                                t('admin.common.not_available')}
                         </p>
                     </CardContent>
                 </Card>
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>{t('admin.workspaces.show.subscription.change_plan')}</CardTitle>
+                        <CardTitle>
+                            {t(
+                                'admin.workspaces.show.subscription.change_plan',
+                            )}
+                        </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={submit} className="space-y-4">
                             <div className="space-y-2">
-                                <Label htmlFor="plan">{t('admin.workspaces.show.subscription.plan_label')}</Label>
-                                <Select value={form.data.plan} onValueChange={(value) => form.setData('plan', value)}>
+                                <Label htmlFor="plan">
+                                    {t(
+                                        'admin.workspaces.show.subscription.plan_label',
+                                    )}
+                                </Label>
+                                <Select
+                                    value={form.data.plan}
+                                    onValueChange={(value) =>
+                                        form.setData('plan', value)
+                                    }
+                                >
                                     <SelectTrigger id="plan">
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {availablePlans.map((plan) => (
-                                            <SelectItem key={plan.slug} value={plan.slug}>
+                                            <SelectItem
+                                                key={plan.slug}
+                                                value={plan.slug}
+                                            >
                                                 {plan.name}
                                             </SelectItem>
                                         ))}
@@ -100,11 +131,22 @@ export default function AdminWorkspaceShow({ workspace, availablePlans }: Props)
                             </div>
 
                             <div className="flex flex-col gap-2 sm:flex-row">
-                                <Button type="submit" disabled={form.processing}>
-                                    {t('admin.workspaces.show.subscription.update_button')}
+                                <Button
+                                    type="submit"
+                                    disabled={form.processing}
+                                >
+                                    {t(
+                                        'admin.workspaces.show.subscription.update_button',
+                                    )}
                                 </Button>
-                                <Button type="button" variant="destructive" onClick={cancelSubscription}>
-                                    {t('admin.workspaces.show.subscription.cancel_button')}
+                                <Button
+                                    type="button"
+                                    variant="destructive"
+                                    onClick={cancelSubscription}
+                                >
+                                    {t(
+                                        'admin.workspaces.show.subscription.cancel_button',
+                                    )}
                                 </Button>
                             </div>
                         </form>

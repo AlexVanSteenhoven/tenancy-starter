@@ -30,7 +30,8 @@ export function useFlashToast(): void {
         };
 
         const stopListening = router.on('success', (event) => {
-            const flash = (event.detail.page.props as { flash?: FlashData }).flash;
+            const flash = (event.detail.page.props as { flash?: FlashData })
+                .flash;
             showToast(flash);
         });
 

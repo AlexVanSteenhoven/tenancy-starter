@@ -34,20 +34,32 @@ export default function AdminDashboard({ stats, recentWorkspaces }: Props) {
 
             <div className="space-y-6">
                 <div>
-                    <h1 className="text-2xl font-semibold">{t('admin.dashboard.meta.title')}</h1>
-                    <p className="text-sm text-muted-foreground">{t('admin.dashboard.meta.description')}</p>
+                    <h1 className="text-2xl font-semibold">
+                        {t('admin.dashboard.meta.title')}
+                    </h1>
+                    <p className="text-sm text-muted-foreground">
+                        {t('admin.dashboard.meta.description')}
+                    </p>
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-3">
                     <Card>
                         <CardHeader>
-                            <CardTitle>{t('admin.dashboard.stats.total_workspaces')}</CardTitle>
+                            <CardTitle>
+                                {t('admin.dashboard.stats.total_workspaces')}
+                            </CardTitle>
                         </CardHeader>
-                        <CardContent className="text-3xl font-semibold">{stats.totalWorkspaces}</CardContent>
+                        <CardContent className="text-3xl font-semibold">
+                            {stats.totalWorkspaces}
+                        </CardContent>
                     </Card>
                     <Card>
                         <CardHeader>
-                            <CardTitle>{t('admin.dashboard.stats.active_subscriptions')}</CardTitle>
+                            <CardTitle>
+                                {t(
+                                    'admin.dashboard.stats.active_subscriptions',
+                                )}
+                            </CardTitle>
                         </CardHeader>
                         <CardContent className="text-3xl font-semibold">
                             {stats.totalActiveSubscriptions}
@@ -55,27 +67,42 @@ export default function AdminDashboard({ stats, recentWorkspaces }: Props) {
                     </Card>
                     <Card>
                         <CardHeader>
-                            <CardTitle>{t('admin.dashboard.stats.mrr')}</CardTitle>
+                            <CardTitle>
+                                {t('admin.dashboard.stats.mrr')}
+                            </CardTitle>
                         </CardHeader>
-                        <CardContent className="text-3xl font-semibold">{mrrFormatted}</CardContent>
+                        <CardContent className="text-3xl font-semibold">
+                            {mrrFormatted}
+                        </CardContent>
                     </Card>
                 </div>
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>{t('admin.dashboard.recent.title')}</CardTitle>
+                        <CardTitle>
+                            {t('admin.dashboard.recent.title')}
+                        </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-2">
                             {recentWorkspaces.map((workspace) => (
-                                <div key={workspace.id} className="flex items-center justify-between rounded-md border p-3">
+                                <div
+                                    key={workspace.id}
+                                    className="flex items-center justify-between rounded-md border p-3"
+                                >
                                     <div>
-                                        <p className="font-medium">{workspace.name}</p>
+                                        <p className="font-medium">
+                                            {workspace.name}
+                                        </p>
                                         <p className="text-xs text-muted-foreground">
-                                            {workspace.domain ?? t('admin.common.not_available')}
+                                            {workspace.domain ??
+                                                t('admin.common.not_available')}
                                         </p>
                                     </div>
-                                    <Link className="text-sm text-primary hover:underline" href={`/admin/workspaces/${workspace.id}`}>
+                                    <Link
+                                        className="text-sm text-primary hover:underline"
+                                        href={`/admin/workspaces/${workspace.id}`}
+                                    >
                                         {t('admin.dashboard.recent.open')}
                                     </Link>
                                 </div>

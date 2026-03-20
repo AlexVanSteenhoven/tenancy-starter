@@ -1,9 +1,9 @@
 import { Head } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
-import { PlaceholderPattern } from '@components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
-import type { BreadcrumbItem } from '@types';
 import { dashboard } from '@/routes';
+import { PlaceholderPattern } from '@components/ui/placeholder-pattern';
+import type { BreadcrumbItem } from '@types';
 import '@lib/i18n';
 
 export default function Dashboard() {

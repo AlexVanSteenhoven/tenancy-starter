@@ -2,14 +2,14 @@
 import { Form, Head } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import AuthCardLayout from '@/layouts/auth/auth-card-layout';
+import { login } from '@/routes';
+import { email } from '@/routes/password';
 import InputError from '@components/input-error';
 import TextLink from '@components/text-link';
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import { Label } from '@components/ui/label';
-import AuthCardLayout from '@/layouts/auth/auth-card-layout';
-import { login } from '@/routes';
-import { email } from '@/routes/password';
 import '@lib/i18n';
 
 export default function ForgotPassword({ status }: { status?: string }) {

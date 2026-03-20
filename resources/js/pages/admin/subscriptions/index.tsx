@@ -1,11 +1,11 @@
-import { Button } from '@components/ui/button';
-import { DataTable } from '@components/ui/data-table';
 import { Head, Link } from '@inertiajs/react';
-import { formatCentsToEuro } from '@lib/utils';
 import type { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import AdminLayout from '@/layouts/admin-layout';
+import { Button } from '@components/ui/button';
+import { DataTable } from '@components/ui/data-table';
+import { formatCentsToEuro } from '@lib/utils';
 import '@lib/i18n';
 
 type SubscriptionRow = {
@@ -36,7 +36,14 @@ export default function AdminSubscriptionsIndex({ subscriptions }: Props) {
         {
             accessorKey: 'workspace_name',
             header: ({ column }) => (
-                <Button type="button" variant="ghost" className="-ml-3 h-8" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+                <Button
+                    type="button"
+                    variant="ghost"
+                    className="-ml-3 h-8"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }
+                >
                     {t('admin.subscriptions.table.workspace')}
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
@@ -45,7 +52,14 @@ export default function AdminSubscriptionsIndex({ subscriptions }: Props) {
         {
             accessorKey: 'stripe_status',
             header: ({ column }) => (
-                <Button type="button" variant="ghost" className="-ml-3 h-8" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+                <Button
+                    type="button"
+                    variant="ghost"
+                    className="-ml-3 h-8"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }
+                >
                     {t('admin.subscriptions.table.status')}
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
@@ -56,20 +70,35 @@ export default function AdminSubscriptionsIndex({ subscriptions }: Props) {
             accessorFn: (subscription) =>
                 `${subscription.plan_name ?? ''} ${subscription.plan_price_monthly ?? ''}`,
             header: ({ column }) => (
-                <Button type="button" variant="ghost" className="-ml-3 h-8" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+                <Button
+                    type="button"
+                    variant="ghost"
+                    className="-ml-3 h-8"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }
+                >
                     {t('admin.subscriptions.table.price')}
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             ),
             cell: ({ row }) =>
-                row.original.plan_name === null || row.original.plan_price_monthly === null
+                row.original.plan_name === null ||
+                row.original.plan_price_monthly === null
                     ? t('admin.common.not_available')
                     : `${row.original.plan_name} (${formatCentsToEuro(row.original.plan_price_monthly)})`,
         },
         {
             accessorKey: 'created_at',
             header: ({ column }) => (
-                <Button type="button" variant="ghost" className="-ml-3 h-8" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+                <Button
+                    type="button"
+                    variant="ghost"
+                    className="-ml-3 h-8"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }
+                >
                     {t('admin.subscriptions.table.created_at')}
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
@@ -79,7 +108,10 @@ export default function AdminSubscriptionsIndex({ subscriptions }: Props) {
             id: 'actions',
             header: t('admin.common.actions'),
             cell: ({ row }) => (
-                <Link href={`/admin/subscriptions/${row.original.id}`} className="text-primary hover:underline">
+                <Link
+                    href={`/admin/subscriptions/${row.original.id}`}
+                    className="text-primary hover:underline"
+                >
                     {t('admin.common.view')}
                 </Link>
             ),
@@ -91,8 +123,12 @@ export default function AdminSubscriptionsIndex({ subscriptions }: Props) {
             <Head title={t('admin.subscriptions.meta.title')} />
             <div className="space-y-4">
                 <div>
-                    <h1 className="text-2xl font-semibold">{t('admin.subscriptions.meta.title')}</h1>
-                    <p className="text-sm text-muted-foreground">{t('admin.subscriptions.meta.description')}</p>
+                    <h1 className="text-2xl font-semibold">
+                        {t('admin.subscriptions.meta.title')}
+                    </h1>
+                    <p className="text-sm text-muted-foreground">
+                        {t('admin.subscriptions.meta.description')}
+                    </p>
                 </div>
                 <DataTable columns={columns} data={subscriptions} />
             </div>

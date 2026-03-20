@@ -21,7 +21,8 @@ for (const path in languageModules) {
             languages[language] = { translation: {} };
         }
 
-        languages[language].translation[namespace] = languageModules[path].default;
+        languages[language].translation[namespace] =
+            languageModules[path].default;
     }
 }
 

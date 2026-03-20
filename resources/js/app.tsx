@@ -3,10 +3,10 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Toaster } from 'sonner';
-import '@styles/app.css';
-import '@lib/i18n';
 import { initializeTheme, useAppearance } from '@hooks/use-appearance';
 import { useFlashToast } from '@hooks/use-flash-toast';
+import '@styles/app.css';
+import '@lib/i18n';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 

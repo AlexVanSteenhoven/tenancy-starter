@@ -1,5 +1,9 @@
 import { Form, Head } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
+import AuthCardLayout from '@/layouts/auth/auth-card-layout';
+import { register } from '@/routes';
+import { store } from '@/routes/login';
+import { request } from '@/routes/password';
 import InputError from '@components/input-error';
 import TextLink from '@components/text-link';
 import { Button } from '@components/ui/button';
@@ -7,10 +11,6 @@ import { Checkbox } from '@components/ui/checkbox';
 import { Input } from '@components/ui/input';
 import { Label } from '@components/ui/label';
 import { Spinner } from '@components/ui/spinner';
-import AuthCardLayout from '@/layouts/auth/auth-card-layout';
-import { register } from '@/routes';
-import { store } from '@/routes/login';
-import { request } from '@/routes/password';
 import '@lib/i18n';
 
 type Props = {

@@ -3,11 +3,11 @@ import { type SubmitEventHandler } from 'react';
 import { useTranslation } from 'react-i18next';
 import StoreRefundController from '@/actions/App/Http/Controllers/Admin/Invoices/StoreRefundController';
 import AdminLayout from '@/layouts/admin-layout';
-import { formatCentsToEuro } from '@lib/utils';
 import { Button } from '@components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import { Input } from '@components/ui/input';
 import { Label } from '@components/ui/label';
+import { formatCentsToEuro } from '@lib/utils';
 import '@lib/i18n';
 
 type Props = {
@@ -52,21 +52,41 @@ export default function AdminInvoiceShow({ invoice }: Props) {
             <div className="space-y-6">
                 <div>
                     <h1 className="text-2xl font-semibold">
-                        {t('admin.invoices.show.meta.title')} #{invoice.number ?? invoice.id}
+                        {t('admin.invoices.show.meta.title')} #
+                        {invoice.number ?? invoice.id}
                     </h1>
-                    <p className="text-sm text-muted-foreground">{invoice.workspace_name ?? t('admin.common.not_available')}</p>
+                    <p className="text-sm text-muted-foreground">
+                        {invoice.workspace_name ??
+                            t('admin.common.not_available')}
+                    </p>
                 </div>
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>{t('admin.invoices.show.details.title')}</CardTitle>
+                        <CardTitle>
+                            {t('admin.invoices.show.details.title')}
+                        </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-2 text-sm">
-                        <p>{t('admin.invoices.show.details.status')}: {invoice.status}</p>
-                        <p>{t('admin.invoices.show.details.amount_paid')}: {formatCentsToEuro(invoice.amount_paid)}</p>
-                        <p>{t('admin.invoices.show.details.amount_due')}: {formatCentsToEuro(invoice.amount_due)}</p>
+                        <p>
+                            {t('admin.invoices.show.details.status')}:{' '}
+                            {invoice.status}
+                        </p>
+                        <p>
+                            {t('admin.invoices.show.details.amount_paid')}:{' '}
+                            {formatCentsToEuro(invoice.amount_paid)}
+                        </p>
+                        <p>
+                            {t('admin.invoices.show.details.amount_due')}:{' '}
+                            {formatCentsToEuro(invoice.amount_due)}
+                        </p>
                         {invoice.invoice_pdf !== null && (
-                            <a href={invoice.invoice_pdf} target="_blank" rel="noreferrer" className="text-primary hover:underline">
+                            <a
+                                href={invoice.invoice_pdf}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-primary hover:underline"
+                            >
                                 {t('admin.invoices.show.details.download_pdf')}
                             </a>
                         )}
@@ -75,26 +95,42 @@ export default function AdminInvoiceShow({ invoice }: Props) {
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>{t('admin.invoices.show.refund.title')}</CardTitle>
+                        <CardTitle>
+                            {t('admin.invoices.show.refund.title')}
+                        </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={submitRefund} className="space-y-4">
                             <div className="space-y-2">
-                                <Label htmlFor="amount">{t('admin.invoices.show.refund.amount')}</Label>
+                                <Label htmlFor="amount">
+                                    {t('admin.invoices.show.refund.amount')}
+                                </Label>
                                 <Input
                                     id="amount"
                                     type="number"
                                     min={1}
                                     value={form.data.amount}
-                                    onChange={(event) => form.setData('amount', event.target.value)}
+                                    onChange={(event) =>
+                                        form.setData(
+                                            'amount',
+                                            event.target.value,
+                                        )
+                                    }
                                 />
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="reason">{t('admin.invoices.show.refund.reason')}</Label>
+                                <Label htmlFor="reason">
+                                    {t('admin.invoices.show.refund.reason')}
+                                </Label>
                                 <Input
                                     id="reason"
                                     value={form.data.reason}
-                                    onChange={(event) => form.setData('reason', event.target.value)}
+                                    onChange={(event) =>
+                                        form.setData(
+                                            'reason',
+                                            event.target.value,
+                                        )
+                                    }
                                 />
                             </div>
                             <Button type="submit" disabled={form.processing}>

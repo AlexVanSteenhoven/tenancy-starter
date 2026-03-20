@@ -41,24 +41,32 @@ export default function AdminLogin({ status = null }: Props) {
 
             <form onSubmit={submit} className="space-y-4">
                 <div className="space-y-2">
-                    <Label htmlFor="email">{t('admin.auth.form.email.label')}</Label>
+                    <Label htmlFor="email">
+                        {t('admin.auth.form.email.label')}
+                    </Label>
                     <Input
                         id="email"
                         type="email"
                         value={form.data.email}
-                        onChange={(event) => form.setData('email', event.target.value)}
+                        onChange={(event) =>
+                            form.setData('email', event.target.value)
+                        }
                         placeholder={t('admin.auth.form.email.placeholder')}
                     />
                     <InputError message={form.errors.email} />
                 </div>
 
                 <div className="space-y-2">
-                    <Label htmlFor="password">{t('admin.auth.form.password.label')}</Label>
+                    <Label htmlFor="password">
+                        {t('admin.auth.form.password.label')}
+                    </Label>
                     <Input
                         id="password"
                         type="password"
                         value={form.data.password}
-                        onChange={(event) => form.setData('password', event.target.value)}
+                        onChange={(event) =>
+                            form.setData('password', event.target.value)
+                        }
                         placeholder={t('admin.auth.form.password.placeholder')}
                     />
                     <InputError message={form.errors.password} />
@@ -68,14 +76,24 @@ export default function AdminLogin({ status = null }: Props) {
                     <Checkbox
                         id="remember"
                         checked={form.data.remember}
-                        onCheckedChange={(checked) => form.setData('remember', Boolean(checked))}
+                        onCheckedChange={(checked) =>
+                            form.setData('remember', Boolean(checked))
+                        }
                     />
-                    <Label htmlFor="remember">{t('admin.auth.form.remember')}</Label>
+                    <Label htmlFor="remember">
+                        {t('admin.auth.form.remember')}
+                    </Label>
                 </div>
 
-                {status !== null && <p className="text-sm text-muted-foreground">{status}</p>}
+                {status !== null && (
+                    <p className="text-sm text-muted-foreground">{status}</p>
+                )}
 
-                <Button type="submit" className="w-full" disabled={form.processing}>
+                <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={form.processing}
+                >
                     {t('admin.auth.form.submit')}
                 </Button>
             </form>

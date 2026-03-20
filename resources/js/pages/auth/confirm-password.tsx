@@ -1,12 +1,12 @@
 import { Form, Head } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
+import AuthCardLayout from '@/layouts/auth/auth-card-layout';
+import { store } from '@/routes/password/confirm';
 import InputError from '@components/input-error';
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import { Label } from '@components/ui/label';
 import { Spinner } from '@components/ui/spinner';
-import AuthCardLayout from '@/layouts/auth/auth-card-layout';
-import { store } from '@/routes/password/confirm';
 import '@lib/i18n';
 
 export default function ConfirmPassword() {

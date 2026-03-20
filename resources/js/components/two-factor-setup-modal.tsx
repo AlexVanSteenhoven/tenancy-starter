@@ -3,6 +3,7 @@ import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { Check, Copy, ScanLine } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { confirm } from '@/routes/two-factor';
 import InputError from '@components/input-error';
 import { Button } from '@components/ui/button';
 import {
@@ -22,7 +23,6 @@ import { useClipboard } from '@hooks/use-clipboard';
 import { OTP_MAX_LENGTH } from '@hooks/use-two-factor-auth';
 import AlertError from './alert-error';
 import { Spinner } from './ui/spinner';
-import { confirm } from '@/routes/two-factor';
 import '@lib/i18n';
 
 function GridScanIcon() {
@@ -213,7 +213,9 @@ function TwoFactorVerificationStep({
                                 onClick={onBack}
                                 disabled={processing}
                             >
-                                {t('settings.two-factor.setup-modal.actions.back')}
+                                {t(
+                                    'settings.two-factor.setup-modal.actions.back',
+                                )}
                             </Button>
                             <Button
                                 type="submit"
@@ -222,7 +224,9 @@ function TwoFactorVerificationStep({
                                     processing || code.length < OTP_MAX_LENGTH
                                 }
                             >
-                                {t('settings.two-factor.setup-modal.actions.confirm')}
+                                {t(
+                                    'settings.two-factor.setup-modal.actions.confirm',
+                                )}
                             </Button>
                         </div>
                     </div>
@@ -280,7 +284,9 @@ export default function TwoFactorSetupModal({
                 description: t(
                     'settings.two-factor.setup-modal.verify.description',
                 ),
-                buttonText: t('settings.two-factor.setup-modal.actions.continue'),
+                buttonText: t(
+                    'settings.two-factor.setup-modal.actions.continue',
+                ),
             };
         }
 

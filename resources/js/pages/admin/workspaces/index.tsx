@@ -29,7 +29,14 @@ export default function AdminWorkspacesIndex({ workspaces }: Props) {
         {
             accessorKey: 'name',
             header: ({ column }) => (
-                <Button type="button" variant="ghost" className="-ml-3 h-8" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+                <Button
+                    type="button"
+                    variant="ghost"
+                    className="-ml-3 h-8"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }
+                >
                     {t('admin.workspaces.table.name')}
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
@@ -38,7 +45,14 @@ export default function AdminWorkspacesIndex({ workspaces }: Props) {
         {
             accessorKey: 'domain',
             header: ({ column }) => (
-                <Button type="button" variant="ghost" className="-ml-3 h-8" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+                <Button
+                    type="button"
+                    variant="ghost"
+                    className="-ml-3 h-8"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }
+                >
                     {t('admin.workspaces.table.domain')}
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
@@ -47,7 +61,14 @@ export default function AdminWorkspacesIndex({ workspaces }: Props) {
         {
             accessorKey: 'plan_name',
             header: ({ column }) => (
-                <Button type="button" variant="ghost" className="-ml-3 h-8" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+                <Button
+                    type="button"
+                    variant="ghost"
+                    className="-ml-3 h-8"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }
+                >
                     {t('admin.workspaces.table.plan')}
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
@@ -56,7 +77,14 @@ export default function AdminWorkspacesIndex({ workspaces }: Props) {
         {
             accessorKey: 'subscription_status',
             header: ({ column }) => (
-                <Button type="button" variant="ghost" className="-ml-3 h-8" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+                <Button
+                    type="button"
+                    variant="ghost"
+                    className="-ml-3 h-8"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }
+                >
                     {t('admin.workspaces.table.subscription_status')}
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
@@ -66,7 +94,10 @@ export default function AdminWorkspacesIndex({ workspaces }: Props) {
             id: 'actions',
             header: t('admin.common.actions'),
             cell: ({ row }) => (
-                <Link href={`/admin/workspaces/${row.original.id}`} className="text-primary hover:underline">
+                <Link
+                    href={`/admin/workspaces/${row.original.id}`}
+                    className="text-primary hover:underline"
+                >
                     {t('admin.common.view')}
                 </Link>
             ),
@@ -79,8 +110,12 @@ export default function AdminWorkspacesIndex({ workspaces }: Props) {
 
             <div className="space-y-4">
                 <div>
-                    <h1 className="text-2xl font-semibold">{t('admin.workspaces.meta.title')}</h1>
-                    <p className="text-sm text-muted-foreground">{t('admin.workspaces.meta.description')}</p>
+                    <h1 className="text-2xl font-semibold">
+                        {t('admin.workspaces.meta.title')}
+                    </h1>
+                    <p className="text-sm text-muted-foreground">
+                        {t('admin.workspaces.meta.description')}
+                    </p>
                 </div>
 
                 <DataTable

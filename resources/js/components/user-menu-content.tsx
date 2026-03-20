@@ -1,6 +1,8 @@
 import { Link, router } from '@inertiajs/react';
 import { LogOut, Settings } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { logout } from '@/routes';
+import { edit } from '@/routes/settings/profile';
 import {
     DropdownMenuGroup,
     DropdownMenuItem,
@@ -10,8 +12,6 @@ import {
 import { UserInfo } from '@components/user-info';
 import { useMobileNavigation } from '@hooks/use-mobile-navigation';
 import type { User } from '@types';
-import { logout } from '@/routes';
-import { edit } from '@/routes/settings/profile';
 import '@lib/i18n';
 
 type Props = {

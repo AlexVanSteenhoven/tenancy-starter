@@ -59,13 +59,15 @@ export default function AcceptInvitation({
             <Head title={t('auth.invitations.meta.title')} />
 
             {!invitation ? (
-                <p className="text-muted-foreground text-sm">
+                <p className="text-sm text-muted-foreground">
                     {t('auth.invitations.states.invalid')}
                 </p>
             ) : (
                 <form onSubmit={submit} className="flex flex-col gap-6">
                     <div className="grid gap-2">
-                        <Label htmlFor="email">{t('auth.invitations.form.email.label')}</Label>
+                        <Label htmlFor="email">
+                            {t('auth.invitations.form.email.label')}
+                        </Label>
                         <Input
                             id="email"
                             type="email"
@@ -77,7 +79,9 @@ export default function AcceptInvitation({
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="name">{t('auth.invitations.form.name.label')}</Label>
+                        <Label htmlFor="name">
+                            {t('auth.invitations.form.name.label')}
+                        </Label>
                         <Input
                             id="name"
                             type="text"
@@ -85,7 +89,9 @@ export default function AcceptInvitation({
                             onChange={(event) =>
                                 form.setData('name', event.target.value)
                             }
-                            placeholder={t('auth.invitations.form.name.placeholder')}
+                            placeholder={t(
+                                'auth.invitations.form.name.placeholder',
+                            )}
                             autoComplete="name"
                             autoFocus
                         />
@@ -103,7 +109,9 @@ export default function AcceptInvitation({
                             onChange={(event) =>
                                 form.setData('password', event.target.value)
                             }
-                            placeholder={t('auth.invitations.form.password.placeholder')}
+                            placeholder={t(
+                                'auth.invitations.form.password.placeholder',
+                            )}
                             autoComplete="new-password"
                         />
                         <InputError message={form.errors.password} />
@@ -111,7 +119,9 @@ export default function AcceptInvitation({
 
                     <div className="grid gap-2">
                         <Label htmlFor="password_confirmation">
-                            {t('auth.invitations.form.password_confirmation.label')}
+                            {t(
+                                'auth.invitations.form.password_confirmation.label',
+                            )}
                         </Label>
                         <Input
                             id="password_confirmation"
@@ -128,7 +138,9 @@ export default function AcceptInvitation({
                             )}
                             autoComplete="new-password"
                         />
-                        <InputError message={form.errors.password_confirmation} />
+                        <InputError
+                            message={form.errors.password_confirmation}
+                        />
                     </div>
 
                     <Button type="submit" disabled={form.processing}>

@@ -46,7 +46,9 @@ export default function ShowUser({ user }: ShowUserProps) {
                         {t('users.show-user.title')}
                     </h1>
                     <Button asChild type="button" variant="secondary">
-                        <Link href={ShowUsersController.url()}>{t('users.show-user.back')}</Link>
+                        <Link href={ShowUsersController.url()}>
+                            {t('users.show-user.back')}
+                        </Link>
                     </Button>
                 </div>
 
@@ -87,7 +89,9 @@ export default function ShowUser({ user }: ShowUserProps) {
                         <dt className="text-muted-foreground">
                             {t('users.show-user.fields.status')}
                         </dt>
-                        <dd><StatusBadge status={user.status} /></dd>
+                        <dd>
+                            <StatusBadge status={user.status} />
+                        </dd>
                     </div>
                 </dl>
             </div>

@@ -1,18 +1,3 @@
-import {
-    CardCvcElement,
-    CardExpiryElement,
-    CardNumberElement,
-    Elements,
-    useElements,
-    useStripe,
-} from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
-import { Head, useForm } from '@inertiajs/react';
-import type { SubmitEventHandler } from 'react';
-import { useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { store } from '@/routes/onboarding/billing';
-import AuthCardLayout from '@/layouts/auth/auth-card-layout';
 import InputError from '@components/input-error';
 import { Badge } from '@components/ui/badge';
 import { Button } from '@components/ui/button';
@@ -26,6 +11,21 @@ import {
 import { Input } from '@components/ui/input';
 import { Label } from '@components/ui/label';
 import { Spinner } from '@components/ui/spinner';
+import { Head, useForm } from '@inertiajs/react';
+import {
+    CardCvcElement,
+    CardExpiryElement,
+    CardNumberElement,
+    Elements,
+    useElements,
+    useStripe,
+} from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import type { SubmitEventHandler } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import AuthCardLayout from '@/layouts/auth/auth-card-layout';
+import { store } from '@/routes/onboarding/billing';
 import '@lib/i18n';
 
 type Workspace = {
@@ -52,7 +52,6 @@ const stripeElementClassName =
 
 function BillingForm({
     plans,
-    workspace,
     stripeEnabled,
 }: Omit<Props, 'stripeKey'> & { stripeEnabled: boolean }) {
     const { t } = useTranslation();
@@ -81,7 +80,8 @@ function BillingForm({
     const selectedPlanData =
         plans.find((plan) => plan.slug === selectedPlan) ?? plans[0];
     const requiresPayment = (selectedPlanData?.price_monthly ?? 0) > 0;
-    const subtotalAmount = (selectedPlanData?.price_monthly ?? 0) * seatQuantity;
+    const subtotalAmount =
+        (selectedPlanData?.price_monthly ?? 0) * seatQuantity;
     const stripeElementOptions = useMemo(
         () => ({
             style: {
@@ -184,7 +184,7 @@ function BillingForm({
         if (error !== undefined) {
             setStripeError(
                 error.message ??
-                    t('onboarding.billing.validation.payment_failed'),
+                t('onboarding.billing.validation.payment_failed'),
             );
 
             return;
@@ -291,16 +291,16 @@ function BillingForm({
                                         <p className="text-3xl leading-none font-semibold">
                                             {isPaidPlan
                                                 ? t(
-                                                      'onboarding.billing.price.monthly',
-                                                      {
-                                                          amount: formattedAmount(
-                                                              plan.price_monthly,
-                                                          ),
-                                                      },
-                                                  )
+                                                    'onboarding.billing.price.monthly',
+                                                    {
+                                                        amount: formattedAmount(
+                                                            plan.price_monthly,
+                                                        ),
+                                                    },
+                                                )
                                                 : t(
-                                                      'onboarding.billing.price.free',
-                                                  )}
+                                                    'onboarding.billing.price.free',
+                                                )}
                                         </p>
                                     </CardHeader>
                                     <CardContent>
@@ -601,7 +601,10 @@ function BillingForm({
                                     className="h-10 rounded-md border border-input px-3 text-lg font-semibold transition-all hover:bg-accent/20"
                                     onClick={() =>
                                         setSeatQuantity((value) => {
-                                            const nextValue = Math.max(1, value - 1);
+                                            const nextValue = Math.max(
+                                                1,
+                                                value - 1,
+                                            );
                                             form.setData('seats', nextValue);
 
                                             return nextValue;
@@ -617,8 +620,13 @@ function BillingForm({
                                     value={seatQuantity}
                                     className="h-10 text-center"
                                     onChange={(event) => {
-                                        const parsed = Number.parseInt(event.target.value, 10);
-                                        const nextValue = Number.isNaN(parsed) ? 1 : Math.max(1, parsed);
+                                        const parsed = Number.parseInt(
+                                            event.target.value,
+                                            10,
+                                        );
+                                        const nextValue = Number.isNaN(parsed)
+                                            ? 1
+                                            : Math.max(1, parsed);
                                         setSeatQuantity(nextValue);
                                         form.setData('seats', nextValue);
                                     }}
@@ -659,15 +667,16 @@ function BillingForm({
                                             )}
                                         </p>
                                         <p className="text-xs text-muted-foreground">
-                                            {t('onboarding.billing.summary.seats', {
-                                                quantity: seatQuantity,
-                                            })}
+                                            {t(
+                                                'onboarding.billing.summary.seats',
+                                                {
+                                                    quantity: seatQuantity,
+                                                },
+                                            )}
                                         </p>
                                     </div>
                                     <p className="text-sm">
-                                        {formattedAmount(
-                                            subtotalAmount,
-                                        )}
+                                        {formattedAmount(subtotalAmount)}
                                     </p>
                                 </div>
                             </div>
@@ -680,9 +689,7 @@ function BillingForm({
                                         )}
                                     </span>
                                     <span>
-                                        {formattedAmount(
-                                            subtotalAmount,
-                                        )}
+                                        {formattedAmount(subtotalAmount)}
                                     </span>
                                 </div>
                                 <div className="flex items-center justify-between text-muted-foreground">
@@ -702,9 +709,7 @@ function BillingForm({
                                     {t('onboarding.billing.summary.total')}
                                 </span>
                                 <span className="text-sm font-semibold">
-                                    {formattedAmount(
-                                        subtotalAmount,
-                                    )}
+                                    {formattedAmount(subtotalAmount)}
                                 </span>
                             </div>
                         </div>

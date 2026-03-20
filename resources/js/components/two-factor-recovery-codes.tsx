@@ -2,6 +2,7 @@ import { Form } from '@inertiajs/react';
 import { Eye, EyeOff, LockKeyhole, RefreshCw } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { regenerateRecoveryCodes } from '@/routes/two-factor';
 import { Button } from '@components/ui/button';
 import {
     Card,
@@ -11,7 +12,6 @@ import {
     CardTitle,
 } from '@components/ui/card';
 import AlertError from './alert-error';
-import { regenerateRecoveryCodes } from '@/routes/two-factor';
 import '@lib/i18n';
 
 type Props = {
@@ -79,7 +79,9 @@ export default function TwoFactorRecoveryCodes({
                             aria-hidden="true"
                         />
                         {codesAreVisible
-                            ? t('settings.two-factor.recovery-codes.actions.hide')
+                            ? t(
+                                  'settings.two-factor.recovery-codes.actions.hide',
+                              )
                             : t(
                                   'settings.two-factor.recovery-codes.actions.show',
                               )}

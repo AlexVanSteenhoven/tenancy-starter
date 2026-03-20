@@ -1,7 +1,5 @@
 "use client"
 
-import * as React from "react"
-import { useTranslation } from "react-i18next"
 import {
   type ColumnDef,
   type SortingState,
@@ -13,6 +11,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
+import * as React from "react"
+import { useTranslation } from "react-i18next"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -42,6 +42,7 @@ export function DataTable<TData>({
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [globalFilter, setGlobalFilter] = React.useState("")
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,

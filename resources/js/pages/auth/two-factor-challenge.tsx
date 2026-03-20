@@ -2,6 +2,8 @@ import { Form, Head } from '@inertiajs/react';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import AuthCardLayout from '@/layouts/auth/auth-card-layout';
+import { store } from '@/routes/two-factor/login';
 import InputError from '@components/input-error';
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
@@ -11,8 +13,6 @@ import {
     InputOTPSlot,
 } from '@components/ui/input-otp';
 import { OTP_MAX_LENGTH } from '@hooks/use-two-factor-auth';
-import AuthCardLayout from '@/layouts/auth/auth-card-layout';
-import { store } from '@/routes/two-factor/login';
 import '@lib/i18n';
 
 export default function TwoFactorChallenge() {
@@ -31,18 +31,14 @@ export default function TwoFactorChallenge() {
                 description: t(
                     'auth.two-factor.challenge.recovery-code.description',
                 ),
-                toggleText: t(
-                    'auth.two-factor.challenge.toggle.to-auth-code',
-                ),
+                toggleText: t('auth.two-factor.challenge.toggle.to-auth-code'),
             };
         }
 
         return {
             title: t('auth.two-factor.challenge.auth-code.title'),
             description: t('auth.two-factor.challenge.auth-code.description'),
-            toggleText: t(
-                'auth.two-factor.challenge.toggle.to-recovery-code',
-            ),
+            toggleText: t('auth.two-factor.challenge.toggle.to-recovery-code'),
         };
     }, [showRecoveryInput, t]);
 
@@ -121,7 +117,9 @@ export default function TwoFactorChallenge() {
 
                             <div className="text-center text-sm text-muted-foreground">
                                 <span>
-                                    {t('auth.two-factor.challenge.toggle.prefix')}{' '}
+                                    {t(
+                                        'auth.two-factor.challenge.toggle.prefix',
+                                    )}{' '}
                                 </span>
                                 <button
                                     type="button"

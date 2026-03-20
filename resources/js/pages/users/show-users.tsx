@@ -197,15 +197,21 @@ export default function ShowUsers({
         let successful = true;
 
         if (roleChanged) {
-            successful = await patchUser(UpdateUserRoleController.url(editingUser.id), {
-                role: editingRole,
-            });
+            successful = await patchUser(
+                UpdateUserRoleController.url(editingUser.id),
+                {
+                    role: editingRole,
+                },
+            );
         }
 
         if (successful && statusChanged) {
-            successful = await patchUser(UpdateUserStatusController.url(editingUser.id), {
-                status: editingStatus,
-            });
+            successful = await patchUser(
+                UpdateUserStatusController.url(editingUser.id),
+                {
+                    status: editingStatus,
+                },
+            );
         }
 
         if (successful) {
@@ -381,7 +387,9 @@ export default function ShowUsers({
                                     return;
                                 }
 
-                                router.get(ShowUserController.url(row.original.id));
+                                router.get(
+                                    ShowUserController.url(row.original.id),
+                                );
                             }}
                         >
                             {t('users.actions.show')}

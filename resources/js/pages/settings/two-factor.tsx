@@ -2,17 +2,17 @@ import { Form, Head } from '@inertiajs/react';
 import { ShieldBan, ShieldCheck } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import SettingsLayout from '@/layouts/settings/layout';
+import { show } from '@/routes/settings/two-factor';
+import { disable, enable } from '@/routes/two-factor';
 import Heading from '@components/heading';
+import { LayoutResolver } from '@components/layout-resolver';
 import TwoFactorRecoveryCodes from '@components/two-factor-recovery-codes';
 import TwoFactorSetupModal from '@components/two-factor-setup-modal';
 import { Badge } from '@components/ui/badge';
 import { Button } from '@components/ui/button';
 import { useTwoFactorAuth } from '@hooks/use-two-factor-auth';
-import { LayoutResolver } from '@components/layout-resolver';
-import SettingsLayout from '@/layouts/settings/layout';
 import type { BreadcrumbItem } from '@types';
-import { show } from '@/routes/settings/two-factor';
-import { disable, enable } from '@/routes/two-factor';
 import '@lib/i18n';
 
 type Props = {

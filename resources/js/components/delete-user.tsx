@@ -1,6 +1,7 @@
 import { Form } from '@inertiajs/react';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { destroy } from '@/routes/settings/profile';
 import Heading from '@components/heading';
 import InputError from '@components/input-error';
 import { Button } from '@components/ui/button';
@@ -15,7 +16,6 @@ import {
 } from '@components/ui/dialog';
 import { Input } from '@components/ui/input';
 import { Label } from '@components/ui/label';
-import { destroy } from '@/routes/settings/profile';
 import '@lib/i18n';
 
 export default function DeleteUser() {

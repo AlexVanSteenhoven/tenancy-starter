@@ -2,16 +2,16 @@ import { Transition } from '@headlessui/react';
 import { Form, Head } from '@inertiajs/react';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import SettingsLayout from '@/layouts/settings/layout';
+import { update } from '@/routes/settings/password';
+import { edit } from '@/routes/settings/password';
 import Heading from '@components/heading';
 import InputError from '@components/input-error';
+import { LayoutResolver } from '@components/layout-resolver';
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import { Label } from '@components/ui/label';
-import { LayoutResolver } from '@components/layout-resolver';
-import SettingsLayout from '@/layouts/settings/layout';
 import type { BreadcrumbItem } from '@types';
-import { update } from '@/routes/settings/password';
-import { edit } from '@/routes/settings/password';
 import '@lib/i18n';
 
 export default function Password() {

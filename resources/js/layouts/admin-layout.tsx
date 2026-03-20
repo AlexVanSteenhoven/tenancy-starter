@@ -1,5 +1,11 @@
 import { Link, usePage } from '@inertiajs/react';
-import { Building2, CreditCard, LayoutGrid, ReceiptText, Tags } from 'lucide-react';
+import {
+    Building2,
+    CreditCard,
+    LayoutGrid,
+    ReceiptText,
+    Tags,
+} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import ShowInvoicesController from '@/actions/App/Http/Controllers/Admin/Invoices/ShowInvoicesController';
 import ShowPlansController from '@/actions/App/Http/Controllers/Admin/Plans/ShowPlansController';
@@ -27,14 +33,37 @@ import type { AppLayoutProps, Auth, NavItem } from '@types';
 import '@lib/i18n';
 
 const adminNavItems: NavItem[] = [
-    { title: 'admin.navigation.dashboard', href: ShowDashboardController.url(), icon: LayoutGrid },
-    { title: 'admin.navigation.workspaces', href: ShowWorkspacesController.url(), icon: Building2 },
-    { title: 'admin.navigation.plans', href: ShowPlansController.url(), icon: Tags },
-    { title: 'admin.navigation.subscriptions', href: ShowSubscriptionsController.url(), icon: CreditCard },
-    { title: 'admin.navigation.invoices', href: ShowInvoicesController.url(), icon: ReceiptText },
+    {
+        title: 'admin.navigation.dashboard',
+        href: ShowDashboardController.url(),
+        icon: LayoutGrid,
+    },
+    {
+        title: 'admin.navigation.workspaces',
+        href: ShowWorkspacesController.url(),
+        icon: Building2,
+    },
+    {
+        title: 'admin.navigation.plans',
+        href: ShowPlansController.url(),
+        icon: Tags,
+    },
+    {
+        title: 'admin.navigation.subscriptions',
+        href: ShowSubscriptionsController.url(),
+        icon: CreditCard,
+    },
+    {
+        title: 'admin.navigation.invoices',
+        href: ShowInvoicesController.url(),
+        icon: ReceiptText,
+    },
 ];
 
-export default function AdminLayout({ children, breadcrumbs = [] }: AppLayoutProps) {
+export default function AdminLayout({
+    children,
+    breadcrumbs = [],
+}: AppLayoutProps) {
     const { auth } = usePage<{ auth: Auth }>().props;
     const { t } = useTranslation();
     const { isCurrentUrl } = useCurrentUrl();
@@ -55,7 +84,9 @@ export default function AdminLayout({ children, breadcrumbs = [] }: AppLayoutPro
                 </SidebarHeader>
                 <SidebarContent>
                     <SidebarGroup className="px-2 py-0">
-                        <SidebarGroupLabel>{t('admin.navigation.group')}</SidebarGroupLabel>
+                        <SidebarGroupLabel>
+                            {t('admin.navigation.group')}
+                        </SidebarGroupLabel>
                         <SidebarMenu>
                             {adminNavItems.map((item) => (
                                 <SidebarMenuItem key={item.href.toString()}>

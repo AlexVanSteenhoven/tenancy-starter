@@ -1,11 +1,11 @@
 import { Head } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
+import SettingsLayout from '@/layouts/settings/layout';
+import { edit as editAppearance } from '@/routes/settings/appearance';
 import AppearanceTabs from '@components/appearance-tabs';
 import Heading from '@components/heading';
 import { LayoutResolver } from '@components/layout-resolver';
-import SettingsLayout from '@/layouts/settings/layout';
 import type { BreadcrumbItem } from '@types';
-import { edit as editAppearance } from '@/routes/settings/appearance';
 import '@lib/i18n';
 
 export default function Appearance() {
@@ -30,7 +30,9 @@ export default function Appearance() {
                     <Heading
                         variant="small"
                         title={t('settings.appearance.heading.title')}
-                        description={t('settings.appearance.heading.description')}
+                        description={t(
+                            'settings.appearance.heading.description',
+                        )}
                     />
                     <AppearanceTabs />
                 </div>

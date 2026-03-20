@@ -1,13 +1,16 @@
-import { Form, Head } from '@inertiajs/react';
+/*eslint-disable */
 import InputError from '@components/input-error';
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import { Label } from '@components/ui/label';
 import { Spinner } from '@components/ui/spinner';
-import AuthCardLayout from '@/layouts/auth/auth-card-layout';
-import StoreSetupAccountController from '@/actions/App/Http/Controllers/Onboarding/StoreSetupAccountController';
-import '@/lib/i18n';
+import { Form, Head } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
+import StoreSetupAccountController from '@/actions/App/Http/Controllers/Onboarding/StoreSetupAccountController';
+import AuthCardLayout from '@/layouts/auth/auth-card-layout';
+
+import '@/lib/i18n';
+/*eslint-enable */
 
 type Props = {
     email: string;
@@ -60,14 +63,18 @@ export default function SetupAccount({ email }: Props) {
                                     autoFocus
                                     tabIndex={2}
                                     autoComplete="name"
-                                    placeholder={t('auth.setup.account.form.name.placeholder')}
+                                    placeholder={t(
+                                        'auth.setup.account.form.name.placeholder',
+                                    )}
                                 />
                                 <InputError message={errors.name} />
                             </div>
 
                             <div className="grid gap-2">
                                 <Label htmlFor="password">
-                                    {t('auth.setup.account.form.password.label')}
+                                    {t(
+                                        'auth.setup.account.form.password.label',
+                                    )}
                                 </Label>
                                 <Input
                                     id="password"
@@ -76,14 +83,18 @@ export default function SetupAccount({ email }: Props) {
                                     required
                                     tabIndex={3}
                                     autoComplete="new-password"
-                                    placeholder={t('auth.setup.account.form.password.placeholder')}
+                                    placeholder={t(
+                                        'auth.setup.account.form.password.placeholder',
+                                    )}
                                 />
                                 <InputError message={errors.password} />
                             </div>
 
                             <div className="grid gap-2">
                                 <Label htmlFor="password_confirmation">
-                                    {t('auth.setup.account.form.password_confirmation.label')}
+                                    {t(
+                                        'auth.setup.account.form.password_confirmation.label',
+                                    )}
                                 </Label>
                                 <Input
                                     id="password_confirmation"
@@ -92,9 +103,13 @@ export default function SetupAccount({ email }: Props) {
                                     required
                                     tabIndex={4}
                                     autoComplete="new-password"
-                                    placeholder={t('auth.setup.account.form.password_confirmation.placeholder')}
+                                    placeholder={t(
+                                        'auth.setup.account.form.password_confirmation.placeholder',
+                                    )}
                                 />
-                                <InputError message={errors.password_confirmation} />
+                                <InputError
+                                    message={errors.password_confirmation}
+                                />
                             </div>
 
                             <Button

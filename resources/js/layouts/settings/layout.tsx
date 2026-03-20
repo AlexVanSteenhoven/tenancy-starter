@@ -1,17 +1,17 @@
 import { Link } from '@inertiajs/react';
 import type { PropsWithChildren } from 'react';
 import { useTranslation } from 'react-i18next';
+import { cn, toUrl } from '@/lib/utils';
+import { edit as editAppearance } from '@/routes/settings/appearance';
+import { edit as editPassword } from '@/routes/settings/password';
+import { edit as editProfile } from '@/routes/settings/profile';
+import { show as showTwoFactor } from '@/routes/settings/two-factor';
 import Heading from '@components/heading';
 import { Button } from '@components/ui/button';
 import { Separator } from '@components/ui/separator';
 import { useCurrentUrl } from '@hooks/use-current-url';
-import { cn, toUrl } from '@/lib/utils';
 import type { NavItem } from '@types';
 import '@lib/i18n';
-import { edit as editProfile } from '@/routes/settings/profile';
-import { edit as editPassword } from '@/routes/settings/password';
-import { show as showTwoFactor } from '@/routes/settings/two-factor';
-import { edit as editAppearance } from '@/routes/settings/appearance';
 
 export default function SettingsLayout({ children }: PropsWithChildren) {
     const { t } = useTranslation();

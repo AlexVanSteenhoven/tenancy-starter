@@ -45,16 +45,19 @@ const statusBadgeStyles: Record<Status, { badge: string; dot: string }> = {
     },
 };
 
-export default function StatusBadge({ status, fallbackText }: StatusBadgeProps) {
+export default function StatusBadge({
+    status,
+    fallbackText,
+}: StatusBadgeProps) {
     const { t } = useTranslation();
     const translateStatus = useEnumTranslation(statusTranslationMap);
     const { getLabel } = useLabel();
 
-    if (! status) {
+    if (!status) {
         return <span>{fallbackText ?? t('users.columns.no-status')}</span>;
     }
 
-    if (! isStatus(status)) {
+    if (!isStatus(status)) {
         return <span>{getLabel(status, translateStatus)}</span>;
     }
 
@@ -63,7 +66,10 @@ export default function StatusBadge({ status, fallbackText }: StatusBadgeProps) 
     return (
         <Badge
             variant="outline"
-            className={cn('rounded-full px-2.5 py-0.5 font-medium', styles.badge)}
+            className={cn(
+                'rounded-full px-2.5 py-0.5 font-medium',
+                styles.badge,
+            )}
         >
             <span
                 className={cn(

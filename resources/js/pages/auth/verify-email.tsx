@@ -1,12 +1,12 @@
 // Components
 import { Form, Head } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
-import TextLink from '@components/text-link';
-import { Button } from '@components/ui/button';
-import { Spinner } from '@components/ui/spinner';
 import AuthCardLayout from '@/layouts/auth/auth-card-layout';
 import { logout } from '@/routes';
 import { send } from '@/routes/verification';
+import TextLink from '@components/text-link';
+import { Button } from '@components/ui/button';
+import { Spinner } from '@components/ui/spinner';
 import '@lib/i18n';
 
 export default function VerifyEmail({ status }: { status?: string }) {
