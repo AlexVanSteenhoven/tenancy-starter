@@ -1,3 +1,15 @@
+## Project Skills Activation
+
+Activate the relevant skill whenever you work in that domain:
+
+- `controller-architecture` — When creating controllers, actions, form requests, or using `make:feature`
+- `authorization-guidelines` — When working with roles, permissions, authorization checks, or policies
+- `tenancy-development` — When working with workspaces, tenant routing, domains, or tenant databases
+- `frontend-structure` — When working on React/frontend files, creating pages/components, or using path aliases
+- `translations-guidelines` — When adding/editing translations or working with i18n keys
+
+---
+
 ## General code instructions
 
 - Don't generate code comments above the methods or code blocks if they are obvious. Don't add docblock comments when defining variables, unless instructed to, like `/** @var \App\Models\User $currentUser */`. Generate comments only for something that needs extra explanation for the reasons why that code was written.
