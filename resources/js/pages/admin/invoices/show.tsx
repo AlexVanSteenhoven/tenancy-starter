@@ -3,6 +3,7 @@ import { type SubmitEventHandler } from 'react';
 import { useTranslation } from 'react-i18next';
 import StoreRefundController from '@/actions/App/Http/Controllers/Admin/Invoices/StoreRefundController';
 import AdminLayout from '@/layouts/admin-layout';
+import { formatCentsToEuro } from '@lib/utils';
 import { Button } from '@components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import { Input } from '@components/ui/input';
@@ -62,8 +63,8 @@ export default function AdminInvoiceShow({ invoice }: Props) {
                     </CardHeader>
                     <CardContent className="space-y-2 text-sm">
                         <p>{t('admin.invoices.show.details.status')}: {invoice.status}</p>
-                        <p>{t('admin.invoices.show.details.amount_paid')}: {invoice.amount_paid}</p>
-                        <p>{t('admin.invoices.show.details.amount_due')}: {invoice.amount_due}</p>
+                        <p>{t('admin.invoices.show.details.amount_paid')}: {formatCentsToEuro(invoice.amount_paid)}</p>
+                        <p>{t('admin.invoices.show.details.amount_due')}: {formatCentsToEuro(invoice.amount_due)}</p>
                         {invoice.invoice_pdf !== null && (
                             <a href={invoice.invoice_pdf} target="_blank" rel="noreferrer" className="text-primary hover:underline">
                                 {t('admin.invoices.show.details.download_pdf')}

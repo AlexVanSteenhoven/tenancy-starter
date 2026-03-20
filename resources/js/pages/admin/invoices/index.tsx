@@ -1,7 +1,10 @@
 import { Head, Link } from '@inertiajs/react';
 import type { ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import AdminLayout from '@/layouts/admin-layout';
+import { formatCentsToEuro } from '@lib/utils';
+import { Button } from '@components/ui/button';
 import { DataTable } from '@components/ui/data-table';
 import '@lib/i18n';
 
@@ -27,10 +30,43 @@ export default function AdminInvoicesIndex({ invoices }: Props) {
     const { t } = useTranslation();
 
     const columns: ColumnDef<InvoiceRow>[] = [
-        { accessorKey: 'number', header: t('admin.invoices.table.number') },
-        { accessorKey: 'workspace_name', header: t('admin.invoices.table.workspace') },
-        { accessorKey: 'status', header: t('admin.invoices.table.status') },
-        { accessorKey: 'amount_paid', header: t('admin.invoices.table.amount_paid') },
+        {
+            accessorKey: 'number',
+            header: ({ column }) => (
+                <Button type="button" variant="ghost" className="-ml-3 h-8" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+                    {t('admin.invoices.table.number')}
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            ),
+        },
+        {
+            accessorKey: 'workspace_name',
+            header: ({ column }) => (
+                <Button type="button" variant="ghost" className="-ml-3 h-8" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+                    {t('admin.invoices.table.workspace')}
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            ),
+        },
+        {
+            accessorKey: 'status',
+            header: ({ column }) => (
+                <Button type="button" variant="ghost" className="-ml-3 h-8" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+                    {t('admin.invoices.table.status')}
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            ),
+        },
+        {
+            accessorKey: 'amount_paid',
+            header: ({ column }) => (
+                <Button type="button" variant="ghost" className="-ml-3 h-8" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+                    {t('admin.invoices.table.amount_paid')}
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            ),
+            cell: ({ row }) => formatCentsToEuro(row.original.amount_paid),
+        },
         {
             id: 'actions',
             header: t('admin.common.actions'),

@@ -77,7 +77,7 @@ export function DataTable<TData>({
       </div>
 
       <div className="overflow-hidden rounded-md border">
-        <Table className="bg-secondary">
+        <Table className="bg-card [&_td]:px-4 [&_td]:py-2.5 [&_th]:px-4 [&_th]:py-2.5">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>

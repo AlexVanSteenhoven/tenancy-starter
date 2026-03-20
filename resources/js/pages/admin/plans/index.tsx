@@ -1,15 +1,14 @@
-import { Head, router, useForm } from '@inertiajs/react';
-import { type SubmitEventHandler } from 'react';
-import { useTranslation } from 'react-i18next';
-import DeactivatePlanController from '@/actions/App/Http/Controllers/Admin/Plans/DeactivatePlanController';
-import SyncPlansFromStripeController from '@/actions/App/Http/Controllers/Admin/Plans/SyncPlansFromStripeController';
-import StorePlanController from '@/actions/App/Http/Controllers/Admin/Plans/StorePlanController';
-import UpdatePlanController from '@/actions/App/Http/Controllers/Admin/Plans/UpdatePlanController';
-import AdminLayout from '@/layouts/admin-layout';
+import { Badge } from '@components/ui/badge';
 import { Button } from '@components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
-import { Input } from '@components/ui/input';
-import { Label } from '@components/ui/label';
+import { DataTable } from '@components/ui/data-table';
+import { Head, router } from '@inertiajs/react';
+import { formatCentsToEuro } from '@lib/utils';
+import type { ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDown } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import SyncPlansFromStripeController from '@/actions/App/Http/Controllers/Admin/Plans/SyncPlansFromStripeController';
+import AdminLayout from '@/layouts/admin-layout';
 import '@lib/i18n';
 
 type PlanRow = {
@@ -30,26 +29,93 @@ type Props = {
 
 export default function AdminPlansIndex({ plans }: Props) {
     const { t } = useTranslation();
-    const createForm = useForm({
-        slug: '',
-        name: '',
-        description: '',
-        price_monthly: 0,
-        features: '',
-        is_active: true,
-    });
-
-    const submit: SubmitEventHandler<HTMLFormElement> = (event) => {
-        event.preventDefault();
-        createForm.transform((data) => ({
-            ...data,
-            features: data.features
-                .split('\n')
-                .map((feature) => feature.trim())
-                .filter((feature) => feature !== ''),
-        }));
-        createForm.post(StorePlanController.url());
-    };
+    const columns: ColumnDef<PlanRow>[] = [
+        {
+            accessorKey: 'name',
+            header: ({ column }) => (
+                <Button
+                    type="button"
+                    variant="ghost"
+                    className="-ml-3 h-8"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+                >
+                    {t('admin.plans.table.name')}
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            ),
+        },
+        {
+            accessorKey: 'slug',
+            header: ({ column }) => (
+                <Button
+                    type="button"
+                    variant="ghost"
+                    className="-ml-3 h-8"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+                >
+                    {t('admin.plans.table.slug')}
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            ),
+        },
+        {
+            accessorKey: 'price_monthly',
+            header: ({ column }) => (
+                <Button
+                    type="button"
+                    variant="ghost"
+                    className="-ml-3 h-8"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+                >
+                    {t('admin.plans.table.price')}
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            ),
+            cell: ({ row }) => formatCentsToEuro(row.original.price_monthly),
+        },
+        {
+            accessorKey: 'is_active',
+            header: ({ column }) => (
+                <Button
+                    type="button"
+                    variant="ghost"
+                    className="-ml-3 h-8"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+                >
+                    {t('admin.plans.table.status')}
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            ),
+            cell: ({ row }) => (
+                <Badge
+                    variant="outline"
+                    className={
+                        row.original.is_active
+                            ? 'rounded-full border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300'
+                            : 'rounded-full border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300'
+                    }
+                >
+                    {row.original.is_active ? t('admin.plans.status.active') : t('admin.plans.status.inactive')}
+                </Badge>
+            ),
+        },
+        {
+            id: 'stripe',
+            accessorFn: (plan) => `${plan.stripe_product_id ?? ''} ${plan.stripe_price_id ?? ''}`,
+            header: ({ column }) => (
+                <Button
+                    type="button"
+                    variant="ghost"
+                    className="-ml-3 h-8"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+                >
+                    {t('admin.plans.table.stripe')}
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            ),
+            cell: ({ row }) => `${row.original.stripe_product_id ?? '-'} / ${row.original.stripe_price_id ?? '-'}`,
+        },
+    ];
 
     return (
         <AdminLayout>
@@ -60,6 +126,23 @@ export default function AdminPlansIndex({ plans }: Props) {
                     <h1 className="text-2xl font-semibold">{t('admin.plans.meta.title')}</h1>
                     <p className="text-sm text-muted-foreground">{t('admin.plans.meta.description')}</p>
                 </div>
+
+                <Card>
+                    <CardHeader>
+                        <CardTitle>{t('admin.plans.stripe_instructions.title')}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-sm text-muted-foreground">{t('admin.plans.stripe_instructions.description')}</p>
+                        <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
+                            <li>{t('admin.plans.stripe_instructions.step1')}</li>
+                            <li>{t('admin.plans.stripe_instructions.step2')}</li>
+                            <li>{t('admin.plans.stripe_instructions.step3')}</li>
+                            <li>{t('admin.plans.stripe_instructions.step4')}</li>
+                            <li>{t('admin.plans.stripe_instructions.step5')}</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+
                 <div>
                     <Button
                         variant="secondary"
@@ -67,88 +150,16 @@ export default function AdminPlansIndex({ plans }: Props) {
                             router.post(SyncPlansFromStripeController.url());
                         }}
                     >
-                        {t('admin.common.sync')}
+                        {t('admin.plans.actions.fetch')}
                     </Button>
                 </div>
-
-                <Card>
-                    <CardHeader>
-                        <CardTitle>{t('admin.plans.create.title')}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <form onSubmit={submit} className="grid gap-4 md:grid-cols-2">
-                            <div className="space-y-2">
-                                <Label htmlFor="slug">{t('admin.plans.fields.slug')}</Label>
-                                <Input id="slug" value={createForm.data.slug} onChange={(event) => createForm.setData('slug', event.target.value)} />
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="name">{t('admin.plans.fields.name')}</Label>
-                                <Input id="name" value={createForm.data.name} onChange={(event) => createForm.setData('name', event.target.value)} />
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="description">{t('admin.plans.fields.description')}</Label>
-                                <Input id="description" value={createForm.data.description} onChange={(event) => createForm.setData('description', event.target.value)} />
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="price">{t('admin.plans.fields.price_monthly')}</Label>
-                                <Input id="price" type="number" min={0} value={createForm.data.price_monthly} onChange={(event) => createForm.setData('price_monthly', Number(event.target.value))} />
-                            </div>
-                            <div className="space-y-2 md:col-span-2">
-                                <Label htmlFor="features">{t('admin.plans.fields.features')}</Label>
-                                <Input id="features" value={createForm.data.features} onChange={(event) => createForm.setData('features', event.target.value)} />
-                            </div>
-                            <div className="md:col-span-2">
-                                <Button type="submit" disabled={createForm.processing}>{t('admin.plans.create.submit')}</Button>
-                            </div>
-                        </form>
-                    </CardContent>
-                </Card>
 
                 <Card>
                     <CardHeader>
                         <CardTitle>{t('admin.plans.table.title')}</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="space-y-3">
-                            {plans.map((plan) => (
-                                <div key={plan.id} className="flex flex-col gap-3 rounded-md border p-4 md:flex-row md:items-center md:justify-between">
-                                    <div>
-                                        <p className="font-medium">{plan.name} ({plan.slug})</p>
-                                        <p className="text-xs text-muted-foreground">
-                                            {t('admin.plans.table.price')}: {(plan.price_monthly / 100).toFixed(2)} USD
-                                        </p>
-                                        <p className="text-xs text-muted-foreground">
-                                            {t('admin.plans.table.stripe')}: {plan.stripe_product_id ?? '-'} / {plan.stripe_price_id ?? '-'}
-                                        </p>
-                                    </div>
-                                    <div className="flex gap-2">
-                                        <Button
-                                            variant="outline"
-                                            onClick={() => {
-                                                router.patch(UpdatePlanController.url(plan.id), {
-                                                    slug: plan.slug,
-                                                    name: plan.name,
-                                                    description: plan.description ?? '',
-                                                    price_monthly: plan.price_monthly,
-                                                    features: plan.features,
-                                                    is_active: plan.is_active,
-                                                });
-                                            }}
-                                        >
-                                            {t('admin.common.update')}
-                                        </Button>
-                                        <Button
-                                            variant="destructive"
-                                            onClick={() => {
-                                                router.delete(DeactivatePlanController.url(plan.id));
-                                            }}
-                                        >
-                                            {t('admin.common.deactivate')}
-                                        </Button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                        <DataTable columns={columns} data={plans} />
                     </CardContent>
                 </Card>
             </div>

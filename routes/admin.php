@@ -9,11 +9,8 @@ use App\Http\Controllers\Admin\Auth\ShowLoginController;
 use App\Http\Controllers\Admin\Invoices\ShowInvoiceController;
 use App\Http\Controllers\Admin\Invoices\ShowInvoicesController;
 use App\Http\Controllers\Admin\Invoices\StoreRefundController;
-use App\Http\Controllers\Admin\Plans\DeactivatePlanController;
 use App\Http\Controllers\Admin\Plans\ShowPlansController;
-use App\Http\Controllers\Admin\Plans\StorePlanController;
 use App\Http\Controllers\Admin\Plans\SyncPlansFromStripeController;
-use App\Http\Controllers\Admin\Plans\UpdatePlanController;
 use App\Http\Controllers\Admin\ShowDashboardController;
 use App\Http\Controllers\Admin\Subscriptions\ShowSubscriptionController;
 use App\Http\Controllers\Admin\Subscriptions\ShowSubscriptionsController;
@@ -43,9 +40,6 @@ Route::prefix('_')->as('admin.')->group(function () {
         Route::prefix('plans')->as('plans.')->group(function () {
             Route::get('/', ShowPlansController::class)->name('index');
             Route::post('sync', SyncPlansFromStripeController::class)->name('sync');
-            Route::post('/', StorePlanController::class)->name('store');
-            Route::patch('{plan}', UpdatePlanController::class)->name('update');
-            Route::delete('{plan}', DeactivatePlanController::class)->name('deactivate');
         });
 
         Route::prefix('subscriptions')->as('subscriptions.')->group(function () {

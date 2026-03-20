@@ -9,3 +9,10 @@ export function cn(...inputs: ClassValue[]) {
 export function toUrl(url: NonNullable<InertiaLinkProps['href']>): string {
     return typeof url === 'string' ? url : url.url;
 }
+
+export function formatCentsToEuro(amountInCents: number): string {
+    return new Intl.NumberFormat(undefined, {
+        style: 'currency',
+        currency: 'EUR',
+    }).format(amountInCents / 100);
+}

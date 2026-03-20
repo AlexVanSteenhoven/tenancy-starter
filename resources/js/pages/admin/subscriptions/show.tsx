@@ -1,7 +1,7 @@
+import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import { Head } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import AdminLayout from '@/layouts/admin-layout';
-import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import '@lib/i18n';
 
 type Props = {
