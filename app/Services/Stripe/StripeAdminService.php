@@ -154,6 +154,7 @@ final readonly class StripeAdminService implements StripePlanCatalog
         do {
             $response = $this->stripeClient->products->all(array_filter([
                 'limit' => 100,
+                'active' => true,
                 'starting_after' => $startingAfter,
             ]));
 
