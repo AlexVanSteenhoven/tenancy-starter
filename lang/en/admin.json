@@ -10,6 +10,7 @@
         "no": "No"
     },
     "navigation": {
+        "group": "Administration",
         "dashboard": "Dashboard",
         "workspaces": "Workspaces",
         "plans": "Plans",
@@ -95,28 +96,33 @@
     "plans": {
         "meta": {
             "title": "Plans",
-            "description": "Create and manage Stripe-backed billing plans."
+            "description": "Manage billing plans in Stripe and fetch them into the admin panel."
         },
-        "create": {
-            "title": "Create plan",
-            "submit": "Create plan"
+        "actions": {
+            "fetch": "Fetch products from Stripe"
         },
-        "fields": {
-            "slug": "Slug",
-            "name": "Name",
-            "description": "Description",
-            "price_monthly": "Monthly price (cents)",
-            "features": "Features (newline separated)"
+        "stripe_instructions": {
+            "title": "Manage plans in Stripe first",
+            "description": "Stripe is the source of truth for products and recurring prices. Configure everything in Stripe, then fetch to apply the latest catalog here.",
+            "step1": "In your Stripe Dashboard, create or update each product you want to offer to workspaces.",
+            "step2": "Add an active recurring monthly price for every paid product so subscriptions can be created correctly.",
+            "step3": "Set product metadata with a `slug` key (for example: `pro`, `business`) to keep plan identifiers stable in the app.",
+            "step4": "After any Stripe change, click \"Fetch products from Stripe\" to import new products and refresh existing plan details.",
+            "step5": "If a product is removed or archived in Stripe, the next fetch updates or removes it locally to keep both systems aligned."
         },
         "table": {
             "title": "Existing plans",
+            "name": "Name",
+            "slug": "Slug",
             "price": "Price",
+            "status": "Status",
             "stripe": "Stripe"
         },
+        "status": {
+            "active": "Active",
+            "inactive": "Inactive"
+        },
         "messages": {
-            "created": "Plan created successfully.",
-            "updated": "Plan updated successfully.",
-            "deactivated": "Plan deactivated successfully.",
             "synced": "Plans synced from Stripe. Created: :created, Updated: :updated, Deleted: :deleted."
         }
     },

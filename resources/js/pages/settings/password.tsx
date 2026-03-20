@@ -7,7 +7,7 @@ import InputError from '@components/input-error';
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import { Label } from '@components/ui/label';
-import AppLayout from '@/layouts/app-layout';
+import { LayoutResolver } from '@components/layout-resolver';
 import SettingsLayout from '@/layouts/settings/layout';
 import type { BreadcrumbItem } from '@types';
 import { update } from '@/routes/settings/password';
@@ -26,7 +26,7 @@ export default function Password() {
     ];
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <LayoutResolver breadcrumbs={breadcrumbs}>
             <Head title={t('settings.password.meta.title')} />
 
             <h1 className="sr-only">{t('settings.password.meta.sr-title')}</h1>
@@ -159,6 +159,6 @@ export default function Password() {
                     </Form>
                 </div>
             </SettingsLayout>
-        </AppLayout>
+        </LayoutResolver>
     );
 }

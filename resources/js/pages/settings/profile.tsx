@@ -1,7 +1,7 @@
 import { Transition } from '@headlessui/react';
 import { Form, Head, Link, usePage } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
-import AppLayout from '@/layouts/app-layout';
+import { LayoutResolver } from '@components/layout-resolver';
 import SettingsLayout from '@/layouts/settings/layout';
 import { edit, update } from '@/routes/settings/profile';
 import { send } from '@/routes/verification';
@@ -31,7 +31,7 @@ export default function Profile({
     ];
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <LayoutResolver breadcrumbs={breadcrumbs}>
             <Head title={t('settings.profile.meta.title')} />
 
             <h1 className="sr-only">{t('settings.profile.meta.sr-title')}</h1>
@@ -156,6 +156,6 @@ export default function Profile({
 
                 <DeleteUser />
             </SettingsLayout>
-        </AppLayout>
+        </LayoutResolver>
     );
 }

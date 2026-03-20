@@ -8,7 +8,7 @@ import TwoFactorSetupModal from '@components/two-factor-setup-modal';
 import { Badge } from '@components/ui/badge';
 import { Button } from '@components/ui/button';
 import { useTwoFactorAuth } from '@hooks/use-two-factor-auth';
-import AppLayout from '@/layouts/app-layout';
+import { LayoutResolver } from '@components/layout-resolver';
 import SettingsLayout from '@/layouts/settings/layout';
 import type { BreadcrumbItem } from '@types';
 import { show } from '@/routes/settings/two-factor';
@@ -44,7 +44,7 @@ export default function TwoFactor({
     const [showSetupModal, setShowSetupModal] = useState<boolean>(false);
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <LayoutResolver breadcrumbs={breadcrumbs}>
             <Head title={t('settings.two-factor.meta.title')} />
 
             <h1 className="sr-only">
@@ -152,6 +152,6 @@ export default function TwoFactor({
                     />
                 </div>
             </SettingsLayout>
-        </AppLayout>
+        </LayoutResolver>
     );
 }

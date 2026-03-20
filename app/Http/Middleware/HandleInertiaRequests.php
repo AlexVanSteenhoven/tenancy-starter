@@ -48,6 +48,7 @@ final class HandleInertiaRequests extends Middleware
                 'statusDescription' => $request->session()->get('statusDescription'),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'isAdmin' => $request->getHost() === 'admin.'.collect(config('tenancy.central_domains'))->first(),
         ];
     }
 }

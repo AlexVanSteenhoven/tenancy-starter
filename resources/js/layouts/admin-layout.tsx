@@ -9,16 +9,20 @@ import ShowWorkspacesController from '@/actions/App/Http/Controllers/Admin/Works
 import { AppContent } from '@components/app-content';
 import AppLogo from '@components/app-logo';
 import { AppShell } from '@components/app-shell';
+import { AppSidebarHeader } from '@components/app-sidebar-header';
 import { NavUser } from '@components/nav-user';
 import {
     Sidebar,
     SidebarContent,
     SidebarFooter,
+    SidebarGroup,
+    SidebarGroupLabel,
     SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@components/ui/sidebar';
+import { useCurrentUrl } from '@hooks/use-current-url';
 import type { AppLayoutProps, Auth, NavItem } from '@types';
 import '@lib/i18n';
 
@@ -30,10 +34,10 @@ const adminNavItems: NavItem[] = [
     { title: 'admin.navigation.invoices', href: ShowInvoicesController.url(), icon: ReceiptText },
 ];
 
-export default function AdminLayout({ children }: AppLayoutProps) {
+export default function AdminLayout({ children, breadcrumbs = [] }: AppLayoutProps) {
     const { auth } = usePage<{ auth: Auth }>().props;
-    const currentPath = usePage().url;
     const { t } = useTranslation();
+    const { isCurrentUrl } = useCurrentUrl();
 
     return (
         <AppShell variant="sidebar">
@@ -50,24 +54,32 @@ export default function AdminLayout({ children }: AppLayoutProps) {
                     </SidebarMenu>
                 </SidebarHeader>
                 <SidebarContent>
-                    <SidebarMenu>
-                        {adminNavItems.map((item) => (
-                            <SidebarMenuItem key={item.href.toString()}>
-                                <SidebarMenuButton asChild isActive={currentPath.startsWith(item.href.toString())}>
-                                    <Link href={item.href}>
-                                        {item.icon && <item.icon className="size-4" />}
-                                        <span>{t(item.title)}</span>
-                                    </Link>
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                        ))}
-                    </SidebarMenu>
+                    <SidebarGroup className="px-2 py-0">
+                        <SidebarGroupLabel>{t('admin.navigation.group')}</SidebarGroupLabel>
+                        <SidebarMenu>
+                            {adminNavItems.map((item) => (
+                                <SidebarMenuItem key={item.href.toString()}>
+                                    <SidebarMenuButton
+                                        asChild
+                                        isActive={isCurrentUrl(item.href)}
+                                        tooltip={{ children: t(item.title) }}
+                                    >
+                                        <Link href={item.href}>
+                                            {item.icon && <item.icon />}
+                                            <span>{t(item.title)}</span>
+                                        </Link>
+                                    </SidebarMenuButton>
+                                </SidebarMenuItem>
+                            ))}
+                        </SidebarMenu>
+                    </SidebarGroup>
                 </SidebarContent>
                 <SidebarFooter>
                     {auth.user !== null && <NavUser />}
                 </SidebarFooter>
             </Sidebar>
-            <AppContent variant="sidebar" className="overflow-x-hidden p-6">
+            <AppContent variant="sidebar" className="overflow-x-hidden">
+                <AppSidebarHeader breadcrumbs={breadcrumbs} />
                 {children}
             </AppContent>
         </AppShell>
